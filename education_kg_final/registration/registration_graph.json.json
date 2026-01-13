@@ -1,0 +1,695 @@
+{
+  "directed": true,
+  "multigraph": true,
+  "graph": {},
+  "nodes": [
+    {
+      "node_type": "table",
+      "name": "registration",
+      "row_count": 52906,
+      "column_count": 4,
+      "size_bytes": 5290600,
+      "label": "Table: registration",
+      "id": "table_registration"
+    },
+    {
+      "node_type": "column",
+      "name": "Student ID",
+      "position": 1,
+      "semantic_type": "categorical",
+      "nullable": false,
+      "null_percentage": 0.0,
+      "unique_count": 1278,
+      "cardinality_ratio": 0.0242,
+      "label": "Column: Student ID",
+      "id": "col_registration_Student ID"
+    },
+    {
+      "node_type": "column",
+      "name": "Course Code",
+      "position": 2,
+      "semantic_type": "categorical",
+      "nullable": false,
+      "null_percentage": 0.0,
+      "unique_count": 204,
+      "cardinality_ratio": 0.0039,
+      "label": "Column: Course Code",
+      "id": "col_registration_Course Code"
+    },
+    {
+      "node_type": "column",
+      "name": "Semester",
+      "position": 3,
+      "semantic_type": "categorical",
+      "nullable": false,
+      "null_percentage": 0.0,
+      "unique_count": 8,
+      "cardinality_ratio": 0.0002,
+      "label": "Column: Semester",
+      "id": "col_registration_Semester"
+    },
+    {
+      "node_type": "column",
+      "name": "Status",
+      "position": 4,
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 2,
+      "cardinality_ratio": 0.0,
+      "label": "Column: Status",
+      "id": "col_registration_Status"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "label": "Type: VARCHAR",
+      "id": "dtype_1"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "not_null",
+      "label": "Not Null",
+      "id": "constraint_2"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_3"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "foreign_key",
+      "references_table": "students_info",
+      "label": "FK -> students_info",
+      "id": "constraint_4"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "label": "Type: VARCHAR",
+      "id": "dtype_5"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "not_null",
+      "label": "Not Null",
+      "id": "constraint_6"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_7"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "foreign_key",
+      "references_table": "courses",
+      "label": "FK -> courses",
+      "id": "constraint_8"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "BIGINT",
+      "semantic_type": "categorical",
+      "label": "Type: BIGINT",
+      "id": "dtype_9"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "not_null",
+      "label": "Not Null",
+      "id": "constraint_10"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_11"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "label": "Type: VARCHAR",
+      "id": "dtype_12"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_13"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "categorical",
+      "entropy": 3.3219,
+      "is_balanced": true,
+      "unique_count": 1278,
+      "label": "Categorical Stats",
+      "id": "stats_14"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUCE4004",
+      "label": "Value: TUCE4004",
+      "count": 56,
+      "percentage": 0.10584810796507012,
+      "id": "catval_15"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUEE4006",
+      "label": "Value: TUEE4006",
+      "count": 56,
+      "percentage": 0.10584810796507012,
+      "id": "catval_16"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUCIV4024",
+      "label": "Value: TUCIV4024",
+      "count": 56,
+      "percentage": 0.10584810796507012,
+      "id": "catval_17"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUEE4011",
+      "label": "Value: TUEE4011",
+      "count": 56,
+      "percentage": 0.10584810796507012,
+      "id": "catval_18"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUEC4043",
+      "label": "Value: TUEC4043",
+      "count": 56,
+      "percentage": 0.10584810796507012,
+      "id": "catval_19"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "categorical",
+      "entropy": 3.263,
+      "is_balanced": true,
+      "unique_count": 204,
+      "label": "Categorical Stats",
+      "id": "stats_20"
+    },
+    {
+      "node_type": "category_value",
+      "value": "PHY101",
+      "label": "Value: PHY101",
+      "count": 1278,
+      "percentage": 2.4156050353457075,
+      "id": "catval_21"
+    },
+    {
+      "node_type": "category_value",
+      "value": "PHY102",
+      "label": "Value: PHY102",
+      "count": 1278,
+      "percentage": 2.4156050353457075,
+      "id": "catval_22"
+    },
+    {
+      "node_type": "category_value",
+      "value": "MAT101",
+      "label": "Value: MAT101",
+      "count": 1278,
+      "percentage": 2.4156050353457075,
+      "id": "catval_23"
+    },
+    {
+      "node_type": "category_value",
+      "value": "MAT102",
+      "label": "Value: MAT102",
+      "count": 1278,
+      "percentage": 2.4156050353457075,
+      "id": "catval_24"
+    },
+    {
+      "node_type": "category_value",
+      "value": "MAT103",
+      "label": "Value: MAT103",
+      "count": 1278,
+      "percentage": 2.4156050353457075,
+      "id": "catval_25"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "categorical",
+      "entropy": 2.9557,
+      "is_balanced": true,
+      "unique_count": 8,
+      "label": "Categorical Stats",
+      "id": "stats_26"
+    },
+    {
+      "node_type": "category_value",
+      "value": "1",
+      "label": "Value: 1",
+      "count": 8946,
+      "percentage": 16.90923524741995,
+      "id": "catval_27"
+    },
+    {
+      "node_type": "category_value",
+      "value": "2",
+      "label": "Value: 2",
+      "count": 8946,
+      "percentage": 16.90923524741995,
+      "id": "catval_28"
+    },
+    {
+      "node_type": "category_value",
+      "value": "3",
+      "label": "Value: 3",
+      "count": 7196,
+      "percentage": 13.601481873511512,
+      "id": "catval_29"
+    },
+    {
+      "node_type": "category_value",
+      "value": "4",
+      "label": "Value: 4",
+      "count": 7196,
+      "percentage": 13.601481873511512,
+      "id": "catval_30"
+    },
+    {
+      "node_type": "category_value",
+      "value": "5",
+      "label": "Value: 5",
+      "count": 5754,
+      "percentage": 10.875893093410955,
+      "id": "catval_31"
+    },
+    {
+      "node_type": "category_value",
+      "value": "6",
+      "label": "Value: 6",
+      "count": 5754,
+      "percentage": 10.875893093410955,
+      "id": "catval_32"
+    },
+    {
+      "node_type": "category_value",
+      "value": "7",
+      "label": "Value: 7",
+      "count": 4557,
+      "percentage": 8.613389785657581,
+      "id": "catval_33"
+    },
+    {
+      "node_type": "category_value",
+      "value": "8",
+      "label": "Value: 8",
+      "count": 4557,
+      "percentage": 8.613389785657581,
+      "id": "catval_34"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "categorical",
+      "entropy": 0.3288,
+      "is_balanced": false,
+      "unique_count": 2,
+      "label": "Categorical Stats",
+      "id": "stats_35"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Completed",
+      "label": "Value: Completed",
+      "count": 49714,
+      "percentage": 93.96665784599101,
+      "id": "catval_36"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Enrolled",
+      "label": "Value: Enrolled",
+      "count": 3192,
+      "percentage": 6.033342154008997,
+      "id": "catval_37"
+    },
+    {
+      "node_type": "table",
+      "name": "students_info",
+      "is_reference": true,
+      "label": "\u2192 students_info",
+      "id": "ref_students_info"
+    },
+    {
+      "node_type": "table",
+      "name": "courses",
+      "is_reference": true,
+      "label": "\u2192 courses",
+      "id": "ref_courses"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "index_candidate",
+      "label": "Hint: Index Candidate",
+      "id": "hint_index_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "partition_candidate",
+      "label": "Hint: Partition Candidate",
+      "id": "hint_partition_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "aggregation_candidate",
+      "label": "Hint: Aggregation Candidate",
+      "id": "hint_aggregation_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "grouping_candidate",
+      "label": "Hint: Grouping Candidate",
+      "id": "hint_grouping_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "filtering_candidate",
+      "label": "Hint: Filtering Candidate",
+      "id": "hint_filtering_candidate"
+    }
+  ],
+  "links": [
+    {
+      "edge_type": "has_column",
+      "position": 1,
+      "source": "table_registration",
+      "target": "col_registration_Student ID",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 2,
+      "source": "table_registration",
+      "target": "col_registration_Course Code",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 3,
+      "source": "table_registration",
+      "target": "col_registration_Semester",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 4,
+      "source": "table_registration",
+      "target": "col_registration_Status",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_registration_Student ID",
+      "target": "dtype_1",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_registration_Student ID",
+      "target": "constraint_2",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_registration_Student ID",
+      "target": "constraint_3",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_registration_Student ID",
+      "target": "constraint_4",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_registration_Student ID",
+      "target": "stats_14",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 0.10584810796507012,
+      "source": "col_registration_Student ID",
+      "target": "catval_15",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 0.10584810796507012,
+      "source": "col_registration_Student ID",
+      "target": "catval_16",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 0.10584810796507012,
+      "source": "col_registration_Student ID",
+      "target": "catval_17",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 0.10584810796507012,
+      "source": "col_registration_Student ID",
+      "target": "catval_18",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 0.10584810796507012,
+      "source": "col_registration_Student ID",
+      "target": "catval_19",
+      "key": 0
+    },
+    {
+      "edge_type": "references",
+      "label": "references",
+      "source": "col_registration_Student ID",
+      "target": "ref_students_info",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_registration_Course Code",
+      "target": "dtype_5",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_registration_Course Code",
+      "target": "constraint_6",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_registration_Course Code",
+      "target": "constraint_7",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_registration_Course Code",
+      "target": "constraint_8",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_registration_Course Code",
+      "target": "stats_20",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 2.4156050353457075,
+      "source": "col_registration_Course Code",
+      "target": "catval_21",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 2.4156050353457075,
+      "source": "col_registration_Course Code",
+      "target": "catval_22",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 2.4156050353457075,
+      "source": "col_registration_Course Code",
+      "target": "catval_23",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 2.4156050353457075,
+      "source": "col_registration_Course Code",
+      "target": "catval_24",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 2.4156050353457075,
+      "source": "col_registration_Course Code",
+      "target": "catval_25",
+      "key": 0
+    },
+    {
+      "edge_type": "references",
+      "label": "references",
+      "source": "col_registration_Course Code",
+      "target": "ref_courses",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "categorical_column",
+      "source": "col_registration_Course Code",
+      "target": "hint_grouping_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_registration_Semester",
+      "target": "dtype_9",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_registration_Semester",
+      "target": "constraint_10",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_registration_Semester",
+      "target": "constraint_11",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_registration_Semester",
+      "target": "stats_26",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 16.90923524741995,
+      "source": "col_registration_Semester",
+      "target": "catval_27",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 16.90923524741995,
+      "source": "col_registration_Semester",
+      "target": "catval_28",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 13.601481873511512,
+      "source": "col_registration_Semester",
+      "target": "catval_29",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 13.601481873511512,
+      "source": "col_registration_Semester",
+      "target": "catval_30",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 10.875893093410955,
+      "source": "col_registration_Semester",
+      "target": "catval_31",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 10.875893093410955,
+      "source": "col_registration_Semester",
+      "target": "catval_32",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 8.613389785657581,
+      "source": "col_registration_Semester",
+      "target": "catval_33",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 8.613389785657581,
+      "source": "col_registration_Semester",
+      "target": "catval_34",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "categorical_column",
+      "source": "col_registration_Semester",
+      "target": "hint_grouping_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_registration_Status",
+      "target": "dtype_12",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_registration_Status",
+      "target": "constraint_13",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_registration_Status",
+      "target": "stats_35",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 93.96665784599101,
+      "source": "col_registration_Status",
+      "target": "catval_36",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 6.033342154008997,
+      "source": "col_registration_Status",
+      "target": "catval_37",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "categorical_column",
+      "source": "col_registration_Status",
+      "target": "hint_grouping_candidate",
+      "key": 0
+    }
+  ]
+}

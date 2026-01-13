@@ -1,0 +1,26 @@
+table_name,column_name,synonyms,description
+students_info,Student ID,"learner,learners,pupil,pupils,enrollee,enrollees,learner_id,pupil_id,academic_records,academic,records,educational",Unique identifier for students
+students_info,Name,"student_name,full_name,educational",Student's full name
+students_info,Date of Birth,"dob,birthdate,birth_date",Student's birth date
+students_info,Batch,"year,cohort,class_year,educational",Student's batch or year
+students_info,Contact Info,"email,phone,contact,information,educational",Student's contact information
+courses,Course Code,"class,classes,subject,subjects,class_id,subject_id,educational",Unique identifier for courses
+courses,Course Title,"class_name,subject_name,course_name,educational",Name of the course
+courses,Credits,"credit_hours,units,educational",Credit hours for the course
+courses,Department,"dept,department_name,educational",Department offering the course
+grades,Student ID,"learner_id,pupil_id,academic_records,academic,educational",Student enrolled in course
+grades,Course Code,"class_id,subject_id,classes,educational",Course being graded
+grades,Marks,"score,grade,result,performance,performed,academic,records,educational",Final grade or marks for the course
+grades,GPA,"grade_point_average,average,performance,academic,records,educational",Grade point average
+registration,Student ID,"learner_id,pupil_id,enrolled",Student enrolled in course
+registration,Course Code,"class_id,subject_id,classes",Course being registered for
+registration,Status,"enrollment_status,enroll_status,enrolled,enrollment,active,registrations",Registration status
+faculty_info,Faculty ID,"teacher_id,professor_id,instructor_id,educator,educators,educational",Unique faculty identifier
+faculty_info,Name,"faculty_name,instructor_name,teacher_name,educational",Faculty member's name
+faculty_info,Department,"dept,department_name,educational",Department of the faculty
+faculty_info,Course Code,"class_id,subject_id,educational",Course being taught
+hostel,Student ID,"learner_id,pupil_id,housing",Student assigned to hostel
+hostel,Hostel Name,"hostel,residence,dormitory,housing,accommodation,housing_assignments",Name of the hostel
+hostel,Room Number,"room,housing_assignment",Room assigned to student
+parent_info,Student ID,"learner_id,pupil_id",Student whose parent information this is
+feedue,Student ID,"learner_id,pupil_id",Student with fee due

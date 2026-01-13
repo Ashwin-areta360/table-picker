@@ -1,0 +1,2032 @@
+{
+  "directed": true,
+  "multigraph": true,
+  "graph": {},
+  "nodes": [
+    {
+      "node_type": "table",
+      "name": "IMDB_Movie_Data",
+      "row_count": 1000,
+      "column_count": 12,
+      "size_bytes": 100000,
+      "label": "Table: IMDB_Movie_Data",
+      "id": "table_IMDB_Movie_Data"
+    },
+    {
+      "node_type": "column",
+      "name": "Rank",
+      "position": 1,
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 1000,
+      "cardinality_ratio": 1.0,
+      "label": "Column: Rank",
+      "id": "col_IMDB_Movie_Data_Rank"
+    },
+    {
+      "node_type": "column",
+      "name": "Title",
+      "position": 2,
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 999,
+      "cardinality_ratio": 0.999,
+      "label": "Column: Title",
+      "id": "col_IMDB_Movie_Data_Title"
+    },
+    {
+      "node_type": "column",
+      "name": "Genre",
+      "position": 3,
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 207,
+      "cardinality_ratio": 0.207,
+      "label": "Column: Genre",
+      "id": "col_IMDB_Movie_Data_Genre"
+    },
+    {
+      "node_type": "column",
+      "name": "Description",
+      "position": 4,
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 1000,
+      "cardinality_ratio": 1.0,
+      "label": "Column: Description",
+      "id": "col_IMDB_Movie_Data_Description"
+    },
+    {
+      "node_type": "column",
+      "name": "Director",
+      "position": 5,
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 644,
+      "cardinality_ratio": 0.644,
+      "label": "Column: Director",
+      "id": "col_IMDB_Movie_Data_Director"
+    },
+    {
+      "node_type": "column",
+      "name": "Actors",
+      "position": 6,
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 996,
+      "cardinality_ratio": 0.996,
+      "label": "Column: Actors",
+      "id": "col_IMDB_Movie_Data_Actors"
+    },
+    {
+      "node_type": "column",
+      "name": "Year",
+      "position": 7,
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 11,
+      "cardinality_ratio": 0.011,
+      "label": "Column: Year",
+      "id": "col_IMDB_Movie_Data_Year"
+    },
+    {
+      "node_type": "column",
+      "name": "Runtime (Minutes)",
+      "position": 8,
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 94,
+      "cardinality_ratio": 0.094,
+      "label": "Column: Runtime (Minutes)",
+      "id": "col_IMDB_Movie_Data_Runtime (Minutes)"
+    },
+    {
+      "node_type": "column",
+      "name": "Rating",
+      "position": 9,
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 55,
+      "cardinality_ratio": 0.055,
+      "label": "Column: Rating",
+      "id": "col_IMDB_Movie_Data_Rating"
+    },
+    {
+      "node_type": "column",
+      "name": "Votes",
+      "position": 10,
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 997,
+      "cardinality_ratio": 0.997,
+      "label": "Column: Votes",
+      "id": "col_IMDB_Movie_Data_Votes"
+    },
+    {
+      "node_type": "column",
+      "name": "Revenue (Millions)",
+      "position": 11,
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 12.8,
+      "unique_count": 814,
+      "cardinality_ratio": 0.9335,
+      "label": "Column: Revenue (Millions)",
+      "id": "col_IMDB_Movie_Data_Revenue (Millions)"
+    },
+    {
+      "node_type": "column",
+      "name": "Metascore",
+      "position": 12,
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 6.4,
+      "unique_count": 84,
+      "cardinality_ratio": 0.0897,
+      "label": "Column: Metascore",
+      "id": "col_IMDB_Movie_Data_Metascore"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "label": "Type: BIGINT",
+      "id": "dtype_1"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_2"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "unique",
+      "cardinality_ratio": 1.0,
+      "label": "Unique",
+      "id": "constraint_3"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_4"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "label": "Type: VARCHAR",
+      "id": "dtype_5"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_6"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "unique",
+      "cardinality_ratio": 0.999,
+      "label": "Unique",
+      "id": "constraint_7"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_8"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "label": "Type: VARCHAR",
+      "id": "dtype_9"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_10"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "label": "Type: VARCHAR",
+      "id": "dtype_11"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_12"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "unique",
+      "cardinality_ratio": 1.0,
+      "label": "Unique",
+      "id": "constraint_13"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_14"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "label": "Type: VARCHAR",
+      "id": "dtype_15"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_16"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "label": "Type: VARCHAR",
+      "id": "dtype_17"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_18"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "unique",
+      "cardinality_ratio": 0.996,
+      "label": "Unique",
+      "id": "constraint_19"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_20"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "BIGINT",
+      "semantic_type": "categorical",
+      "label": "Type: BIGINT",
+      "id": "dtype_21"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_22"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "label": "Type: BIGINT",
+      "id": "dtype_23"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_24"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "DOUBLE",
+      "semantic_type": "numerical",
+      "label": "Type: DOUBLE",
+      "id": "dtype_25"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_26"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "label": "Type: BIGINT",
+      "id": "dtype_27"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_28"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "unique",
+      "cardinality_ratio": 0.997,
+      "label": "Unique",
+      "id": "constraint_29"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_30"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "DOUBLE",
+      "semantic_type": "numerical",
+      "label": "Type: DOUBLE",
+      "id": "dtype_31"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_32"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "label": "Type: BIGINT",
+      "id": "dtype_33"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_34"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "numerical",
+      "label": "Numerical Stats",
+      "min": 1.0,
+      "max": 1000.0,
+      "mean": 500.5,
+      "median": 500.5,
+      "std_dev": 288.8194,
+      "q1": 10.99,
+      "q25": 250.75,
+      "q75": 750.25,
+      "q99": 990.01,
+      "zero_count": 0,
+      "negative_count": 0,
+      "positive_count": 1000,
+      "id": "stats_35"
+    },
+    {
+      "node_type": "distribution",
+      "label": "Distribution",
+      "skewness": "symmetric",
+      "iqr": 499.5,
+      "has_outliers": true,
+      "coefficient_of_variation": 0.5770617382617382,
+      "spread": "high",
+      "id": "distribution_36"
+    },
+    {
+      "node_type": "category_value",
+      "value": "16",
+      "label": "Sample: 16",
+      "sample_index": 1,
+      "id": "sample_37"
+    },
+    {
+      "node_type": "category_value",
+      "value": "23",
+      "label": "Sample: 23",
+      "sample_index": 2,
+      "id": "sample_38"
+    },
+    {
+      "node_type": "category_value",
+      "value": "32",
+      "label": "Sample: 32",
+      "sample_index": 3,
+      "id": "sample_39"
+    },
+    {
+      "node_type": "category_value",
+      "value": "33",
+      "label": "Sample: 33",
+      "sample_index": 4,
+      "id": "sample_40"
+    },
+    {
+      "node_type": "category_value",
+      "value": "53",
+      "label": "Sample: 53",
+      "sample_index": 5,
+      "id": "sample_41"
+    },
+    {
+      "node_type": "category_value",
+      "value": "5- 25- 77",
+      "label": "Sample: 5- 25- 77",
+      "sample_index": 1,
+      "id": "sample_42"
+    },
+    {
+      "node_type": "category_value",
+      "value": "The Last Face",
+      "label": "Sample: The Last Face",
+      "sample_index": 2,
+      "id": "sample_43"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Collateral Beauty",
+      "label": "Sample: Collateral Beauty",
+      "sample_index": 3,
+      "id": "sample_44"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Zootopia",
+      "label": "Sample: Zootopia",
+      "sample_index": 4,
+      "id": "sample_45"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Prisoners",
+      "label": "Sample: Prisoners",
+      "sample_index": 5,
+      "id": "sample_46"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Comedy,Family,Musical",
+      "label": "Sample: Comedy,Family,Musical",
+      "sample_index": 1,
+      "id": "sample_47"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Mystery,Thriller",
+      "label": "Sample: Mystery,Thriller",
+      "sample_index": 2,
+      "id": "sample_48"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Action,Adventure,Crime",
+      "label": "Sample: Action,Adventure,Crime",
+      "sample_index": 3,
+      "id": "sample_49"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Crime,Drama,History",
+      "label": "Sample: Crime,Drama,History",
+      "sample_index": 4,
+      "id": "sample_50"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Action,Horror",
+      "label": "Sample: Action,Horror",
+      "sample_index": 5,
+      "id": "sample_51"
+    },
+    {
+      "node_type": "category_value",
+      "value": "A young woman must save herself and her friends from an ancient evil that stalks its victims through the real-life phenomenon of sleep paralysis.",
+      "label": "Sample: A young woman must save herself and her friends from an ancient evil that stalks its victims through the real-life phenomenon of sleep paralysis.",
+      "sample_index": 1,
+      "id": "sample_52"
+    },
+    {
+      "node_type": "category_value",
+      "value": "A former secretary, newly appointed as a scriptwriter for propaganda films, joins the cast and crew of a major production while the Blitz rages around them.",
+      "label": "Sample: A former secretary, newly appointed as a scriptwriter for propaganda films, joins the cast and crew of a major production while the Blitz rages around them.",
+      "sample_index": 2,
+      "id": "sample_53"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Literature student Anastasia Steele's life changes forever when she meets handsome, yet tormented, billionaire Christian Grey.",
+      "label": "Sample: Literature student Anastasia Steele's life changes forever when she meets handsome, yet tormented, billionaire Christian Grey.",
+      "sample_index": 3,
+      "id": "sample_54"
+    },
+    {
+      "node_type": "category_value",
+      "value": "A man's nervous breakdown causes him to leave his wife and live in his attic for several months.",
+      "label": "Sample: A man's nervous breakdown causes him to leave his wife and live in his attic for several months.",
+      "sample_index": 4,
+      "id": "sample_55"
+    },
+    {
+      "node_type": "category_value",
+      "value": "A personal shopper in Paris refuses to leave the city until she makes contact with her twin brother who previously died there. Her life becomes more complicated when a mysterious person contacts her via text message.",
+      "label": "Sample: A personal shopper in Paris refuses to leave the city until she makes contact with her twin brother who previously died there. Her life becomes more complicated when a mysterious person contacts her via text message.",
+      "sample_index": 5,
+      "id": "sample_56"
+    },
+    {
+      "node_type": "category_value",
+      "value": "M. Night Shyamalan",
+      "label": "Sample: M. Night Shyamalan",
+      "sample_index": 1,
+      "id": "sample_57"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Shawn Burkett",
+      "label": "Sample: Shawn Burkett",
+      "sample_index": 2,
+      "id": "sample_58"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Katie Holmes",
+      "label": "Sample: Katie Holmes",
+      "sample_index": 3,
+      "id": "sample_59"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Ana Lily Amirpour",
+      "label": "Sample: Ana Lily Amirpour",
+      "sample_index": 4,
+      "id": "sample_60"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Catherine Hardwicke",
+      "label": "Sample: Catherine Hardwicke",
+      "sample_index": 5,
+      "id": "sample_61"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Noomi Rapace, Logan Marshall-Green, Michael Fassbender, Charlize Theron",
+      "label": "Sample: Noomi Rapace, Logan Marshall-Green, Michael Fassbender, Charlize Theron",
+      "sample_index": 1,
+      "id": "sample_62"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Emma Booth, Ashleigh Cummings, Stephen Curry,Susie Porter",
+      "label": "Sample: Emma Booth, Ashleigh Cummings, Stephen Curry,Susie Porter",
+      "sample_index": 2,
+      "id": "sample_63"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Jocelin Donahue, Jesse Bradford, Jesse Borrego,Lori Petty",
+      "label": "Sample: Jocelin Donahue, Jesse Bradford, Jesse Borrego,Lori Petty",
+      "sample_index": 3,
+      "id": "sample_64"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Amy Adams, Jake Gyllenhaal, Michael Shannon, Aaron Taylor-Johnson",
+      "label": "Sample: Amy Adams, Jake Gyllenhaal, Michael Shannon, Aaron Taylor-Johnson",
+      "sample_index": 4,
+      "id": "sample_65"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Brittany Blanton, Ayse Howard, Roman Jossart,Nadia White",
+      "label": "Sample: Brittany Blanton, Ayse Howard, Roman Jossart,Nadia White",
+      "sample_index": 5,
+      "id": "sample_66"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "categorical",
+      "entropy": 3.0264,
+      "is_balanced": true,
+      "unique_count": 11,
+      "label": "Categorical Stats",
+      "id": "stats_67"
+    },
+    {
+      "node_type": "category_value",
+      "value": "2016",
+      "label": "Value: 2016",
+      "count": 297,
+      "percentage": 29.7,
+      "id": "catval_68"
+    },
+    {
+      "node_type": "category_value",
+      "value": "2015",
+      "label": "Value: 2015",
+      "count": 127,
+      "percentage": 12.7,
+      "id": "catval_69"
+    },
+    {
+      "node_type": "category_value",
+      "value": "2014",
+      "label": "Value: 2014",
+      "count": 98,
+      "percentage": 9.8,
+      "id": "catval_70"
+    },
+    {
+      "node_type": "category_value",
+      "value": "2013",
+      "label": "Value: 2013",
+      "count": 91,
+      "percentage": 9.1,
+      "id": "catval_71"
+    },
+    {
+      "node_type": "category_value",
+      "value": "2012",
+      "label": "Value: 2012",
+      "count": 64,
+      "percentage": 6.4,
+      "id": "catval_72"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "numerical",
+      "label": "Numerical Stats",
+      "min": 66.0,
+      "max": 191.0,
+      "mean": 113.172,
+      "median": 111.0,
+      "std_dev": 18.8109,
+      "q1": 81.99000000000001,
+      "q25": 100.0,
+      "q75": 123.0,
+      "q99": 166.02999999999997,
+      "zero_count": 0,
+      "negative_count": 0,
+      "positive_count": 1000,
+      "id": "stats_73"
+    },
+    {
+      "node_type": "distribution",
+      "label": "Distribution",
+      "skewness": "right_skewed",
+      "iqr": 23.0,
+      "has_outliers": true,
+      "coefficient_of_variation": 0.1662151415544481,
+      "spread": "medium",
+      "id": "distribution_74"
+    },
+    {
+      "node_type": "category_value",
+      "value": "159",
+      "label": "Sample: 159",
+      "sample_index": 1,
+      "id": "sample_75"
+    },
+    {
+      "node_type": "category_value",
+      "value": "100",
+      "label": "Sample: 100",
+      "sample_index": 2,
+      "id": "sample_76"
+    },
+    {
+      "node_type": "category_value",
+      "value": "115",
+      "label": "Sample: 115",
+      "sample_index": 3,
+      "id": "sample_77"
+    },
+    {
+      "node_type": "category_value",
+      "value": "113",
+      "label": "Sample: 113",
+      "sample_index": 4,
+      "id": "sample_78"
+    },
+    {
+      "node_type": "category_value",
+      "value": "84",
+      "label": "Sample: 84",
+      "sample_index": 5,
+      "id": "sample_79"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "numerical",
+      "label": "Numerical Stats",
+      "min": 1.9,
+      "max": 9.0,
+      "mean": 6.7232,
+      "median": 6.8,
+      "std_dev": 0.9454,
+      "q1": 3.9,
+      "q25": 6.2,
+      "q75": 7.4,
+      "q99": 8.5,
+      "zero_count": 0,
+      "negative_count": 0,
+      "positive_count": 1000,
+      "id": "stats_80"
+    },
+    {
+      "node_type": "distribution",
+      "label": "Distribution",
+      "skewness": "symmetric",
+      "iqr": 1.2000000000000002,
+      "has_outliers": true,
+      "coefficient_of_variation": 0.14061756306520704,
+      "spread": "medium",
+      "id": "distribution_81"
+    },
+    {
+      "node_type": "category_value",
+      "value": "4.9",
+      "label": "Sample: 4.9",
+      "sample_index": 1,
+      "id": "sample_82"
+    },
+    {
+      "node_type": "category_value",
+      "value": "5.1",
+      "label": "Sample: 5.1",
+      "sample_index": 2,
+      "id": "sample_83"
+    },
+    {
+      "node_type": "category_value",
+      "value": "7.2",
+      "label": "Sample: 7.2",
+      "sample_index": 3,
+      "id": "sample_84"
+    },
+    {
+      "node_type": "category_value",
+      "value": "4.4",
+      "label": "Sample: 4.4",
+      "sample_index": 4,
+      "id": "sample_85"
+    },
+    {
+      "node_type": "category_value",
+      "value": "6.6",
+      "label": "Sample: 6.6",
+      "sample_index": 5,
+      "id": "sample_86"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "numerical",
+      "label": "Numerical Stats",
+      "min": 61.0,
+      "max": 1791916.0,
+      "mean": 169808.255,
+      "median": 110799.0,
+      "std_dev": 188762.6475,
+      "q1": 221.98000000000002,
+      "q25": 36309.0,
+      "q75": 239909.75,
+      "q99": 865614.1799999995,
+      "zero_count": 0,
+      "negative_count": 0,
+      "positive_count": 1000,
+      "id": "stats_87"
+    },
+    {
+      "node_type": "distribution",
+      "label": "Distribution",
+      "skewness": "right_skewed",
+      "iqr": 203600.75,
+      "has_outliers": true,
+      "coefficient_of_variation": 1.1116223266059708,
+      "spread": "high",
+      "id": "distribution_88"
+    },
+    {
+      "node_type": "category_value",
+      "value": "485820",
+      "label": "Sample: 485820",
+      "sample_index": 1,
+      "id": "sample_89"
+    },
+    {
+      "node_type": "category_value",
+      "value": "258682",
+      "label": "Sample: 258682",
+      "sample_index": 2,
+      "id": "sample_90"
+    },
+    {
+      "node_type": "category_value",
+      "value": "127553",
+      "label": "Sample: 127553",
+      "sample_index": 3,
+      "id": "sample_91"
+    },
+    {
+      "node_type": "category_value",
+      "value": "120690",
+      "label": "Sample: 120690",
+      "sample_index": 4,
+      "id": "sample_92"
+    },
+    {
+      "node_type": "category_value",
+      "value": "162122",
+      "label": "Sample: 162122",
+      "sample_index": 5,
+      "id": "sample_93"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "numerical",
+      "label": "Numerical Stats",
+      "min": 0.0,
+      "max": 936.63,
+      "mean": 82.9564,
+      "median": 47.985,
+      "std_dev": 103.2535,
+      "q1": 0.02,
+      "q25": 13.270000000000001,
+      "q75": 113.715,
+      "q99": 431.4591999999991,
+      "zero_count": 1,
+      "negative_count": 0,
+      "positive_count": 871,
+      "id": "stats_94"
+    },
+    {
+      "node_type": "distribution",
+      "label": "Distribution",
+      "skewness": "right_skewed",
+      "iqr": 100.44500000000001,
+      "has_outliers": true,
+      "coefficient_of_variation": 1.2446718999377986,
+      "spread": "high",
+      "id": "distribution_95"
+    },
+    {
+      "node_type": "category_value",
+      "value": "234.02",
+      "label": "Sample: 234.02",
+      "sample_index": 1,
+      "id": "sample_96"
+    },
+    {
+      "node_type": "category_value",
+      "value": "30.35",
+      "label": "Sample: 30.35",
+      "sample_index": 2,
+      "id": "sample_97"
+    },
+    {
+      "node_type": "category_value",
+      "value": "125.07",
+      "label": "Sample: 125.07",
+      "sample_index": 3,
+      "id": "sample_98"
+    },
+    {
+      "node_type": "category_value",
+      "value": "116.87",
+      "label": "Sample: 116.87",
+      "sample_index": 4,
+      "id": "sample_99"
+    },
+    {
+      "node_type": "category_value",
+      "value": "760.51",
+      "label": "Sample: 760.51",
+      "sample_index": 5,
+      "id": "sample_100"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "numerical",
+      "label": "Numerical Stats",
+      "min": 11.0,
+      "max": 100.0,
+      "mean": 58.985,
+      "median": 59.5,
+      "std_dev": 17.1948,
+      "q1": 22.0,
+      "q25": 47.0,
+      "q75": 72.0,
+      "q99": 94.64999999999998,
+      "zero_count": 0,
+      "negative_count": 0,
+      "positive_count": 936,
+      "id": "stats_101"
+    },
+    {
+      "node_type": "distribution",
+      "label": "Distribution",
+      "skewness": "symmetric",
+      "iqr": 25.0,
+      "has_outliers": true,
+      "coefficient_of_variation": 0.2915114012036959,
+      "spread": "medium",
+      "id": "distribution_102"
+    },
+    {
+      "node_type": "category_value",
+      "value": "42",
+      "label": "Sample: 42",
+      "sample_index": 1,
+      "id": "sample_103"
+    },
+    {
+      "node_type": "category_value",
+      "value": "63",
+      "label": "Sample: 63",
+      "sample_index": 2,
+      "id": "sample_104"
+    },
+    {
+      "node_type": "category_value",
+      "value": "33",
+      "label": "Sample: 33",
+      "sample_index": 3,
+      "id": "sample_105"
+    },
+    {
+      "node_type": "category_value",
+      "value": "78",
+      "label": "Sample: 78",
+      "sample_index": 4,
+      "id": "sample_106"
+    },
+    {
+      "node_type": "category_value",
+      "value": "66",
+      "label": "Sample: 66",
+      "sample_index": 5,
+      "id": "sample_107"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "index_candidate",
+      "label": "Hint: Index Candidate",
+      "id": "hint_index_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "partition_candidate",
+      "label": "Hint: Partition Candidate",
+      "id": "hint_partition_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "aggregation_candidate",
+      "label": "Hint: Aggregation Candidate",
+      "id": "hint_aggregation_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "grouping_candidate",
+      "label": "Hint: Grouping Candidate",
+      "id": "hint_grouping_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "filtering_candidate",
+      "label": "Hint: Filtering Candidate",
+      "id": "hint_filtering_candidate"
+    }
+  ],
+  "links": [
+    {
+      "edge_type": "has_column",
+      "position": 1,
+      "source": "table_IMDB_Movie_Data",
+      "target": "col_IMDB_Movie_Data_Rank",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 2,
+      "source": "table_IMDB_Movie_Data",
+      "target": "col_IMDB_Movie_Data_Title",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 3,
+      "source": "table_IMDB_Movie_Data",
+      "target": "col_IMDB_Movie_Data_Genre",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 4,
+      "source": "table_IMDB_Movie_Data",
+      "target": "col_IMDB_Movie_Data_Description",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 5,
+      "source": "table_IMDB_Movie_Data",
+      "target": "col_IMDB_Movie_Data_Director",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 6,
+      "source": "table_IMDB_Movie_Data",
+      "target": "col_IMDB_Movie_Data_Actors",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 7,
+      "source": "table_IMDB_Movie_Data",
+      "target": "col_IMDB_Movie_Data_Year",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 8,
+      "source": "table_IMDB_Movie_Data",
+      "target": "col_IMDB_Movie_Data_Runtime (Minutes)",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 9,
+      "source": "table_IMDB_Movie_Data",
+      "target": "col_IMDB_Movie_Data_Rating",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 10,
+      "source": "table_IMDB_Movie_Data",
+      "target": "col_IMDB_Movie_Data_Votes",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 11,
+      "source": "table_IMDB_Movie_Data",
+      "target": "col_IMDB_Movie_Data_Revenue (Millions)",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 12,
+      "source": "table_IMDB_Movie_Data",
+      "target": "col_IMDB_Movie_Data_Metascore",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "dtype_1",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "constraint_2",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "constraint_3",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "constraint_4",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "stats_35",
+      "key": 0
+    },
+    {
+      "edge_type": "has_distribution",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "distribution_36",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "sample_37",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "sample_38",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "sample_39",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "sample_40",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "sample_41",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "col_IMDB_Movie_Data_Title",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "col_IMDB_Movie_Data_Genre",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "col_IMDB_Movie_Data_Description",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "col_IMDB_Movie_Data_Director",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "col_IMDB_Movie_Data_Actors",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "col_IMDB_Movie_Data_Year",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "col_IMDB_Movie_Data_Runtime (Minutes)",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "col_IMDB_Movie_Data_Rating",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "col_IMDB_Movie_Data_Votes",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "col_IMDB_Movie_Data_Revenue (Millions)",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "col_IMDB_Movie_Data_Metascore",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "high_cardinality",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "hint_index_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "numerical_column",
+      "source": "col_IMDB_Movie_Data_Rank",
+      "target": "hint_aggregation_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_IMDB_Movie_Data_Title",
+      "target": "dtype_5",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Title",
+      "target": "constraint_6",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Title",
+      "target": "constraint_7",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Title",
+      "target": "constraint_8",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_IMDB_Movie_Data_Title",
+      "target": "sample_42",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_IMDB_Movie_Data_Title",
+      "target": "sample_43",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_IMDB_Movie_Data_Title",
+      "target": "sample_44",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_IMDB_Movie_Data_Title",
+      "target": "sample_45",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_IMDB_Movie_Data_Title",
+      "target": "sample_46",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "high_cardinality",
+      "source": "col_IMDB_Movie_Data_Title",
+      "target": "hint_index_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_IMDB_Movie_Data_Genre",
+      "target": "dtype_9",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Genre",
+      "target": "constraint_10",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_IMDB_Movie_Data_Genre",
+      "target": "sample_47",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_IMDB_Movie_Data_Genre",
+      "target": "sample_48",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_IMDB_Movie_Data_Genre",
+      "target": "sample_49",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_IMDB_Movie_Data_Genre",
+      "target": "sample_50",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_IMDB_Movie_Data_Genre",
+      "target": "sample_51",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "moderate_cardinality",
+      "source": "col_IMDB_Movie_Data_Genre",
+      "target": "hint_filtering_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "dtype_11",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "constraint_12",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "constraint_13",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "constraint_14",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "sample_52",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "sample_53",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "sample_54",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "sample_55",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "sample_56",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "col_IMDB_Movie_Data_Director",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "col_IMDB_Movie_Data_Actors",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "col_IMDB_Movie_Data_Year",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "col_IMDB_Movie_Data_Runtime (Minutes)",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "col_IMDB_Movie_Data_Rating",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "col_IMDB_Movie_Data_Votes",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "col_IMDB_Movie_Data_Revenue (Millions)",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "col_IMDB_Movie_Data_Metascore",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "high_cardinality",
+      "source": "col_IMDB_Movie_Data_Description",
+      "target": "hint_index_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_IMDB_Movie_Data_Director",
+      "target": "dtype_15",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Director",
+      "target": "constraint_16",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_IMDB_Movie_Data_Director",
+      "target": "sample_57",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_IMDB_Movie_Data_Director",
+      "target": "sample_58",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_IMDB_Movie_Data_Director",
+      "target": "sample_59",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_IMDB_Movie_Data_Director",
+      "target": "sample_60",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_IMDB_Movie_Data_Director",
+      "target": "sample_61",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "moderate_cardinality",
+      "source": "col_IMDB_Movie_Data_Director",
+      "target": "hint_filtering_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_IMDB_Movie_Data_Actors",
+      "target": "dtype_17",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Actors",
+      "target": "constraint_18",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Actors",
+      "target": "constraint_19",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Actors",
+      "target": "constraint_20",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_IMDB_Movie_Data_Actors",
+      "target": "sample_62",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_IMDB_Movie_Data_Actors",
+      "target": "sample_63",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_IMDB_Movie_Data_Actors",
+      "target": "sample_64",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_IMDB_Movie_Data_Actors",
+      "target": "sample_65",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_IMDB_Movie_Data_Actors",
+      "target": "sample_66",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "high_cardinality",
+      "source": "col_IMDB_Movie_Data_Actors",
+      "target": "hint_index_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_IMDB_Movie_Data_Year",
+      "target": "dtype_21",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Year",
+      "target": "constraint_22",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_IMDB_Movie_Data_Year",
+      "target": "stats_67",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 29.7,
+      "source": "col_IMDB_Movie_Data_Year",
+      "target": "catval_68",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 12.7,
+      "source": "col_IMDB_Movie_Data_Year",
+      "target": "catval_69",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 9.8,
+      "source": "col_IMDB_Movie_Data_Year",
+      "target": "catval_70",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 9.1,
+      "source": "col_IMDB_Movie_Data_Year",
+      "target": "catval_71",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 6.4,
+      "source": "col_IMDB_Movie_Data_Year",
+      "target": "catval_72",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "categorical_column",
+      "source": "col_IMDB_Movie_Data_Year",
+      "target": "hint_grouping_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_IMDB_Movie_Data_Runtime (Minutes)",
+      "target": "dtype_23",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Runtime (Minutes)",
+      "target": "constraint_24",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_IMDB_Movie_Data_Runtime (Minutes)",
+      "target": "stats_73",
+      "key": 0
+    },
+    {
+      "edge_type": "has_distribution",
+      "source": "col_IMDB_Movie_Data_Runtime (Minutes)",
+      "target": "distribution_74",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_IMDB_Movie_Data_Runtime (Minutes)",
+      "target": "sample_75",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_IMDB_Movie_Data_Runtime (Minutes)",
+      "target": "sample_76",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_IMDB_Movie_Data_Runtime (Minutes)",
+      "target": "sample_77",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_IMDB_Movie_Data_Runtime (Minutes)",
+      "target": "sample_78",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_IMDB_Movie_Data_Runtime (Minutes)",
+      "target": "sample_79",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "numerical_column",
+      "source": "col_IMDB_Movie_Data_Runtime (Minutes)",
+      "target": "hint_aggregation_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_IMDB_Movie_Data_Rating",
+      "target": "dtype_25",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Rating",
+      "target": "constraint_26",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_IMDB_Movie_Data_Rating",
+      "target": "stats_80",
+      "key": 0
+    },
+    {
+      "edge_type": "has_distribution",
+      "source": "col_IMDB_Movie_Data_Rating",
+      "target": "distribution_81",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_IMDB_Movie_Data_Rating",
+      "target": "sample_82",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_IMDB_Movie_Data_Rating",
+      "target": "sample_83",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_IMDB_Movie_Data_Rating",
+      "target": "sample_84",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_IMDB_Movie_Data_Rating",
+      "target": "sample_85",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_IMDB_Movie_Data_Rating",
+      "target": "sample_86",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "numerical_column",
+      "source": "col_IMDB_Movie_Data_Rating",
+      "target": "hint_aggregation_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_IMDB_Movie_Data_Votes",
+      "target": "dtype_27",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Votes",
+      "target": "constraint_28",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Votes",
+      "target": "constraint_29",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Votes",
+      "target": "constraint_30",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_IMDB_Movie_Data_Votes",
+      "target": "stats_87",
+      "key": 0
+    },
+    {
+      "edge_type": "has_distribution",
+      "source": "col_IMDB_Movie_Data_Votes",
+      "target": "distribution_88",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_IMDB_Movie_Data_Votes",
+      "target": "sample_89",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_IMDB_Movie_Data_Votes",
+      "target": "sample_90",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_IMDB_Movie_Data_Votes",
+      "target": "sample_91",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_IMDB_Movie_Data_Votes",
+      "target": "sample_92",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_IMDB_Movie_Data_Votes",
+      "target": "sample_93",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "high_cardinality",
+      "source": "col_IMDB_Movie_Data_Votes",
+      "target": "hint_index_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "numerical_column",
+      "source": "col_IMDB_Movie_Data_Votes",
+      "target": "hint_aggregation_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_IMDB_Movie_Data_Revenue (Millions)",
+      "target": "dtype_31",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Revenue (Millions)",
+      "target": "constraint_32",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_IMDB_Movie_Data_Revenue (Millions)",
+      "target": "stats_94",
+      "key": 0
+    },
+    {
+      "edge_type": "has_distribution",
+      "source": "col_IMDB_Movie_Data_Revenue (Millions)",
+      "target": "distribution_95",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_IMDB_Movie_Data_Revenue (Millions)",
+      "target": "sample_96",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_IMDB_Movie_Data_Revenue (Millions)",
+      "target": "sample_97",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_IMDB_Movie_Data_Revenue (Millions)",
+      "target": "sample_98",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_IMDB_Movie_Data_Revenue (Millions)",
+      "target": "sample_99",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_IMDB_Movie_Data_Revenue (Millions)",
+      "target": "sample_100",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "numerical_column",
+      "source": "col_IMDB_Movie_Data_Revenue (Millions)",
+      "target": "hint_aggregation_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_IMDB_Movie_Data_Metascore",
+      "target": "dtype_33",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_IMDB_Movie_Data_Metascore",
+      "target": "constraint_34",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_IMDB_Movie_Data_Metascore",
+      "target": "stats_101",
+      "key": 0
+    },
+    {
+      "edge_type": "has_distribution",
+      "source": "col_IMDB_Movie_Data_Metascore",
+      "target": "distribution_102",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_IMDB_Movie_Data_Metascore",
+      "target": "sample_103",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_IMDB_Movie_Data_Metascore",
+      "target": "sample_104",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_IMDB_Movie_Data_Metascore",
+      "target": "sample_105",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_IMDB_Movie_Data_Metascore",
+      "target": "sample_106",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_IMDB_Movie_Data_Metascore",
+      "target": "sample_107",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "numerical_column",
+      "source": "col_IMDB_Movie_Data_Metascore",
+      "target": "hint_aggregation_candidate",
+      "key": 0
+    }
+  ]
+}

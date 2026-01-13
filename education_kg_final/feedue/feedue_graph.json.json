@@ -1,0 +1,625 @@
+{
+  "directed": true,
+  "multigraph": true,
+  "graph": {},
+  "nodes": [
+    {
+      "node_type": "table",
+      "name": "feedue",
+      "row_count": 80,
+      "column_count": 4,
+      "size_bytes": 8000,
+      "label": "Table: feedue",
+      "id": "table_feedue"
+    },
+    {
+      "node_type": "column",
+      "name": "Student ID",
+      "position": 1,
+      "semantic_type": "text",
+      "nullable": false,
+      "null_percentage": 0.0,
+      "unique_count": 80,
+      "cardinality_ratio": 1.0,
+      "label": "Column: Student ID",
+      "id": "col_feedue_Student ID"
+    },
+    {
+      "node_type": "column",
+      "name": "Fee Type",
+      "position": 2,
+      "semantic_type": "categorical",
+      "nullable": false,
+      "null_percentage": 0.0,
+      "unique_count": 3,
+      "cardinality_ratio": 0.0375,
+      "label": "Column: Fee Type",
+      "id": "col_feedue_Fee Type"
+    },
+    {
+      "node_type": "column",
+      "name": "Amount Due",
+      "position": 3,
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 4,
+      "cardinality_ratio": 0.05,
+      "label": "Column: Amount Due",
+      "id": "col_feedue_Amount Due"
+    },
+    {
+      "node_type": "column",
+      "name": "Due Date",
+      "position": 4,
+      "semantic_type": "temporal",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 2,
+      "cardinality_ratio": 0.025,
+      "label": "Column: Due Date",
+      "id": "col_feedue_Due Date"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "label": "Type: VARCHAR",
+      "id": "dtype_1"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "not_null",
+      "label": "Not Null",
+      "id": "constraint_2"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "unique",
+      "cardinality_ratio": 1.0,
+      "label": "Unique",
+      "id": "constraint_3"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_4"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "foreign_key",
+      "references_table": "students_info",
+      "label": "FK -> students_info",
+      "id": "constraint_5"
+    },
+    {
+      "node_type": "pattern",
+      "pattern_type": "identifier",
+      "label": "Pattern: identifier",
+      "id": "pattern_6"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "label": "Type: VARCHAR",
+      "id": "dtype_7"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "not_null",
+      "label": "Not Null",
+      "id": "constraint_8"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_9"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "BIGINT",
+      "semantic_type": "categorical",
+      "label": "Type: BIGINT",
+      "id": "dtype_10"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_11"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "TIMESTAMP",
+      "semantic_type": "temporal",
+      "label": "Type: TIMESTAMP",
+      "id": "dtype_12"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_13"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUEE1012",
+      "label": "Sample: TUEE1012",
+      "sample_index": 1,
+      "id": "sample_14"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUEE1033",
+      "label": "Sample: TUEE1033",
+      "sample_index": 2,
+      "id": "sample_15"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUCE1002",
+      "label": "Sample: TUCE1002",
+      "sample_index": 3,
+      "id": "sample_16"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUME2030",
+      "label": "Sample: TUME2030",
+      "sample_index": 4,
+      "id": "sample_17"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUEC1014",
+      "label": "Sample: TUEC1014",
+      "sample_index": 5,
+      "id": "sample_18"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "categorical",
+      "entropy": 1.4682,
+      "is_balanced": true,
+      "unique_count": 3,
+      "label": "Categorical Stats",
+      "id": "stats_19"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Hostel",
+      "label": "Value: Hostel",
+      "count": 24,
+      "percentage": 30.0,
+      "id": "catval_20"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Transport",
+      "label": "Value: Transport",
+      "count": 15,
+      "percentage": 18.75,
+      "id": "catval_21"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Tuition",
+      "label": "Value: Tuition",
+      "count": 41,
+      "percentage": 51.24999999999999,
+      "id": "catval_22"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "categorical",
+      "entropy": 1.6632,
+      "is_balanced": true,
+      "unique_count": 4,
+      "label": "Categorical Stats",
+      "id": "stats_23"
+    },
+    {
+      "node_type": "category_value",
+      "value": "15000",
+      "label": "Value: 15000",
+      "count": 15,
+      "percentage": 18.75,
+      "id": "catval_24"
+    },
+    {
+      "node_type": "category_value",
+      "value": "35000",
+      "label": "Value: 35000",
+      "count": 20,
+      "percentage": 25.0,
+      "id": "catval_25"
+    },
+    {
+      "node_type": "category_value",
+      "value": "70000",
+      "label": "Value: 70000",
+      "count": 4,
+      "percentage": 5.0,
+      "id": "catval_26"
+    },
+    {
+      "node_type": "category_value",
+      "value": "90000",
+      "label": "Value: 90000",
+      "count": 41,
+      "percentage": 51.24999999999999,
+      "id": "catval_27"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "temporal",
+      "granularity": "daily",
+      "has_gaps": true,
+      "gap_count": 30,
+      "label": "Temporal Stats",
+      "id": "stats_28"
+    },
+    {
+      "node_type": "date_range",
+      "min_date": "2025-10-01 00:00:00",
+      "max_date": "2025-11-01 00:00:00",
+      "range_days": 31,
+      "label": "Range: 31 days",
+      "id": "daterange_29"
+    },
+    {
+      "node_type": "category_value",
+      "value": "2025-10-01 00:00:00",
+      "label": "Sample: 2025-10-01 00:00:00",
+      "sample_index": 1,
+      "id": "sample_30"
+    },
+    {
+      "node_type": "category_value",
+      "value": "2025-11-01 00:00:00",
+      "label": "Sample: 2025-11-01 00:00:00",
+      "sample_index": 2,
+      "id": "sample_31"
+    },
+    {
+      "node_type": "table",
+      "name": "students_info",
+      "is_reference": true,
+      "label": "\u2192 students_info",
+      "id": "ref_students_info"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "index_candidate",
+      "label": "Hint: Index Candidate",
+      "id": "hint_index_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "partition_candidate",
+      "label": "Hint: Partition Candidate",
+      "id": "hint_partition_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "aggregation_candidate",
+      "label": "Hint: Aggregation Candidate",
+      "id": "hint_aggregation_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "grouping_candidate",
+      "label": "Hint: Grouping Candidate",
+      "id": "hint_grouping_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "filtering_candidate",
+      "label": "Hint: Filtering Candidate",
+      "id": "hint_filtering_candidate"
+    }
+  ],
+  "links": [
+    {
+      "edge_type": "has_column",
+      "position": 1,
+      "source": "table_feedue",
+      "target": "col_feedue_Student ID",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 2,
+      "source": "table_feedue",
+      "target": "col_feedue_Fee Type",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 3,
+      "source": "table_feedue",
+      "target": "col_feedue_Amount Due",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 4,
+      "source": "table_feedue",
+      "target": "col_feedue_Due Date",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_feedue_Student ID",
+      "target": "dtype_1",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_feedue_Student ID",
+      "target": "constraint_2",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_feedue_Student ID",
+      "target": "constraint_3",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_feedue_Student ID",
+      "target": "constraint_4",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_feedue_Student ID",
+      "target": "constraint_5",
+      "key": 0
+    },
+    {
+      "edge_type": "has_pattern",
+      "source": "col_feedue_Student ID",
+      "target": "pattern_6",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_feedue_Student ID",
+      "target": "sample_14",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_feedue_Student ID",
+      "target": "sample_15",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_feedue_Student ID",
+      "target": "sample_16",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_feedue_Student ID",
+      "target": "sample_17",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_feedue_Student ID",
+      "target": "sample_18",
+      "key": 0
+    },
+    {
+      "edge_type": "references",
+      "label": "references",
+      "source": "col_feedue_Student ID",
+      "target": "ref_students_info",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_feedue_Student ID",
+      "target": "col_feedue_Fee Type",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_feedue_Student ID",
+      "target": "col_feedue_Amount Due",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_feedue_Student ID",
+      "target": "col_feedue_Due Date",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "high_cardinality",
+      "source": "col_feedue_Student ID",
+      "target": "hint_index_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_feedue_Fee Type",
+      "target": "dtype_7",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_feedue_Fee Type",
+      "target": "constraint_8",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_feedue_Fee Type",
+      "target": "constraint_9",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_feedue_Fee Type",
+      "target": "stats_19",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 30.0,
+      "source": "col_feedue_Fee Type",
+      "target": "catval_20",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 18.75,
+      "source": "col_feedue_Fee Type",
+      "target": "catval_21",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 51.24999999999999,
+      "source": "col_feedue_Fee Type",
+      "target": "catval_22",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_feedue_Fee Type",
+      "target": "col_feedue_Due Date",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "categorical_column",
+      "source": "col_feedue_Fee Type",
+      "target": "hint_grouping_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_feedue_Amount Due",
+      "target": "dtype_10",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_feedue_Amount Due",
+      "target": "constraint_11",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_feedue_Amount Due",
+      "target": "stats_23",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 18.75,
+      "source": "col_feedue_Amount Due",
+      "target": "catval_24",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 25.0,
+      "source": "col_feedue_Amount Due",
+      "target": "catval_25",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 5.0,
+      "source": "col_feedue_Amount Due",
+      "target": "catval_26",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 51.24999999999999,
+      "source": "col_feedue_Amount Due",
+      "target": "catval_27",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_feedue_Amount Due",
+      "target": "col_feedue_Due Date",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "categorical_column",
+      "source": "col_feedue_Amount Due",
+      "target": "hint_grouping_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_feedue_Due Date",
+      "target": "dtype_12",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_feedue_Due Date",
+      "target": "constraint_13",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_feedue_Due Date",
+      "target": "stats_28",
+      "key": 0
+    },
+    {
+      "edge_type": "has_date_range",
+      "source": "col_feedue_Due Date",
+      "target": "daterange_29",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_feedue_Due Date",
+      "target": "sample_30",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_feedue_Due Date",
+      "target": "sample_31",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "temporal_column",
+      "source": "col_feedue_Due Date",
+      "target": "hint_partition_candidate",
+      "key": 0
+    }
+  ]
+}

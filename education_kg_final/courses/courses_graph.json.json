@@ -1,0 +1,585 @@
+{
+  "directed": true,
+  "multigraph": true,
+  "graph": {},
+  "nodes": [
+    {
+      "node_type": "table",
+      "name": "courses",
+      "row_count": 280,
+      "column_count": 4,
+      "size_bytes": 28000,
+      "label": "Table: courses",
+      "id": "table_courses"
+    },
+    {
+      "node_type": "column",
+      "name": "Course Code",
+      "position": 1,
+      "semantic_type": "text",
+      "nullable": false,
+      "null_percentage": 0.0,
+      "unique_count": 280,
+      "cardinality_ratio": 1.0,
+      "label": "Column: Course Code",
+      "id": "col_courses_Course Code"
+    },
+    {
+      "node_type": "column",
+      "name": "Course Title",
+      "position": 2,
+      "semantic_type": "text",
+      "nullable": false,
+      "null_percentage": 0.0,
+      "unique_count": 204,
+      "cardinality_ratio": 0.7286,
+      "label": "Column: Course Title",
+      "id": "col_courses_Course Title"
+    },
+    {
+      "node_type": "column",
+      "name": "Credits",
+      "position": 3,
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 2,
+      "cardinality_ratio": 0.0071,
+      "label": "Column: Credits",
+      "id": "col_courses_Credits"
+    },
+    {
+      "node_type": "column",
+      "name": "Department",
+      "position": 4,
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 5,
+      "cardinality_ratio": 0.0179,
+      "label": "Column: Department",
+      "id": "col_courses_Department"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "label": "Type: VARCHAR",
+      "id": "dtype_1"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "not_null",
+      "label": "Not Null",
+      "id": "constraint_2"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "unique",
+      "cardinality_ratio": 1.0,
+      "label": "Unique",
+      "id": "constraint_3"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_4"
+    },
+    {
+      "node_type": "pattern",
+      "pattern_type": "identifier",
+      "label": "Pattern: identifier",
+      "id": "pattern_5"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "label": "Type: VARCHAR",
+      "id": "dtype_6"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "not_null",
+      "label": "Not Null",
+      "id": "constraint_7"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "BIGINT",
+      "semantic_type": "categorical",
+      "label": "Type: BIGINT",
+      "id": "dtype_8"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_9"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "label": "Type: VARCHAR",
+      "id": "dtype_10"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_11"
+    },
+    {
+      "node_type": "category_value",
+      "value": "STR101",
+      "label": "Sample: STR101",
+      "sample_index": 1,
+      "id": "sample_12"
+    },
+    {
+      "node_type": "category_value",
+      "value": "COT101",
+      "label": "Sample: COT101",
+      "sample_index": 2,
+      "id": "sample_13"
+    },
+    {
+      "node_type": "category_value",
+      "value": "GEO102",
+      "label": "Sample: GEO102",
+      "sample_index": 3,
+      "id": "sample_14"
+    },
+    {
+      "node_type": "category_value",
+      "value": "DBM102",
+      "label": "Sample: DBM102",
+      "sample_index": 4,
+      "id": "sample_15"
+    },
+    {
+      "node_type": "category_value",
+      "value": "THE101",
+      "label": "Sample: THE101",
+      "sample_index": 5,
+      "id": "sample_16"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Basic Civil Eng.",
+      "label": "Sample: Basic Civil Eng.",
+      "sample_index": 1,
+      "id": "sample_17"
+    },
+    {
+      "node_type": "category_value",
+      "value": "M1",
+      "label": "Sample: M1",
+      "sample_index": 2,
+      "id": "sample_18"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Highway Engineering",
+      "label": "Sample: Highway Engineering",
+      "sample_index": 3,
+      "id": "sample_19"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Seminar",
+      "label": "Sample: Seminar",
+      "sample_index": 4,
+      "id": "sample_20"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Project Lab",
+      "label": "Sample: Project Lab",
+      "sample_index": 5,
+      "id": "sample_21"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "categorical",
+      "entropy": 1.0,
+      "is_balanced": true,
+      "unique_count": 2,
+      "label": "Categorical Stats",
+      "id": "stats_22"
+    },
+    {
+      "node_type": "category_value",
+      "value": "3",
+      "label": "Value: 3",
+      "count": 140,
+      "percentage": 50.0,
+      "id": "catval_23"
+    },
+    {
+      "node_type": "category_value",
+      "value": "4",
+      "label": "Value: 4",
+      "count": 140,
+      "percentage": 50.0,
+      "id": "catval_24"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "categorical",
+      "entropy": 2.3219,
+      "is_balanced": true,
+      "unique_count": 5,
+      "label": "Categorical Stats",
+      "id": "stats_25"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Civil Engineering",
+      "label": "Value: Civil Engineering",
+      "count": 56,
+      "percentage": 20.0,
+      "id": "catval_26"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Computer Engineering",
+      "label": "Value: Computer Engineering",
+      "count": 56,
+      "percentage": 20.0,
+      "id": "catval_27"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Electrical Engineering",
+      "label": "Value: Electrical Engineering",
+      "count": 56,
+      "percentage": 20.0,
+      "id": "catval_28"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Electronics Engineering",
+      "label": "Value: Electronics Engineering",
+      "count": 56,
+      "percentage": 20.0,
+      "id": "catval_29"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Mechanical Engineering",
+      "label": "Value: Mechanical Engineering",
+      "count": 56,
+      "percentage": 20.0,
+      "id": "catval_30"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "index_candidate",
+      "label": "Hint: Index Candidate",
+      "id": "hint_index_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "partition_candidate",
+      "label": "Hint: Partition Candidate",
+      "id": "hint_partition_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "aggregation_candidate",
+      "label": "Hint: Aggregation Candidate",
+      "id": "hint_aggregation_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "grouping_candidate",
+      "label": "Hint: Grouping Candidate",
+      "id": "hint_grouping_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "filtering_candidate",
+      "label": "Hint: Filtering Candidate",
+      "id": "hint_filtering_candidate"
+    }
+  ],
+  "links": [
+    {
+      "edge_type": "has_column",
+      "position": 1,
+      "source": "table_courses",
+      "target": "col_courses_Course Code",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 2,
+      "source": "table_courses",
+      "target": "col_courses_Course Title",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 3,
+      "source": "table_courses",
+      "target": "col_courses_Credits",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 4,
+      "source": "table_courses",
+      "target": "col_courses_Department",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_courses_Course Code",
+      "target": "dtype_1",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_courses_Course Code",
+      "target": "constraint_2",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_courses_Course Code",
+      "target": "constraint_3",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_courses_Course Code",
+      "target": "constraint_4",
+      "key": 0
+    },
+    {
+      "edge_type": "has_pattern",
+      "source": "col_courses_Course Code",
+      "target": "pattern_5",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_courses_Course Code",
+      "target": "sample_12",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_courses_Course Code",
+      "target": "sample_13",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_courses_Course Code",
+      "target": "sample_14",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_courses_Course Code",
+      "target": "sample_15",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_courses_Course Code",
+      "target": "sample_16",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_courses_Course Code",
+      "target": "col_courses_Course Title",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_courses_Course Code",
+      "target": "col_courses_Credits",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_courses_Course Code",
+      "target": "col_courses_Department",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "high_cardinality",
+      "source": "col_courses_Course Code",
+      "target": "hint_index_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_courses_Course Title",
+      "target": "dtype_6",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_courses_Course Title",
+      "target": "constraint_7",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_courses_Course Title",
+      "target": "sample_17",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_courses_Course Title",
+      "target": "sample_18",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_courses_Course Title",
+      "target": "sample_19",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_courses_Course Title",
+      "target": "sample_20",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_courses_Course Title",
+      "target": "sample_21",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "moderate_cardinality",
+      "source": "col_courses_Course Title",
+      "target": "hint_filtering_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_courses_Credits",
+      "target": "dtype_8",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_courses_Credits",
+      "target": "constraint_9",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_courses_Credits",
+      "target": "stats_22",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 50.0,
+      "source": "col_courses_Credits",
+      "target": "catval_23",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 50.0,
+      "source": "col_courses_Credits",
+      "target": "catval_24",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "categorical_column",
+      "source": "col_courses_Credits",
+      "target": "hint_grouping_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_courses_Department",
+      "target": "dtype_10",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_courses_Department",
+      "target": "constraint_11",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_courses_Department",
+      "target": "stats_25",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 20.0,
+      "source": "col_courses_Department",
+      "target": "catval_26",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 20.0,
+      "source": "col_courses_Department",
+      "target": "catval_27",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 20.0,
+      "source": "col_courses_Department",
+      "target": "catval_28",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 20.0,
+      "source": "col_courses_Department",
+      "target": "catval_29",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 20.0,
+      "source": "col_courses_Department",
+      "target": "catval_30",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "categorical_column",
+      "source": "col_courses_Department",
+      "target": "hint_grouping_candidate",
+      "key": 0
+    }
+  ]
+}

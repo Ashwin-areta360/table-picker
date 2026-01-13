@@ -1,0 +1,558 @@
+{
+  "directed": true,
+  "multigraph": true,
+  "graph": {},
+  "nodes": [
+    {
+      "node_type": "table",
+      "name": "parent_info",
+      "row_count": 1278,
+      "column_count": 3,
+      "size_bytes": 127800,
+      "label": "Table: parent_info",
+      "id": "table_parent_info"
+    },
+    {
+      "node_type": "column",
+      "name": "Parent ID",
+      "position": 1,
+      "semantic_type": "text",
+      "nullable": false,
+      "null_percentage": 0.0,
+      "unique_count": 1278,
+      "cardinality_ratio": 1.0,
+      "label": "Column: Parent ID",
+      "id": "col_parent_info_Parent ID"
+    },
+    {
+      "node_type": "column",
+      "name": " Parent Name",
+      "position": 2,
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 1278,
+      "cardinality_ratio": 1.0,
+      "label": "Column:  Parent Name",
+      "id": "col_parent_info_ Parent Name"
+    },
+    {
+      "node_type": "column",
+      "name": "Student ID",
+      "position": 3,
+      "semantic_type": "text",
+      "nullable": false,
+      "null_percentage": 0.0,
+      "unique_count": 1278,
+      "cardinality_ratio": 1.0,
+      "label": "Column: Student ID",
+      "id": "col_parent_info_Student ID"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "label": "Type: VARCHAR",
+      "id": "dtype_1"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "not_null",
+      "label": "Not Null",
+      "id": "constraint_2"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "unique",
+      "cardinality_ratio": 1.0,
+      "label": "Unique",
+      "id": "constraint_3"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_4"
+    },
+    {
+      "node_type": "pattern",
+      "pattern_type": "identifier",
+      "label": "Pattern: identifier",
+      "id": "pattern_5"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "label": "Type: VARCHAR",
+      "id": "dtype_6"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_7"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "unique",
+      "cardinality_ratio": 1.0,
+      "label": "Unique",
+      "id": "constraint_8"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_9"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "label": "Type: VARCHAR",
+      "id": "dtype_10"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "not_null",
+      "label": "Not Null",
+      "id": "constraint_11"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "unique",
+      "cardinality_ratio": 1.0,
+      "label": "Unique",
+      "id": "constraint_12"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_13"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "foreign_key",
+      "references_table": "students_info",
+      "label": "FK -> students_info",
+      "id": "constraint_14"
+    },
+    {
+      "node_type": "pattern",
+      "pattern_type": "identifier",
+      "label": "Pattern: identifier",
+      "id": "pattern_15"
+    },
+    {
+      "node_type": "category_value",
+      "value": "PACE1001",
+      "label": "Sample: PACE1001",
+      "sample_index": 1,
+      "id": "sample_16"
+    },
+    {
+      "node_type": "category_value",
+      "value": "PACE1017",
+      "label": "Sample: PACE1017",
+      "sample_index": 2,
+      "id": "sample_17"
+    },
+    {
+      "node_type": "category_value",
+      "value": "PACIV1030",
+      "label": "Sample: PACIV1030",
+      "sample_index": 3,
+      "id": "sample_18"
+    },
+    {
+      "node_type": "category_value",
+      "value": "PACIV1035",
+      "label": "Sample: PACIV1035",
+      "sample_index": 4,
+      "id": "sample_19"
+    },
+    {
+      "node_type": "category_value",
+      "value": "PAEE1013",
+      "label": "Sample: PAEE1013",
+      "sample_index": 5,
+      "id": "sample_20"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Nitesh Dayalan Vavili",
+      "label": "Sample: Nitesh Dayalan Vavili",
+      "sample_index": 1,
+      "id": "sample_21"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Vijay Venkatesh",
+      "label": "Sample: Vijay Venkatesh",
+      "sample_index": 2,
+      "id": "sample_22"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Vijay Srinivas",
+      "label": "Sample: Vijay Srinivas",
+      "sample_index": 3,
+      "id": "sample_23"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Karthik Pillai",
+      "label": "Sample: Karthik Pillai",
+      "sample_index": 4,
+      "id": "sample_24"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Sruthi Lakshmi",
+      "label": "Sample: Sruthi Lakshmi",
+      "sample_index": 5,
+      "id": "sample_25"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUCE1001",
+      "label": "Sample: TUCE1001",
+      "sample_index": 1,
+      "id": "sample_26"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUCE1015",
+      "label": "Sample: TUCE1015",
+      "sample_index": 2,
+      "id": "sample_27"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUCE1025",
+      "label": "Sample: TUCE1025",
+      "sample_index": 3,
+      "id": "sample_28"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUCIV1003",
+      "label": "Sample: TUCIV1003",
+      "sample_index": 4,
+      "id": "sample_29"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUCIV1009",
+      "label": "Sample: TUCIV1009",
+      "sample_index": 5,
+      "id": "sample_30"
+    },
+    {
+      "node_type": "table",
+      "name": "students_info",
+      "is_reference": true,
+      "label": "\u2192 students_info",
+      "id": "ref_students_info"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "index_candidate",
+      "label": "Hint: Index Candidate",
+      "id": "hint_index_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "partition_candidate",
+      "label": "Hint: Partition Candidate",
+      "id": "hint_partition_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "aggregation_candidate",
+      "label": "Hint: Aggregation Candidate",
+      "id": "hint_aggregation_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "grouping_candidate",
+      "label": "Hint: Grouping Candidate",
+      "id": "hint_grouping_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "filtering_candidate",
+      "label": "Hint: Filtering Candidate",
+      "id": "hint_filtering_candidate"
+    }
+  ],
+  "links": [
+    {
+      "edge_type": "has_column",
+      "position": 1,
+      "source": "table_parent_info",
+      "target": "col_parent_info_Parent ID",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 2,
+      "source": "table_parent_info",
+      "target": "col_parent_info_ Parent Name",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 3,
+      "source": "table_parent_info",
+      "target": "col_parent_info_Student ID",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_parent_info_Parent ID",
+      "target": "dtype_1",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_parent_info_Parent ID",
+      "target": "constraint_2",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_parent_info_Parent ID",
+      "target": "constraint_3",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_parent_info_Parent ID",
+      "target": "constraint_4",
+      "key": 0
+    },
+    {
+      "edge_type": "has_pattern",
+      "source": "col_parent_info_Parent ID",
+      "target": "pattern_5",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_parent_info_Parent ID",
+      "target": "sample_16",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_parent_info_Parent ID",
+      "target": "sample_17",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_parent_info_Parent ID",
+      "target": "sample_18",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_parent_info_Parent ID",
+      "target": "sample_19",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_parent_info_Parent ID",
+      "target": "sample_20",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_parent_info_Parent ID",
+      "target": "col_parent_info_ Parent Name",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_parent_info_Parent ID",
+      "target": "col_parent_info_Student ID",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "high_cardinality",
+      "source": "col_parent_info_Parent ID",
+      "target": "hint_index_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_parent_info_ Parent Name",
+      "target": "dtype_6",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_parent_info_ Parent Name",
+      "target": "constraint_7",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_parent_info_ Parent Name",
+      "target": "constraint_8",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_parent_info_ Parent Name",
+      "target": "constraint_9",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_parent_info_ Parent Name",
+      "target": "sample_21",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_parent_info_ Parent Name",
+      "target": "sample_22",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_parent_info_ Parent Name",
+      "target": "sample_23",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_parent_info_ Parent Name",
+      "target": "sample_24",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_parent_info_ Parent Name",
+      "target": "sample_25",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_parent_info_ Parent Name",
+      "target": "col_parent_info_Student ID",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "high_cardinality",
+      "source": "col_parent_info_ Parent Name",
+      "target": "hint_index_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_parent_info_Student ID",
+      "target": "dtype_10",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_parent_info_Student ID",
+      "target": "constraint_11",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_parent_info_Student ID",
+      "target": "constraint_12",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_parent_info_Student ID",
+      "target": "constraint_13",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_parent_info_Student ID",
+      "target": "constraint_14",
+      "key": 0
+    },
+    {
+      "edge_type": "has_pattern",
+      "source": "col_parent_info_Student ID",
+      "target": "pattern_15",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_parent_info_Student ID",
+      "target": "sample_26",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_parent_info_Student ID",
+      "target": "sample_27",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_parent_info_Student ID",
+      "target": "sample_28",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_parent_info_Student ID",
+      "target": "sample_29",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_parent_info_Student ID",
+      "target": "sample_30",
+      "key": 0
+    },
+    {
+      "edge_type": "references",
+      "label": "references",
+      "source": "col_parent_info_Student ID",
+      "target": "ref_students_info",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "high_cardinality",
+      "source": "col_parent_info_Student ID",
+      "target": "hint_index_candidate",
+      "key": 0
+    }
+  ]
+}

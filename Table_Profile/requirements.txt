@@ -1,0 +1,20 @@
+# Table Profile Graph - Dependencies
+# Python 3.7+
+
+# Phase 1: Metadata Collection
+duckdb>=0.9.0              # Database engine for CSV loading and analysis
+
+# Phase 2: Graph Construction
+networkx>=3.0              # Graph construction and manipulation
+
+# Visualization Libraries
+pyvis>=0.3.0               # Interactive network visualization (HTML)
+plotly>=5.0.0              # Interactive 3D plots
+dash>=2.0.0                # Web dashboard framework
+dash-cytoscape>=1.0.0      # Cytoscape graph component for Dash
+kaleido>=0.2.0             # Static image export for Plotly
+
+# Optional: For graph ML/embeddings
+# torch>=2.0.0             # If doing graph neural networks (uncomment if needed)
+# torch-geometric          # GNN library (uncomment if needed)
+

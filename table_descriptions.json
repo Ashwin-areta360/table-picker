@@ -1,0 +1,150 @@
+{
+  "courses": {
+    "description": "Academic courses offered by the institution, representing the subjects that students can study as part of their degree programs. This table defines the curriculum structure across departments.",
+    "columns": {
+        "Course Code": {
+            "description": "A unique alphanumeric code assigned to an academic course to identify it within the institution."
+        },
+        "Course Title": {
+            "description": "The official name of an academic course as listed in the curriculum."
+        },
+        "Credits": {
+            "description": "The number of academic credits assigned to a course, indicating its relative weight or workload."
+        },
+        "Department": {
+            "description": "The academic department or school that offers and manages the course."
+        }
+    }
+  },
+  "faculty_info": {
+    "description": "Records representing faculty members of the institution, including their identity, departmental association, contact details, and the courses they teach.",
+    "columns": {
+        "Faculty ID": {
+            "description": "A unique identifier assigned to a faculty member by the institution."
+        },
+        "Name": {
+            "description": "The name of a faculty member."
+        },
+        "Department": {
+            "description": "The academic department to which a faculty member belongs."
+        },
+        "Contact Info": {
+            "description": "Contact details used to communicate with a faculty member."
+        },
+        "Courses Taught": {
+            "description": "The name or title of an academic course taught by a faculty member."
+        },
+        "Course Code": {
+            "description": "The code of an academic course taught by a faculty member."
+        }
+    }
+  },
+  "feedue": {
+    "description": "Records representing fees assigned to students, including the type of fee, the amount to be paid, and the date by which payment is due.",
+    "columns": {
+        "Student ID": {
+            "description": "An identifier used to distinguish the student to whom a fee record applies."
+        },
+        "Fee Type": {
+            "description": "The category of fee charged to a student."
+        },
+        "Amount Due": {
+            "description": "The amount of money that a student is required to pay for a specific fee."
+        },
+        "Due Date": {
+            "description": "The date by which the fee amount is expected to be paid."
+        }
+    }
+  },
+  "grades": {
+    "description": "Records representing students’ academic performance in individual courses for specific academic semesters, including evaluation scores and grade point averages.",
+    "columns": {
+        "Student ID": {
+            "description": "An identifier used to distinguish the student whose academic performance is recorded."
+        },
+        "Course Code": {
+            "description": "The code of the academic course for which a student’s performance is recorded."
+        },
+        "Semester": {
+            "description": "A numeric value representing the academic term in which the course was taken."
+        },
+        "Marks": {
+            "description": "The numeric score obtained by a student in a course assessment."
+        },
+        "GPA": {
+            "description": "The grade point average reflecting a student’s academic performance for the semester."
+        }
+    }
+  },
+  "hostel": {
+    "description": "Records representing hostel accommodation details assigned to students, including room assignments, hostel names, and allotment dates.",
+    "columns": {
+        "Student ID": {
+            "description": "An identifier used to distinguish the student assigned to hostel accommodation."
+        },
+        "Room Number": {
+            "description": "The room number assigned to a student within a hostel."
+        },
+        "Hostel Name": {
+            "description": "The name of the hostel in which a student is accommodated."
+        },
+        "Date of Allotment": {
+            "description": "The date on which hostel accommodation was allotted to a student."
+        }
+    }
+  },
+  "parent_info": {
+    "description": "Records representing parents associated with students, including parent identifiers and names linked to individual students.",
+    "columns": {
+        "Parent ID": {
+            "description": "A unique identifier assigned to a parent."
+        },
+        " Parent Name": {
+            "description": "The name of the parent associated with a student."
+        },
+        "Student ID": {
+            "description": "An identifier used to distinguish the student associated with a parent."
+        }
+    }
+  },
+  "registration": {
+    "description": "Records representing student enrollment in academic courses for specific semesters, including enrollment status for each course.",
+    "columns": {
+        "Student ID": {
+            "description": "An identifier used to distinguish the student associated with a course registration."
+        },
+        "Course Code": {
+            "description": "The code of the academic course in which a student is registered."
+        },
+        "Semester": {
+            "description": "A numeric value representing the academic term for which a course registration applies."
+        },
+        "Status": {
+            "description": "The current state of a student’s registration for a course."
+        }
+    }
+  },
+  "students_info": {
+    "description": "Records representing core student identity and profile information, including personal details, academic batch, and enrolled program or degree.",
+    "columns": {
+        "Student ID": {
+            "description": "A unique identifier assigned to a student."
+        },
+        "Name": {
+            "description": "The full name of a student."
+        },
+        "Date of Birth": {
+            "description": "The date on which a student was born."
+        },
+        "Contact Info": {
+            "description": "Contact details provided for a student."
+        },
+        "Batch": {
+            "description": "The academic year or batch to which a student belongs."
+        },
+        "Program/Degree": {
+            "description": "The academic program or degree in which a student is enrolled."
+        }
+    }
+  }
+}

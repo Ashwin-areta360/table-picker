@@ -1,0 +1,1139 @@
+{
+  "table_name": "customer_dataset",
+  "row_count": 300,
+  "column_count": 14,
+  "size_bytes": 30000,
+  "columns": {
+    "CustomerID": {
+      "position": 1,
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 300,
+      "cardinality_ratio": 1.0,
+      "sample_values": [
+        1,
+        12,
+        17,
+        27,
+        56,
+        68,
+        84,
+        92,
+        111,
+        119
+      ],
+      "top_values": [
+        {
+          "value": 1,
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": 2,
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": 3,
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": 4,
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": 5,
+          "count": 1,
+          "percentage": 0.33333333333333337
+        }
+      ],
+      "numerical_stats": {
+        "min": 1.0,
+        "max": 300.0,
+        "mean": 150.5,
+        "median": 150.5,
+        "std_dev": 86.7468,
+        "quartiles": {
+          "q1": 3.99,
+          "q25": 75.75,
+          "q75": 225.25,
+          "q99": 297.01
+        },
+        "zero_count": 0,
+        "negative_count": 0,
+        "positive_count": 300
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": true,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": true,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "FirstName": {
+      "position": 2,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 182,
+      "cardinality_ratio": 0.6067,
+      "sample_values": [
+        "James",
+        "Robert",
+        "Jeffrey",
+        "Stephanie",
+        "Gregory",
+        "Marc",
+        "Melanie",
+        "Tony",
+        "Angie",
+        "Jesse"
+      ],
+      "top_values": [
+        {
+          "value": "Michael",
+          "count": 7,
+          "percentage": 2.3333333333333335
+        },
+        {
+          "value": "Robert",
+          "count": 7,
+          "percentage": 2.3333333333333335
+        },
+        {
+          "value": "Joshua",
+          "count": 6,
+          "percentage": 2.0
+        },
+        {
+          "value": "David",
+          "count": 6,
+          "percentage": 2.0
+        },
+        {
+          "value": "William",
+          "count": 5,
+          "percentage": 1.6666666666666667
+        }
+      ],
+      "text_stats": {
+        "avg_length": 6.08,
+        "min_length": 3,
+        "max_length": 11,
+        "patterns": {
+          "email": false,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": true
+      }
+    },
+    "LastName": {
+      "position": 3,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 221,
+      "cardinality_ratio": 0.7367,
+      "sample_values": [
+        "Ryan",
+        "Taylor",
+        "Guzman",
+        "Hess",
+        "Montes",
+        "Kline",
+        "Chung",
+        "Mack",
+        "Kirk",
+        "Mullen"
+      ],
+      "top_values": [
+        {
+          "value": "Smith",
+          "count": 7,
+          "percentage": 2.3333333333333335
+        },
+        {
+          "value": "Jones",
+          "count": 6,
+          "percentage": 2.0
+        },
+        {
+          "value": "Martinez",
+          "count": 4,
+          "percentage": 1.3333333333333335
+        },
+        {
+          "value": "Johnson",
+          "count": 4,
+          "percentage": 1.3333333333333335
+        },
+        {
+          "value": "Bennett",
+          "count": 3,
+          "percentage": 1.0
+        }
+      ],
+      "text_stats": {
+        "avg_length": 6.12,
+        "min_length": 3,
+        "max_length": 11,
+        "patterns": {
+          "email": false,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": true
+      }
+    },
+    "Gender": {
+      "position": 4,
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 3,
+      "cardinality_ratio": 0.01,
+      "sample_values": [
+        "Male",
+        "Female",
+        "Other"
+      ],
+      "top_values": [
+        {
+          "value": "Male",
+          "count": 104,
+          "percentage": 34.66666666666667
+        },
+        {
+          "value": "Female",
+          "count": 104,
+          "percentage": 34.66666666666667
+        },
+        {
+          "value": "Other",
+          "count": 92,
+          "percentage": 30.666666666666664
+        }
+      ],
+      "categorical_stats": {
+        "all_unique_values": [
+          "Female",
+          "Male",
+          "Other"
+        ],
+        "top_10_values": [
+          {
+            "value": "Female",
+            "count": 104,
+            "percentage": 34.66666666666667
+          },
+          {
+            "value": "Male",
+            "count": 104,
+            "percentage": 34.66666666666667
+          },
+          {
+            "value": "Other",
+            "count": 92,
+            "percentage": 30.666666666666664
+          }
+        ],
+        "entropy": 1.5826,
+        "is_balanced": true
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": true,
+        "good_for_filtering": false
+      }
+    },
+    "Age": {
+      "position": 5,
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 58,
+      "cardinality_ratio": 0.1933,
+      "sample_values": [
+        60,
+        70,
+        33,
+        50,
+        49,
+        29,
+        44,
+        73,
+        18,
+        34
+      ],
+      "top_values": [
+        {
+          "value": 65,
+          "count": 12,
+          "percentage": 4.0
+        },
+        {
+          "value": 66,
+          "count": 11,
+          "percentage": 3.6666666666666665
+        },
+        {
+          "value": 68,
+          "count": 10,
+          "percentage": 3.3333333333333335
+        },
+        {
+          "value": 43,
+          "count": 9,
+          "percentage": 3.0
+        },
+        {
+          "value": 71,
+          "count": 9,
+          "percentage": 3.0
+        }
+      ],
+      "numerical_stats": {
+        "min": 18.0,
+        "max": 75.0,
+        "mean": 48.4,
+        "median": 48.0,
+        "std_dev": 16.7566,
+        "quartiles": {
+          "q1": 18.0,
+          "q25": 35.0,
+          "q75": 65.0,
+          "q99": 75.0
+        },
+        "zero_count": 0,
+        "negative_count": 0,
+        "positive_count": 300
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": true
+      }
+    },
+    "Email": {
+      "position": 6,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 300,
+      "cardinality_ratio": 1.0,
+      "sample_values": [
+        "michael.white@yahoo.com",
+        "michael.johnson@gmail.com",
+        "vanessa.fowler@gmail.com",
+        "jillian.sheppard@yahoo.com",
+        "natalie.terry@hotmail.com",
+        "william.lozano@hotmail.com",
+        "melissa.taylor@hotmail.com",
+        "matthew.peters@hotmail.com",
+        "kelly.williams@hotmail.com",
+        "danielle.wallace@gmail.com"
+      ],
+      "top_values": [
+        {
+          "value": "johnny.ward@hotmail.com",
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": "mark.gardner@yahoo.com",
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": "abigail.goodwin@gmail.com",
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": "denise.zhang@gmail.com",
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": "clinton.robinson@yahoo.com",
+          "count": 1,
+          "percentage": 0.33333333333333337
+        }
+      ],
+      "text_stats": {
+        "avg_length": 23.83,
+        "min_length": 18,
+        "max_length": 32,
+        "patterns": {
+          "email": true,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": true,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": true,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "Phone": {
+      "position": 7,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 300,
+      "cardinality_ratio": 1.0,
+      "sample_values": [
+        "324-574-7288x315",
+        "+1-271-939-3005x307",
+        "412.363.3590",
+        "(607)028-2273x1728",
+        "080-759-7829",
+        "932.568.8453",
+        "+1-408-769-4540",
+        "001-560-502-7247x028",
+        "800.419.4816",
+        "(499)746-4017x2576"
+      ],
+      "top_values": [
+        {
+          "value": "537.477.3617x2851",
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": "153-069-5838x1631",
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": "(511)953-0050x4229",
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": "4718671283",
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": "322-085-6195",
+          "count": 1,
+          "percentage": 0.33333333333333337
+        }
+      ],
+      "text_stats": {
+        "avg_length": 16.24,
+        "min_length": 10,
+        "max_length": 22,
+        "patterns": {
+          "email": false,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": true,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": true,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "City": {
+      "position": 8,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 298,
+      "cardinality_ratio": 0.9933,
+      "sample_values": [
+        "Torresfurt",
+        "Williamville",
+        "East Sarahfurt",
+        "Port Kevin",
+        "West Jeffrey",
+        "Rachelmouth",
+        "Edwardberg",
+        "New Cynthia",
+        "Lake Mark",
+        "Hudsonshire"
+      ],
+      "top_values": [
+        {
+          "value": "New Deborah",
+          "count": 2,
+          "percentage": 0.6666666666666667
+        },
+        {
+          "value": "Taylorfort",
+          "count": 2,
+          "percentage": 0.6666666666666667
+        },
+        {
+          "value": "Lake Nicholasstad",
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": "East Ashley",
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": "Sampsonport",
+          "count": 1,
+          "percentage": 0.33333333333333337
+        }
+      ],
+      "text_stats": {
+        "avg_length": 11.94,
+        "min_length": 7,
+        "max_length": 21,
+        "patterns": {
+          "email": false,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": true,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": true,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "State": {
+      "position": 9,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 49,
+      "cardinality_ratio": 0.1633,
+      "sample_values": [
+        "Michigan",
+        "Mississippi",
+        "Florida",
+        "Alabama",
+        "Oklahoma",
+        "Minnesota",
+        "Illinois",
+        "Arkansas",
+        "Nevada",
+        "South Dakota"
+      ],
+      "top_values": [
+        {
+          "value": "Texas",
+          "count": 10,
+          "percentage": 3.3333333333333335
+        },
+        {
+          "value": "Mississippi",
+          "count": 10,
+          "percentage": 3.3333333333333335
+        },
+        {
+          "value": "Michigan",
+          "count": 10,
+          "percentage": 3.3333333333333335
+        },
+        {
+          "value": "Alabama",
+          "count": 9,
+          "percentage": 3.0
+        },
+        {
+          "value": "West Virginia",
+          "count": 9,
+          "percentage": 3.0
+        }
+      ],
+      "text_stats": {
+        "avg_length": 8.47,
+        "min_length": 4,
+        "max_length": 14,
+        "patterns": {
+          "email": false,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": true
+      }
+    },
+    "Country": {
+      "position": 10,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 179,
+      "cardinality_ratio": 0.5967,
+      "sample_values": [
+        "Philippines",
+        "Isle of Man",
+        "Tuvalu",
+        "Anguilla",
+        "Libyan Arab Jamahiriya",
+        "Nigeria",
+        "Serbia",
+        "Vanuatu",
+        "Guinea",
+        "Wallis and Futuna"
+      ],
+      "top_values": [
+        {
+          "value": "Tuvalu",
+          "count": 4,
+          "percentage": 1.3333333333333335
+        },
+        {
+          "value": "Guyana",
+          "count": 4,
+          "percentage": 1.3333333333333335
+        },
+        {
+          "value": "Mongolia",
+          "count": 4,
+          "percentage": 1.3333333333333335
+        },
+        {
+          "value": "Cote d'Ivoire",
+          "count": 3,
+          "percentage": 1.0
+        },
+        {
+          "value": "Sweden",
+          "count": 3,
+          "percentage": 1.0
+        }
+      ],
+      "text_stats": {
+        "avg_length": 11.32,
+        "min_length": 4,
+        "max_length": 51,
+        "patterns": {
+          "email": false,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": true
+      }
+    },
+    "SignupDate": {
+      "position": 11,
+      "native_type": "DATE",
+      "semantic_type": "temporal",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 281,
+      "cardinality_ratio": 0.9367,
+      "sample_values": [
+        "2024-06-23",
+        "2021-07-17",
+        "2022-11-03",
+        "2023-04-12",
+        "2020-11-15",
+        "2021-09-09",
+        "2025-03-06",
+        "2023-11-01",
+        "2025-09-02",
+        "2023-08-06"
+      ],
+      "top_values": [
+        {
+          "value": "2024-04-21",
+          "count": 4,
+          "percentage": 1.3333333333333335
+        },
+        {
+          "value": "2021-09-04",
+          "count": 2,
+          "percentage": 0.6666666666666667
+        },
+        {
+          "value": "2021-09-18",
+          "count": 2,
+          "percentage": 0.6666666666666667
+        },
+        {
+          "value": "2021-02-11",
+          "count": 2,
+          "percentage": 0.6666666666666667
+        },
+        {
+          "value": "2021-06-12",
+          "count": 2,
+          "percentage": 0.6666666666666667
+        }
+      ],
+      "temporal_stats": {
+        "min_date": "2020-09-13",
+        "max_date": "2025-09-02",
+        "range_days": 1815,
+        "granularity": "daily",
+        "has_gaps": true,
+        "gap_count": 1535
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": true,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "LastPurchaseDate": {
+      "position": 12,
+      "native_type": "DATE",
+      "semantic_type": "temporal",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 256,
+      "cardinality_ratio": 0.8533,
+      "sample_values": [
+        "2025-07-31",
+        "2024-01-09",
+        "2025-07-18",
+        "2025-06-14",
+        "2024-06-27",
+        "2022-08-15",
+        "2025-02-26",
+        "2025-09-02",
+        "2024-02-16",
+        "2025-04-25"
+      ],
+      "top_values": [
+        {
+          "value": "2025-02-15",
+          "count": 3,
+          "percentage": 1.0
+        },
+        {
+          "value": "2025-07-20",
+          "count": 3,
+          "percentage": 1.0
+        },
+        {
+          "value": "2025-08-12",
+          "count": 3,
+          "percentage": 1.0
+        },
+        {
+          "value": "2023-08-28",
+          "count": 3,
+          "percentage": 1.0
+        },
+        {
+          "value": "2024-02-21",
+          "count": 2,
+          "percentage": 0.6666666666666667
+        }
+      ],
+      "temporal_stats": {
+        "min_date": "2021-01-16",
+        "max_date": "2025-09-08",
+        "range_days": 1696,
+        "granularity": "daily",
+        "has_gaps": true,
+        "gap_count": 1441
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": true,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": true
+      }
+    },
+    "TotalPurchases": {
+      "position": 13,
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 50,
+      "cardinality_ratio": 0.1667,
+      "sample_values": [
+        1,
+        12,
+        27,
+        17,
+        38,
+        36,
+        45,
+        15,
+        6,
+        10
+      ],
+      "top_values": [
+        {
+          "value": 5,
+          "count": 11,
+          "percentage": 3.6666666666666665
+        },
+        {
+          "value": 22,
+          "count": 11,
+          "percentage": 3.6666666666666665
+        },
+        {
+          "value": 4,
+          "count": 10,
+          "percentage": 3.3333333333333335
+        },
+        {
+          "value": 14,
+          "count": 9,
+          "percentage": 3.0
+        },
+        {
+          "value": 16,
+          "count": 9,
+          "percentage": 3.0
+        }
+      ],
+      "numerical_stats": {
+        "min": 1.0,
+        "max": 50.0,
+        "mean": 23.8567,
+        "median": 22.0,
+        "std_dev": 14.4295,
+        "quartiles": {
+          "q1": 1.0,
+          "q25": 11.0,
+          "q75": 36.0,
+          "q99": 50.0
+        },
+        "zero_count": 0,
+        "negative_count": 0,
+        "positive_count": 300
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": true
+      }
+    },
+    "TotalSpent": {
+      "position": 14,
+      "native_type": "DOUBLE",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 300,
+      "cardinality_ratio": 1.0,
+      "sample_values": [
+        2925.37,
+        2570.65,
+        1652.57,
+        3224.7,
+        3620.83,
+        3079.77,
+        3540.82,
+        4745.21,
+        4059.41,
+        4898.03
+      ],
+      "top_values": [
+        {
+          "value": 2925.37,
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": 2570.65,
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": 1652.57,
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": 3224.7,
+          "count": 1,
+          "percentage": 0.33333333333333337
+        },
+        {
+          "value": 3620.83,
+          "count": 1,
+          "percentage": 0.33333333333333337
+        }
+      ],
+      "numerical_stats": {
+        "min": 78.88,
+        "max": 4992.11,
+        "mean": 2661.7941,
+        "median": 2703.465,
+        "std_dev": 1430.8776,
+        "quartiles": {
+          "q1": 201.3196,
+          "q25": 1399.9999999999998,
+          "q75": 3961.8624999999997,
+          "q99": 4959.5394
+        },
+        "zero_count": 0,
+        "negative_count": 0,
+        "positive_count": 300
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": true,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": true,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    }
+  },
+  "relationships": {
+    "primary_key_candidates": [
+      "CustomerID",
+      "Email",
+      "Phone",
+      "City",
+      "TotalSpent"
+    ],
+    "foreign_key_candidates": {},
+    "correlations": {},
+    "functional_dependencies": [
+      {
+        "determines": "CustomerID",
+        "determined_by": "FirstName"
+      },
+      {
+        "determines": "CustomerID",
+        "determined_by": "LastName"
+      },
+      {
+        "determines": "CustomerID",
+        "determined_by": "Gender"
+      },
+      {
+        "determines": "CustomerID",
+        "determined_by": "Age"
+      },
+      {
+        "determines": "CustomerID",
+        "determined_by": "Email"
+      },
+      {
+        "determines": "CustomerID",
+        "determined_by": "Phone"
+      },
+      {
+        "determines": "CustomerID",
+        "determined_by": "City"
+      },
+      {
+        "determines": "CustomerID",
+        "determined_by": "State"
+      },
+      {
+        "determines": "CustomerID",
+        "determined_by": "Country"
+      },
+      {
+        "determines": "CustomerID",
+        "determined_by": "SignupDate"
+      },
+      {
+        "determines": "CustomerID",
+        "determined_by": "LastPurchaseDate"
+      },
+      {
+        "determines": "CustomerID",
+        "determined_by": "TotalPurchases"
+      },
+      {
+        "determines": "CustomerID",
+        "determined_by": "TotalSpent"
+      },
+      {
+        "determines": "Email",
+        "determined_by": "Phone"
+      },
+      {
+        "determines": "Email",
+        "determined_by": "City"
+      },
+      {
+        "determines": "Email",
+        "determined_by": "State"
+      },
+      {
+        "determines": "Email",
+        "determined_by": "Country"
+      },
+      {
+        "determines": "Email",
+        "determined_by": "SignupDate"
+      },
+      {
+        "determines": "Email",
+        "determined_by": "LastPurchaseDate"
+      },
+      {
+        "determines": "Email",
+        "determined_by": "TotalPurchases"
+      },
+      {
+        "determines": "Email",
+        "determined_by": "TotalSpent"
+      },
+      {
+        "determines": "Phone",
+        "determined_by": "City"
+      },
+      {
+        "determines": "Phone",
+        "determined_by": "State"
+      },
+      {
+        "determines": "Phone",
+        "determined_by": "Country"
+      },
+      {
+        "determines": "Phone",
+        "determined_by": "SignupDate"
+      },
+      {
+        "determines": "Phone",
+        "determined_by": "LastPurchaseDate"
+      },
+      {
+        "determines": "Phone",
+        "determined_by": "TotalPurchases"
+      },
+      {
+        "determines": "Phone",
+        "determined_by": "TotalSpent"
+      }
+    ]
+  }
+}

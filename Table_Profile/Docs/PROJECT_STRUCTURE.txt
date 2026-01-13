@@ -1,0 +1,222 @@
+================================================================================
+TABLE PROFILE GRAPH - FINAL PROJECT STRUCTURE
+================================================================================
+
+📁 PROJECT LAYOUT
+-----------------
+
+Table_Profile/
+├── profile.py                          🎯 MAIN ENTRY POINT
+│
+├── table_profile_graph/               📦 CORE PACKAGE
+│   ├── __init__.py                    
+│   ├── config.py                       ⚙️  Configuration constants
+│   ├── visualizer.py                   🎨 D3.js visualization (DEFAULT)
+│   │
+│   ├── profiler/                       📊 Phase 1: Metadata Collection
+│   │   ├── __init__.py
+│   │   ├── models.py                   Data models and enums
+│   │   ├── metadata_collector.py       Core orchestrator (Steps 1.2-1.4)
+│   │   ├── stats_profiler.py           Type-specific statistics
+│   │   ├── relationship_detector.py    PK/FK/FD/correlation detection
+│   │   ├── hint_generator.py           Optimization hints
+│   │   └── utils.py                    Helper functions
+│   │
+│   └── graph/                          🔨 Phase 2: Graph Construction
+│       ├── __init__.py
+│       ├── schema.py                   Step 2.1: Node/Edge types
+│       ├── builder.py                  Step 2.2-2.6: Graph building
+│       └── serializer.py               Save/load in multiple formats
+│
+├── graph_builder.py                    📜 Legacy (can archive)
+├── Dataset/                            📂 Sample CSV files
+└── Legacy/                             📜 Old implementations
+
+================================================================================
+🚀 USAGE
+================================================================================
+
+Quick Start:
+  python profile.py Dataset/customer_dataset.csv
+
+Custom table name:
+  python profile.py data.csv my_table
+
+With graph export:
+  python profile.py data.csv --save-graph
+
+Skip visualization:
+  python profile.py data.csv --no-viz
+
+All options:
+  python profile.py data.csv custom_name --save-graph
+
+================================================================================
+📦 PACKAGE MODULES
+================================================================================
+
+1️⃣  PROFILER MODULE (Phase 1)
+   Purpose: Collect comprehensive metadata from database tables
+   
+   Components:
+   • models.py              - Data classes (ColumnInfo, TableMetadata, etc.)
+   • metadata_collector.py  - Main orchestrator
+   • stats_profiler.py      - Numerical/Categorical/Temporal/Text stats
+   • relationship_detector.py - PK/FK/Correlation/FD detection
+   • hint_generator.py      - Query optimization hints
+   • utils.py               - Helper functions (CSV loading, summary, reports)
+
+2️⃣  GRAPH MODULE (Phase 2)
+   Purpose: Build knowledge graphs from metadata
+   
+   Components:
+   • schema.py       - Node/Edge type definitions (enums)
+   • builder.py      - GraphBuilder class (builds NetworkX graph)
+   • serializer.py   - Save/load in multiple formats
+
+3️⃣  VISUALIZER MODULE
+   Purpose: Interactive D3.js visualization
+   
+   Features:
+   • Full-screen design
+   • Node selection (single/multi)
+   • Edge selection (NEW!)
+   • Drag & drop
+   • Zoom & pan
+   • Filtering
+   • Keyboard shortcuts
+
+================================================================================
+🎨 VISUALIZATION FEATURES (D3.js)
+================================================================================
+
+✅ Interactions:
+   • Click node/edge       → Select
+   • Ctrl+Click           → Multi-select
+   • Double-click node    → Center view
+   • Drag node            → Move and pin
+   • Drag background      → Pan
+   • Scroll               → Zoom
+   • Hover                → Show tooltip
+
+✅ Selection System:
+   • Nodes: Red border when selected
+   • Edges: Red color when selected
+   • Connected elements auto-highlight
+   • Unconnected elements dim (20% opacity)
+   • Status bar shows selection count
+
+✅ Keyboard Shortcuts:
+   R   - Restart physics simulation
+   F   - Freeze/unfreeze all nodes
+   +   - Zoom in
+   -   - Zoom out
+   0   - Reset view
+   ESC - Clear all selections
+
+✅ Filtering:
+   • Filter by node type (dropdown)
+   • Show only: All/Table/Column/Constraint/Stats/Hint/Values
+   • Maintains selection when filtering
+
+================================================================================
+💾 OUTPUT FILES
+================================================================================
+
+Standard Run:
+  ✓ <table>_metadata.json          - Complete metadata
+  ✓ <table>_visualization.html     - Interactive D3 graph
+
+With --save-graph:
+  ✓ <table>_graph.gpickle          - NetworkX pickle (full fidelity)
+  ✓ <table>_graph.graphml          - For Gephi/Cytoscape
+  ✓ <table>_graph.json             - JSON node-link format
+  ✓ <table>_graph.gexf             - GEXF format
+  ✓ <table>_graph_summary.json     - Graph statistics
+
+================================================================================
+🔧 PROGRAMMATIC USAGE
+================================================================================
+
+Complete Pipeline:
+```python
+from table_profile_graph import (
+    MetadataCollector, load_table_from_csv,
+    GraphBuilder, visualize_from_graph
+)
+import duckdb
+
+conn = duckdb.connect(":memory:")
+table_name = load_table_from_csv(conn, "data.csv")
+
+# Phase 1: Metadata
+collector = MetadataCollector(conn, table_name)
+metadata = collector.collect()
+
+# Phase 2: Graph
+builder = GraphBuilder(metadata)
+graph = builder.build()
+
+# Phase 3: Visualize
+visualize_from_graph(graph, "output.html")
+```
+
+Just Visualization:
+```python
+from table_profile_graph import visualize_from_metadata_file
+
+visualize_from_metadata_file('metadata.json', 'viz.html')
+```
+
+Export for Gephi:
+```python
+from table_profile_graph import GraphBuilder, GraphSerializer
+
+builder = GraphBuilder(metadata)
+graph = builder.build()
+GraphSerializer.save_graphml(graph, "my_graph")
+# → my_graph.graphml ready for Gephi import
+```
+
+================================================================================
+🎯 USE CASES
+================================================================================
+
+1. NL2SQL Integration
+   • Use semantic types for query planning
+   • Use sample values for entity extraction
+   • Use FDs for query optimization
+   • Use hints for index/partition recommendations
+
+2. Database Design
+   • Identify normalization issues (functional dependencies)
+   • Detect redundant columns (correlations)
+   • Plan indexes (high cardinality columns)
+   • Design partitions (temporal columns)
+
+3. Data Exploration
+   • Visual understanding of table structure
+   • Discover relationships between columns
+   • Identify data quality issues
+   • Understand distributions
+
+4. External Tools
+   • Export to Gephi for advanced network analysis
+   • Export to Cytoscape for biological network style
+   • Use GraphML for custom processing
+
+================================================================================
+📊 DEPENDENCIES
+================================================================================
+
+Core:
+  • duckdb >= 0.9.0       - Database engine
+  • networkx >= 3.0       - Graph manipulation
+
+Visualization:
+  • pyvis >= 0.3.0        - For Pyvis visualizations (optional legacy)
+
+Install all:
+  pip install -r requirements.txt
+
+================================================================================

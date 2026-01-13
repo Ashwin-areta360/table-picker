@@ -1,0 +1,2427 @@
+{
+  "table_name": "ttdsalesdata",
+  "row_count": 9991,
+  "column_count": 27,
+  "size_bytes": 999100,
+  "columns": {
+    "OrderDate": {
+      "position": 1,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 999,
+      "cardinality_ratio": 0.1,
+      "sample_values": [
+        "21-Jan-22",
+        "3-Mar-22",
+        "16-May-22",
+        "23-Jun-22",
+        "9-Aug-22",
+        "19-Aug-22",
+        "7-Sep-22",
+        "16-Sep-22",
+        "8-Oct-22",
+        "12-Oct-22"
+      ],
+      "top_values": [
+        {
+          "value": "7-Sep-22",
+          "count": 39,
+          "percentage": 0.3903513161845661
+        },
+        {
+          "value": "6-Sep-24",
+          "count": 38,
+          "percentage": 0.38034230807726954
+        },
+        {
+          "value": "27-Dec-22",
+          "count": 38,
+          "percentage": 0.38034230807726954
+        },
+        {
+          "value": "17-Sep-22",
+          "count": 37,
+          "percentage": 0.370333299969973
+        },
+        {
+          "value": "21-Sep-22",
+          "count": 36,
+          "percentage": 0.3603242918626764
+        }
+      ],
+      "text_stats": {
+        "avg_length": 8.7,
+        "min_length": 8,
+        "max_length": 9,
+        "patterns": {
+          "email": false,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "Store_ID": {
+      "position": 2,
+      "native_type": "VARCHAR",
+      "semantic_type": "identifier",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 531,
+      "cardinality_ratio": 0.0531,
+      "sample_values": [
+        "Store - 8",
+        "Store - 21",
+        "Store - 37",
+        "Store - 39",
+        "Store - 53",
+        "Store - 67",
+        "Store - 69",
+        "Store - 71",
+        "Store - 94",
+        "Store - 107"
+      ],
+      "top_values": [
+        {
+          "value": "Store - 26",
+          "count": 915,
+          "percentage": 9.158242418176359
+        },
+        {
+          "value": "Store - 6",
+          "count": 745,
+          "percentage": 7.456711039935943
+        },
+        {
+          "value": "Store - 3",
+          "count": 537,
+          "percentage": 5.374837353618257
+        },
+        {
+          "value": "Store - 12",
+          "count": 510,
+          "percentage": 5.104594134721249
+        },
+        {
+          "value": "Store - 31",
+          "count": 428,
+          "percentage": 4.283855469922931
+        }
+      ],
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": true,
+        "foreign_key_references": [
+          "store"
+        ]
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "Category": {
+      "position": 3,
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 3,
+      "cardinality_ratio": 0.0003,
+      "sample_values": [
+        "Furniture",
+        "Technology",
+        "Office Supplies"
+      ],
+      "top_values": [
+        {
+          "value": "Office Supplies",
+          "count": 6025,
+          "percentage": 60.30427384646182
+        },
+        {
+          "value": "Furniture",
+          "count": 2120,
+          "percentage": 21.219097187468723
+        },
+        {
+          "value": "Technology",
+          "count": 1846,
+          "percentage": 18.476628966069462
+        }
+      ],
+      "categorical_stats": {
+        "all_unique_values": [
+          "Furniture",
+          "Office Supplies",
+          "Technology"
+        ],
+        "top_10_values": [
+          {
+            "value": "Office Supplies",
+            "count": 6025,
+            "percentage": 60.30427384646182
+          },
+          {
+            "value": "Furniture",
+            "count": 2120,
+            "percentage": 21.219097187468723
+          },
+          {
+            "value": "Technology",
+            "count": 1846,
+            "percentage": 18.476628966069462
+          }
+        ],
+        "entropy": 1.3647,
+        "is_balanced": true
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": true,
+        "good_for_filtering": false
+      }
+    },
+    "City": {
+      "position": 4,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 531,
+      "cardinality_ratio": 0.0531,
+      "sample_values": [
+        "Dallas",
+        "Woodstock",
+        "Medford",
+        "Huntington Beach",
+        "Knoxville",
+        "Appleton",
+        "Chester",
+        "Buffalo",
+        "Trenton",
+        "Indianapolis"
+      ],
+      "top_values": [
+        {
+          "value": "New York City",
+          "count": 915,
+          "percentage": 9.158242418176359
+        },
+        {
+          "value": "Los Angeles",
+          "count": 745,
+          "percentage": 7.456711039935943
+        },
+        {
+          "value": "Philadelphia",
+          "count": 537,
+          "percentage": 5.374837353618257
+        },
+        {
+          "value": "San Francisco",
+          "count": 510,
+          "percentage": 5.104594134721249
+        },
+        {
+          "value": "Seattle",
+          "count": 428,
+          "percentage": 4.283855469922931
+        }
+      ],
+      "text_stats": {
+        "avg_length": 9.33,
+        "min_length": 4,
+        "max_length": 17,
+        "patterns": {
+          "email": false,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "Country": {
+      "position": 5,
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 1,
+      "cardinality_ratio": 0.0001,
+      "sample_values": [
+        "United States"
+      ],
+      "top_values": [
+        {
+          "value": "United States",
+          "count": 9991,
+          "percentage": 100.0
+        }
+      ],
+      "categorical_stats": {
+        "all_unique_values": [
+          "United States"
+        ],
+        "top_10_values": [
+          {
+            "value": "United States",
+            "count": 9991,
+            "percentage": 100.0
+          }
+        ],
+        "entropy": null,
+        "is_balanced": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": true,
+        "good_for_filtering": false
+      }
+    },
+    "CustomerName": {
+      "position": 6,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 793,
+      "cardinality_ratio": 0.0794,
+      "sample_values": [
+        "Anthony Jacobs",
+        "Chris Selesnick",
+        "Brendan Sweed",
+        "Cyma Kinney",
+        "Guy Armstrong",
+        "Shui Tom",
+        "Jill Stevenson",
+        "Dean Katz",
+        "Christina Anderson",
+        "Mike Pelletier"
+      ],
+      "top_values": [
+        {
+          "value": "William Brown",
+          "count": 37,
+          "percentage": 0.370333299969973
+        },
+        {
+          "value": "Matt Abelman",
+          "count": 34,
+          "percentage": 0.3403062756480833
+        },
+        {
+          "value": "Paul Prost",
+          "count": 34,
+          "percentage": 0.3403062756480833
+        },
+        {
+          "value": "John Lee",
+          "count": 34,
+          "percentage": 0.3403062756480833
+        },
+        {
+          "value": "Jonathan Doherty",
+          "count": 32,
+          "percentage": 0.32028825943349015
+        }
+      ],
+      "text_stats": {
+        "avg_length": 12.96,
+        "min_length": 7,
+        "max_length": 22,
+        "patterns": {
+          "email": false,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "Discount": {
+      "position": 7,
+      "native_type": "DOUBLE",
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 12,
+      "cardinality_ratio": 0.0012,
+      "sample_values": [
+        0.0,
+        0.15,
+        0.8,
+        0.7,
+        0.3,
+        0.32,
+        0.1,
+        0.45,
+        0.4,
+        0.2
+      ],
+      "top_values": [
+        {
+          "value": 0.0,
+          "count": 4797,
+          "percentage": 48.013211890701626
+        },
+        {
+          "value": 0.2,
+          "count": 3655,
+          "percentage": 36.582924632168954
+        },
+        {
+          "value": 0.7,
+          "count": 418,
+          "percentage": 4.183765388849965
+        },
+        {
+          "value": 0.8,
+          "count": 300,
+          "percentage": 3.00270243218897
+        },
+        {
+          "value": 0.3,
+          "count": 227,
+          "percentage": 2.2720448403563207
+        }
+      ],
+      "categorical_stats": {
+        "all_unique_values": [
+          0.0,
+          0.1,
+          0.15,
+          0.2,
+          0.3,
+          0.32,
+          0.4,
+          0.45,
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ],
+        "top_10_values": [
+          {
+            "value": 0.0,
+            "count": 4797,
+            "percentage": 48.013211890701626
+          },
+          {
+            "value": 0.2,
+            "count": 3655,
+            "percentage": 36.582924632168954
+          },
+          {
+            "value": 0.7,
+            "count": 418,
+            "percentage": 4.183765388849965
+          },
+          {
+            "value": 0.8,
+            "count": 300,
+            "percentage": 3.00270243218897
+          },
+          {
+            "value": 0.3,
+            "count": 227,
+            "percentage": 2.2720448403563207
+          },
+          {
+            "value": 0.4,
+            "count": 206,
+            "percentage": 2.0618556701030926
+          },
+          {
+            "value": 0.6,
+            "count": 138,
+            "percentage": 1.381243118806926
+          },
+          {
+            "value": 0.1,
+            "count": 94,
+            "percentage": 0.9408467620858773
+          },
+          {
+            "value": 0.5,
+            "count": 66,
+            "percentage": 0.6605945350815734
+          },
+          {
+            "value": 0.15,
+            "count": 52,
+            "percentage": 0.5204684215794215
+          }
+        ],
+        "entropy": 1.8595,
+        "is_balanced": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": true,
+        "good_for_filtering": false
+      }
+    },
+    "OrderID": {
+      "position": 8,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 5007,
+      "cardinality_ratio": 0.5012,
+      "sample_values": [
+        "CA-2011-107755",
+        "CA-2011-133354",
+        "US-2011-100279",
+        "CA-2011-157623",
+        "CA-2011-141838",
+        "US-2011-163797",
+        "US-2011-112564",
+        "CA-2011-131387",
+        "CA-2011-145800",
+        "US-2011-165659"
+      ],
+      "top_values": [
+        {
+          "value": "CA-2014-100111",
+          "count": 14,
+          "percentage": 0.14012611350215193
+        },
+        {
+          "value": "CA-2014-157987",
+          "count": 12,
+          "percentage": 0.12010809728755881
+        },
+        {
+          "value": "US-2013-108504",
+          "count": 11,
+          "percentage": 0.11009908918026225
+        },
+        {
+          "value": "CA-2013-165330",
+          "count": 11,
+          "percentage": 0.11009908918026225
+        },
+        {
+          "value": "CA-2013-105732",
+          "count": 10,
+          "percentage": 0.10009008107296567
+        }
+      ],
+      "text_stats": {
+        "avg_length": 14.0,
+        "min_length": 14,
+        "max_length": 14,
+        "patterns": {
+          "email": false,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": true
+      }
+    },
+    "PostalCode": {
+      "position": 9,
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 631,
+      "cardinality_ratio": 0.0632,
+      "sample_values": [
+        77340,
+        19140,
+        30076,
+        94521,
+        60098,
+        10035,
+        29203,
+        10701,
+        98198,
+        90008
+      ],
+      "top_values": [
+        {
+          "value": 10035,
+          "count": 263,
+          "percentage": 2.6323691322189973
+        },
+        {
+          "value": 10024,
+          "count": 230,
+          "percentage": 2.30207186467821
+        },
+        {
+          "value": 10009,
+          "count": 229,
+          "percentage": 2.292062856570914
+        },
+        {
+          "value": 94122,
+          "count": 203,
+          "percentage": 2.0318286457812027
+        },
+        {
+          "value": 10011,
+          "count": 193,
+          "percentage": 1.9317385647082372
+        }
+      ],
+      "numerical_stats": {
+        "min": 1040.0,
+        "max": 99301.0,
+        "mean": 55185.803,
+        "median": 56301.0,
+        "std_dev": 32063.8167,
+        "quartiles": {
+          "q1": 2149.0,
+          "q25": 23223.0,
+          "q75": 90008.0,
+          "q99": 98115.0
+        },
+        "zero_count": 0,
+        "negative_count": 0,
+        "positive_count": 9991
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "ProductName": {
+      "position": 10,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 1840,
+      "cardinality_ratio": 0.1842,
+      "sample_values": [
+        "GE 30524EE4",
+        "Newell 312",
+        "OSullivan Elevations Bookcase, Cherry Finish",
+        "Staples",
+        "Xerox 1923",
+        "Eldon Expressions Desk Accessory, Wood Pencil Holder, Oak",
+        "Recycled Steel Personal File for Hanging File Folders",
+        "Pressboard Covers with Storage Hooks, 9 1/2 x 11, Light Blue",
+        "Space Solutions HD Industrial Steel Shelving.",
+        "Sauder Facets Collection Library, Sky Alder Finish"
+      ],
+      "top_values": [
+        {
+          "value": "Staples",
+          "count": 227,
+          "percentage": 2.2720448403563207
+        },
+        {
+          "value": "Avery Non-Stick Binders",
+          "count": 20,
+          "percentage": 0.20018016214593135
+        },
+        {
+          "value": "KI Adjustable-Height Table",
+          "count": 18,
+          "percentage": 0.1801621459313382
+        },
+        {
+          "value": "Storex Dura Pro Binders",
+          "count": 17,
+          "percentage": 0.17015313782404165
+        },
+        {
+          "value": "Situations Contoured Folding Chairs, 4/Set",
+          "count": 15,
+          "percentage": 0.1501351216094485
+        }
+      ],
+      "text_stats": {
+        "avg_length": 36.54,
+        "min_length": 5,
+        "max_length": 127,
+        "patterns": {
+          "email": false,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": true
+      }
+    },
+    "Profit": {
+      "position": 11,
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 755,
+      "cardinality_ratio": 0.0756,
+      "sample_values": [
+        -5,
+        21,
+        20,
+        -15,
+        -10,
+        57,
+        79,
+        -38,
+        26,
+        1276
+      ],
+      "top_values": [
+        {
+          "value": 4,
+          "count": 436,
+          "percentage": 4.363927534781303
+        },
+        {
+          "value": 3,
+          "count": 434,
+          "percentage": 4.3439095185667105
+        },
+        {
+          "value": 2,
+          "count": 413,
+          "percentage": 4.133720348313482
+        },
+        {
+          "value": 6,
+          "count": 380,
+          "percentage": 3.8034230807726956
+        },
+        {
+          "value": 1,
+          "count": 361,
+          "percentage": 3.613251926734061
+        }
+      ],
+      "numerical_stats": {
+        "min": -6600.0,
+        "max": 8400.0,
+        "mean": 28.6598,
+        "median": 9.0,
+        "std_dev": 234.2902,
+        "quartiles": {
+          "q1": -319.1,
+          "q25": 2.0,
+          "q75": 29.0,
+          "q99": 581.1000000000004
+        },
+        "zero_count": 164,
+        "negative_count": 1864,
+        "positive_count": 7963
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "Quantity": {
+      "position": 12,
+      "native_type": "BIGINT",
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 14,
+      "cardinality_ratio": 0.0014,
+      "sample_values": [
+        5,
+        6,
+        10,
+        1,
+        12,
+        4,
+        7,
+        2,
+        11,
+        13
+      ],
+      "top_values": [
+        {
+          "value": 3,
+          "count": 2408,
+          "percentage": 24.101691522370132
+        },
+        {
+          "value": 2,
+          "count": 2401,
+          "percentage": 24.031628465619058
+        },
+        {
+          "value": 5,
+          "count": 1230,
+          "percentage": 12.311079971974777
+        },
+        {
+          "value": 4,
+          "count": 1190,
+          "percentage": 11.910719647682914
+        },
+        {
+          "value": 1,
+          "count": 899,
+          "percentage": 8.998098288459614
+        }
+      ],
+      "categorical_stats": {
+        "all_unique_values": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "top_10_values": [
+          {
+            "value": 3,
+            "count": 2408,
+            "percentage": 24.101691522370132
+          },
+          {
+            "value": 2,
+            "count": 2401,
+            "percentage": 24.031628465619058
+          },
+          {
+            "value": 5,
+            "count": 1230,
+            "percentage": 12.311079971974777
+          },
+          {
+            "value": 4,
+            "count": 1190,
+            "percentage": 11.910719647682914
+          },
+          {
+            "value": 1,
+            "count": 899,
+            "percentage": 8.998098288459614
+          },
+          {
+            "value": 7,
+            "count": 606,
+            "percentage": 6.065458913021719
+          },
+          {
+            "value": 6,
+            "count": 572,
+            "percentage": 5.725152637373636
+          },
+          {
+            "value": 9,
+            "count": 258,
+            "percentage": 2.5823240916825143
+          },
+          {
+            "value": 8,
+            "count": 257,
+            "percentage": 2.5723150835752175
+          },
+          {
+            "value": 10,
+            "count": 57,
+            "percentage": 0.5705134621159044
+          }
+        ],
+        "entropy": 2.8515,
+        "is_balanced": true
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": true,
+        "good_for_filtering": false
+      }
+    },
+    "Region": {
+      "position": 13,
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 4,
+      "cardinality_ratio": 0.0004,
+      "sample_values": [
+        "South",
+        "East",
+        "West",
+        "Central"
+      ],
+      "top_values": [
+        {
+          "value": "West",
+          "count": 3201,
+          "percentage": 32.038834951456316
+        },
+        {
+          "value": "East",
+          "count": 2848,
+          "percentage": 28.50565508958062
+        },
+        {
+          "value": "Central",
+          "count": 2323,
+          "percentage": 23.250925833249923
+        },
+        {
+          "value": "South",
+          "count": 1619,
+          "percentage": 16.204584125713144
+        }
+      ],
+      "categorical_stats": {
+        "all_unique_values": [
+          "Central",
+          "East",
+          "South",
+          "West"
+        ],
+        "top_10_values": [
+          {
+            "value": "West",
+            "count": 3201,
+            "percentage": 32.038834951456316
+          },
+          {
+            "value": "East",
+            "count": 2848,
+            "percentage": 28.50565508958062
+          },
+          {
+            "value": "Central",
+            "count": 2323,
+            "percentage": 23.250925833249923
+          },
+          {
+            "value": "South",
+            "count": 1619,
+            "percentage": 16.204584125713144
+          }
+        ],
+        "entropy": 1.9571,
+        "is_balanced": true
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": true,
+        "good_for_filtering": false
+      }
+    },
+    "Sales": {
+      "position": 14,
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 1148,
+      "cardinality_ratio": 0.1149,
+      "sample_values": [
+        31,
+        52,
+        32,
+        15,
+        355,
+        480,
+        636,
+        22,
+        81,
+        132
+      ],
+      "top_values": [
+        {
+          "value": 13,
+          "count": 200,
+          "percentage": 2.0018016214593133
+        },
+        {
+          "value": 6,
+          "count": 194,
+          "percentage": 1.9417475728155338
+        },
+        {
+          "value": 9,
+          "count": 183,
+          "percentage": 1.8316484836352718
+        },
+        {
+          "value": 10,
+          "count": 175,
+          "percentage": 1.7515764187768992
+        },
+        {
+          "value": 12,
+          "count": 172,
+          "percentage": 1.7215493944550095
+        }
+      ],
+      "numerical_stats": {
+        "min": 0.0,
+        "max": 22638.0,
+        "mean": 229.9163,
+        "median": 54.0,
+        "std_dev": 623.3363,
+        "quartiles": {
+          "q1": 2.0,
+          "q25": 17.0,
+          "q75": 210.0,
+          "q99": 2482.500000000009
+        },
+        "zero_count": 1,
+        "negative_count": 0,
+        "positive_count": 9990
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": true
+      }
+    },
+    "Segment": {
+      "position": 15,
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 3,
+      "cardinality_ratio": 0.0003,
+      "sample_values": [
+        "Corporate",
+        "Consumer",
+        "Home Office"
+      ],
+      "top_values": [
+        {
+          "value": "Consumer",
+          "count": 5190,
+          "percentage": 51.94675207686919
+        },
+        {
+          "value": "Corporate",
+          "count": 3018,
+          "percentage": 30.20718646782104
+        },
+        {
+          "value": "Home Office",
+          "count": 1783,
+          "percentage": 17.846061455309776
+        }
+      ],
+      "categorical_stats": {
+        "all_unique_values": [
+          "Consumer",
+          "Corporate",
+          "Home Office"
+        ],
+        "top_10_values": [
+          {
+            "value": "Consumer",
+            "count": 5190,
+            "percentage": 51.94675207686919
+          },
+          {
+            "value": "Corporate",
+            "count": 3018,
+            "percentage": 30.20718646782104
+          },
+          {
+            "value": "Home Office",
+            "count": 1783,
+            "percentage": 17.846061455309776
+          }
+        ],
+        "entropy": 1.4562,
+        "is_balanced": true
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": true,
+        "good_for_filtering": false
+      }
+    },
+    "ShipDate": {
+      "position": 16,
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 1333,
+      "cardinality_ratio": 0.1334,
+      "sample_values": [
+        44207,
+        44210,
+        44262,
+        44280,
+        44277,
+        44286,
+        44293,
+        44298,
+        44309,
+        44313
+      ],
+      "top_values": [
+        {
+          "value": 44911,
+          "count": 35,
+          "percentage": 0.35031528375537985
+        },
+        {
+          "value": 45562,
+          "count": 34,
+          "percentage": 0.3403062756480833
+        },
+        {
+          "value": 45618,
+          "count": 32,
+          "percentage": 0.32028825943349015
+        },
+        {
+          "value": 45633,
+          "count": 32,
+          "percentage": 0.32028825943349015
+        },
+        {
+          "value": 45551,
+          "count": 30,
+          "percentage": 0.300270243218897
+        }
+      ],
+      "numerical_stats": {
+        "min": 44204.0,
+        "max": 45663.0,
+        "mean": 45051.4113,
+        "median": 45107.0,
+        "std_dev": 420.7793,
+        "quartiles": {
+          "q1": 44243.0,
+          "q25": 44708.0,
+          "q75": 45431.0,
+          "q99": 45654.0
+        },
+        "zero_count": 0,
+        "negative_count": 0,
+        "positive_count": 9991
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": true
+      }
+    },
+    "ShipMode": {
+      "position": 17,
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 4,
+      "cardinality_ratio": 0.0004,
+      "sample_values": [
+        "First Class",
+        "Same Day",
+        "Second Class",
+        "Standard Class"
+      ],
+      "top_values": [
+        {
+          "value": "Standard Class",
+          "count": 5968,
+          "percentage": 59.73376038434591
+        },
+        {
+          "value": "Second Class",
+          "count": 1942,
+          "percentage": 19.43749374436993
+        },
+        {
+          "value": "First Class",
+          "count": 1538,
+          "percentage": 15.39385446902212
+        },
+        {
+          "value": "Same Day",
+          "count": 543,
+          "percentage": 5.434891402262036
+        }
+      ],
+      "categorical_stats": {
+        "all_unique_values": [
+          "First Class",
+          "Same Day",
+          "Second Class",
+          "Standard Class"
+        ],
+        "top_10_values": [
+          {
+            "value": "Standard Class",
+            "count": 5968,
+            "percentage": 59.73376038434591
+          },
+          {
+            "value": "Second Class",
+            "count": 1942,
+            "percentage": 19.43749374436993
+          },
+          {
+            "value": "First Class",
+            "count": 1538,
+            "percentage": 15.39385446902212
+          },
+          {
+            "value": "Same Day",
+            "count": 543,
+            "percentage": 5.434891402262036
+          }
+        ],
+        "entropy": 1.5473,
+        "is_balanced": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": true,
+        "good_for_filtering": false
+      }
+    },
+    "State": {
+      "position": 18,
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 49,
+      "cardinality_ratio": 0.0049,
+      "sample_values": [
+        "Ohio",
+        "Florida",
+        "Oklahoma",
+        "Kentucky",
+        "Wisconsin",
+        "Iowa",
+        "Maryland",
+        "Illinois",
+        "Michigan",
+        "New York"
+      ],
+      "top_values": [
+        {
+          "value": "California",
+          "count": 1999,
+          "percentage": 20.008007206485836
+        },
+        {
+          "value": "New York",
+          "count": 1128,
+          "percentage": 11.290161145030527
+        },
+        {
+          "value": "Texas",
+          "count": 985,
+          "percentage": 9.85887298568712
+        },
+        {
+          "value": "Pennsylvania",
+          "count": 587,
+          "percentage": 5.8752877589830845
+        },
+        {
+          "value": "Washington",
+          "count": 506,
+          "percentage": 5.064558102292063
+        }
+      ],
+      "categorical_stats": {
+        "all_unique_values": [
+          "Alabama",
+          "Arizona",
+          "Arkansas",
+          "California",
+          "Colorado",
+          "Connecticut",
+          "Delaware",
+          "District of Columbia",
+          "Florida",
+          "Georgia",
+          "Idaho",
+          "Illinois",
+          "Indiana",
+          "Iowa",
+          "Kansas",
+          "Kentucky",
+          "Louisiana",
+          "Maine",
+          "Maryland",
+          "Massachusetts",
+          "Michigan",
+          "Minnesota",
+          "Mississippi",
+          "Missouri",
+          "Montana",
+          "Nebraska",
+          "Nevada",
+          "New Hampshire",
+          "New Jersey",
+          "New Mexico",
+          "New York",
+          "North Carolina",
+          "North Dakota",
+          "Ohio",
+          "Oklahoma",
+          "Oregon",
+          "Pennsylvania",
+          "Rhode Island",
+          "South Carolina",
+          "South Dakota",
+          "Tennessee",
+          "Texas",
+          "Utah",
+          "Vermont",
+          "Virginia",
+          "Washington",
+          "West Virginia",
+          "Wisconsin",
+          "Wyoming"
+        ],
+        "top_10_values": [
+          {
+            "value": "California",
+            "count": 1999,
+            "percentage": 20.008007206485836
+          },
+          {
+            "value": "New York",
+            "count": 1128,
+            "percentage": 11.290161145030527
+          },
+          {
+            "value": "Texas",
+            "count": 985,
+            "percentage": 9.85887298568712
+          },
+          {
+            "value": "Pennsylvania",
+            "count": 587,
+            "percentage": 5.8752877589830845
+          },
+          {
+            "value": "Washington",
+            "count": 506,
+            "percentage": 5.064558102292063
+          },
+          {
+            "value": "Illinois",
+            "count": 492,
+            "percentage": 4.924431988789911
+          },
+          {
+            "value": "Ohio",
+            "count": 469,
+            "percentage": 4.69422480232209
+          },
+          {
+            "value": "Florida",
+            "count": 383,
+            "percentage": 3.833450105094585
+          },
+          {
+            "value": "Michigan",
+            "count": 255,
+            "percentage": 2.5522970673606244
+          },
+          {
+            "value": "North Carolina",
+            "count": 249,
+            "percentage": 2.492243018716845
+          }
+        ],
+        "entropy": 3.006,
+        "is_balanced": true
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": true,
+        "good_for_filtering": false
+      }
+    },
+    "Sub_Category": {
+      "position": 19,
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 17,
+      "cardinality_ratio": 0.0017,
+      "sample_values": [
+        "Furnishings",
+        "Paper",
+        "Copiers",
+        "Chairs",
+        "Bookcases",
+        "Accessories",
+        "Supplies",
+        "Storage",
+        "Envelopes",
+        "Art"
+      ],
+      "top_values": [
+        {
+          "value": "Binders",
+          "count": 1522,
+          "percentage": 15.233710339305375
+        },
+        {
+          "value": "Paper",
+          "count": 1370,
+          "percentage": 13.712341106996298
+        },
+        {
+          "value": "Furnishings",
+          "count": 957,
+          "percentage": 9.578620758682813
+        },
+        {
+          "value": "Phones",
+          "count": 888,
+          "percentage": 8.887999199279353
+        },
+        {
+          "value": "Storage",
+          "count": 846,
+          "percentage": 8.467620858772895
+        }
+      ],
+      "categorical_stats": {
+        "all_unique_values": [
+          "Accessories",
+          "Appliances",
+          "Art",
+          "Binders",
+          "Bookcases",
+          "Chairs",
+          "Copiers",
+          "Envelopes",
+          "Fasteners",
+          "Furnishings",
+          "Labels",
+          "Machines",
+          "Paper",
+          "Phones",
+          "Storage",
+          "Supplies",
+          "Tables"
+        ],
+        "top_10_values": [
+          {
+            "value": "Binders",
+            "count": 1522,
+            "percentage": 15.233710339305375
+          },
+          {
+            "value": "Paper",
+            "count": 1370,
+            "percentage": 13.712341106996298
+          },
+          {
+            "value": "Furnishings",
+            "count": 957,
+            "percentage": 9.578620758682813
+          },
+          {
+            "value": "Phones",
+            "count": 888,
+            "percentage": 8.887999199279353
+          },
+          {
+            "value": "Storage",
+            "count": 846,
+            "percentage": 8.467620858772895
+          },
+          {
+            "value": "Art",
+            "count": 796,
+            "percentage": 7.967170453408068
+          },
+          {
+            "value": "Accessories",
+            "count": 775,
+            "percentage": 7.756981283154839
+          },
+          {
+            "value": "Chairs",
+            "count": 616,
+            "percentage": 6.165548994094685
+          },
+          {
+            "value": "Appliances",
+            "count": 466,
+            "percentage": 4.6641977780002
+          },
+          {
+            "value": "Labels",
+            "count": 364,
+            "percentage": 3.6432789510559505
+          }
+        ],
+        "entropy": 3.2083,
+        "is_balanced": true
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": true,
+        "good_for_filtering": false
+      }
+    },
+    "DaystoShipActual": {
+      "position": 20,
+      "native_type": "BIGINT",
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 8,
+      "cardinality_ratio": 0.0008,
+      "sample_values": [
+        0,
+        3,
+        6,
+        7,
+        2,
+        4,
+        5,
+        1
+      ],
+      "top_values": [
+        {
+          "value": 4,
+          "count": 2771,
+          "percentage": 27.734961465318786
+        },
+        {
+          "value": 5,
+          "count": 2175,
+          "percentage": 21.76959263337003
+        },
+        {
+          "value": 2,
+          "count": 1331,
+          "percentage": 13.321989790811731
+        },
+        {
+          "value": 6,
+          "count": 1201,
+          "percentage": 12.020818736863177
+        },
+        {
+          "value": 3,
+          "count": 1005,
+          "percentage": 10.05905314783305
+        }
+      ],
+      "categorical_stats": {
+        "all_unique_values": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "top_10_values": [
+          {
+            "value": 4,
+            "count": 2771,
+            "percentage": 27.734961465318786
+          },
+          {
+            "value": 5,
+            "count": 2175,
+            "percentage": 21.76959263337003
+          },
+          {
+            "value": 2,
+            "count": 1331,
+            "percentage": 13.321989790811731
+          },
+          {
+            "value": 6,
+            "count": 1201,
+            "percentage": 12.020818736863177
+          },
+          {
+            "value": 3,
+            "count": 1005,
+            "percentage": 10.05905314783305
+          },
+          {
+            "value": 7,
+            "count": 621,
+            "percentage": 6.215594034631168
+          },
+          {
+            "value": 0,
+            "count": 519,
+            "percentage": 5.1946752076869185
+          },
+          {
+            "value": 1,
+            "count": 368,
+            "percentage": 3.683314983485136
+          }
+        ],
+        "entropy": 2.7263,
+        "is_balanced": true
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": true,
+        "good_for_filtering": false
+      }
+    },
+    "SalesForecast": {
+      "position": 21,
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 1323,
+      "cardinality_ratio": 0.1324,
+      "sample_values": [
+        238,
+        190,
+        65,
+        166,
+        97,
+        38,
+        169,
+        1376,
+        86,
+        36
+      ],
+      "top_values": [
+        {
+          "value": 17,
+          "count": 159,
+          "percentage": 1.5914322890601542
+        },
+        {
+          "value": 8,
+          "count": 158,
+          "percentage": 1.5814232809528577
+        },
+        {
+          "value": 15,
+          "count": 153,
+          "percentage": 1.5313782404163747
+        },
+        {
+          "value": 20,
+          "count": 147,
+          "percentage": 1.4713241917725952
+        },
+        {
+          "value": 14,
+          "count": 145,
+          "percentage": 1.4513061755580023
+        }
+      ],
+      "numerical_stats": {
+        "min": 1.0,
+        "max": 29665.0,
+        "mean": 301.257,
+        "median": 71.0,
+        "std_dev": 816.8146,
+        "quartiles": {
+          "q1": 3.0,
+          "q25": 23.0,
+          "q75": 275.0,
+          "q99": 3253.2000000000116
+        },
+        "zero_count": 0,
+        "negative_count": 0,
+        "positive_count": 9991
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": true
+      }
+    },
+    "ShipStatus": {
+      "position": 22,
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 3,
+      "cardinality_ratio": 0.0003,
+      "sample_values": [
+        "Shipped Early",
+        "Shipped Late",
+        "Shipped On Time"
+      ],
+      "top_values": [
+        {
+          "value": "Shipped Early",
+          "count": 4907,
+          "percentage": 49.11420278250425
+        },
+        {
+          "value": "Shipped Late",
+          "count": 2639,
+          "percentage": 26.41377239515564
+        },
+        {
+          "value": "Shipped On Time",
+          "count": 2445,
+          "percentage": 24.472024822340106
+        }
+      ],
+      "categorical_stats": {
+        "all_unique_values": [
+          "Shipped Early",
+          "Shipped Late",
+          "Shipped On Time"
+        ],
+        "top_10_values": [
+          {
+            "value": "Shipped Early",
+            "count": 4907,
+            "percentage": 49.11420278250425
+          },
+          {
+            "value": "Shipped Late",
+            "count": 2639,
+            "percentage": 26.41377239515564
+          },
+          {
+            "value": "Shipped On Time",
+            "count": 2445,
+            "percentage": 24.472024822340106
+          }
+        ],
+        "entropy": 1.5081,
+        "is_balanced": true
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": true,
+        "good_for_filtering": false
+      }
+    },
+    "DaystoShipScheduled": {
+      "position": 23,
+      "native_type": "BIGINT",
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 4,
+      "cardinality_ratio": 0.0004,
+      "sample_values": [
+        0,
+        6,
+        3,
+        1
+      ],
+      "top_values": [
+        {
+          "value": 6,
+          "count": 5968,
+          "percentage": 59.73376038434591
+        },
+        {
+          "value": 3,
+          "count": 1942,
+          "percentage": 19.43749374436993
+        },
+        {
+          "value": 1,
+          "count": 1538,
+          "percentage": 15.39385446902212
+        },
+        {
+          "value": 0,
+          "count": 543,
+          "percentage": 5.434891402262036
+        }
+      ],
+      "categorical_stats": {
+        "all_unique_values": [
+          0,
+          1,
+          3,
+          6
+        ],
+        "top_10_values": [
+          {
+            "value": 6,
+            "count": 5968,
+            "percentage": 59.73376038434591
+          },
+          {
+            "value": 3,
+            "count": 1942,
+            "percentage": 19.43749374436993
+          },
+          {
+            "value": 1,
+            "count": 1538,
+            "percentage": 15.39385446902212
+          },
+          {
+            "value": 0,
+            "count": 543,
+            "percentage": 5.434891402262036
+          }
+        ],
+        "entropy": 1.5473,
+        "is_balanced": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": true,
+        "good_for_filtering": false
+      }
+    },
+    "SalesperCustomer": {
+      "position": 24,
+      "native_type": "DOUBLE",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 5455,
+      "cardinality_ratio": 0.546,
+      "sample_values": [
+        391.98,
+        755.96,
+        11.36,
+        12.35,
+        16.18,
+        8.85,
+        362.25,
+        376.51,
+        17.94,
+        108.92
+      ],
+      "top_values": [
+        {
+          "value": 12.96,
+          "count": 57,
+          "percentage": 0.5705134621159044
+        },
+        {
+          "value": 15.55,
+          "count": 39,
+          "percentage": 0.3903513161845661
+        },
+        {
+          "value": 19.44,
+          "count": 39,
+          "percentage": 0.3903513161845661
+        },
+        {
+          "value": 10.37,
+          "count": 36,
+          "percentage": 0.3603242918626764
+        },
+        {
+          "value": 25.92,
+          "count": 36,
+          "percentage": 0.3603242918626764
+        }
+      ],
+      "numerical_stats": {
+        "min": 0.44,
+        "max": 22638.48,
+        "mean": 229.901,
+        "median": 54.48,
+        "std_dev": 623.3325,
+        "quartiles": {
+          "q1": 2.29,
+          "q25": 17.28,
+          "q75": 209.95499999999998,
+          "q99": 2482.4380000000087
+        },
+        "zero_count": 0,
+        "negative_count": 0,
+        "positive_count": 9991
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": true
+      }
+    },
+    "ProfitRatio": {
+      "position": 25,
+      "native_type": "DOUBLE",
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 288,
+      "cardinality_ratio": 0.0288,
+      "sample_values": [
+        27.0,
+        16.0,
+        -25.0,
+        30.0,
+        28.0,
+        15.0,
+        43.0,
+        -4.3,
+        -1.4,
+        -58.3
+      ],
+      "top_values": [
+        {
+          "value": 48.0,
+          "count": 509,
+          "percentage": 5.094585126613953
+        },
+        {
+          "value": 35.0,
+          "count": 443,
+          "percentage": 4.433990591532379
+        },
+        {
+          "value": 47.0,
+          "count": 353,
+          "percentage": 3.533179861875688
+        },
+        {
+          "value": 26.0,
+          "count": 325,
+          "percentage": 3.2529276348713845
+        },
+        {
+          "value": 49.0,
+          "count": 315,
+          "percentage": 3.152837553798418
+        }
+      ],
+      "categorical_stats": {
+        "all_unique_values": null,
+        "top_10_values": [
+          {
+            "value": 48.0,
+            "count": 509,
+            "percentage": 5.094585126613953
+          },
+          {
+            "value": 35.0,
+            "count": 443,
+            "percentage": 4.433990591532379
+          },
+          {
+            "value": 47.0,
+            "count": 353,
+            "percentage": 3.533179861875688
+          },
+          {
+            "value": 26.0,
+            "count": 325,
+            "percentage": 3.2529276348713845
+          },
+          {
+            "value": 49.0,
+            "count": 315,
+            "percentage": 3.152837553798418
+          },
+          {
+            "value": 33.8,
+            "count": 286,
+            "percentage": 2.862576318686818
+          },
+          {
+            "value": 29.0,
+            "count": 278,
+            "percentage": 2.7825042538284457
+          },
+          {
+            "value": 46.0,
+            "count": 266,
+            "percentage": 2.6623961565408867
+          },
+          {
+            "value": 28.0,
+            "count": 260,
+            "percentage": 2.6023421078971074
+          },
+          {
+            "value": 36.3,
+            "count": 252,
+            "percentage": 2.5222700430387346
+          }
+        ],
+        "entropy": 3.2814,
+        "is_balanced": true
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": true,
+        "good_for_filtering": false
+      }
+    },
+    "latitude": {
+      "position": 26,
+      "native_type": "DOUBLE",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 630,
+      "cardinality_ratio": 0.0631,
+      "sample_values": [
+        36.7352,
+        30.2787,
+        36.1214,
+        30.2285,
+        42.2545,
+        36.5686,
+        38.0774,
+        40.9166,
+        38.3482,
+        34.106
+      ],
+      "top_values": [
+        {
+          "value": 40.8011,
+          "count": 263,
+          "percentage": 2.6323691322189973
+        },
+        {
+          "value": 40.7864,
+          "count": 230,
+          "percentage": 2.30207186467821
+        },
+        {
+          "value": 40.7262,
+          "count": 229,
+          "percentage": 2.292062856570914
+        },
+        {
+          "value": 37.7593,
+          "count": 203,
+          "percentage": 2.0318286457812027
+        },
+        {
+          "value": 40.7402,
+          "count": 193,
+          "percentage": 1.9317385647082372
+        }
+      ],
+      "numerical_stats": {
+        "min": 25.4766,
+        "max": 48.7974,
+        "mean": 37.7885,
+        "median": 38.7902,
+        "std_dev": 4.8847,
+        "quartiles": {
+          "q1": 26.0218,
+          "q25": 34.0116,
+          "q75": 40.8011,
+          "q99": 47.6849
+        },
+        "zero_count": 0,
+        "negative_count": 0,
+        "positive_count": 9991
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "longitude": {
+      "position": 27,
+      "native_type": "DOUBLE",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 631,
+      "cardinality_ratio": 0.0632,
+      "sample_values": [
+        -86.8602,
+        -117.6622,
+        -92.3639,
+        -119.7061,
+        -93.2029,
+        -121.8306,
+        -73.6683,
+        -97.356,
+        -71.4058,
+        -72.7997
+      ],
+      "top_values": [
+        {
+          "value": -73.9371,
+          "count": 263,
+          "percentage": 2.6323691322189973
+        },
+        {
+          "value": -73.9764,
+          "count": 230,
+          "percentage": 2.30207186467821
+        },
+        {
+          "value": -73.9796,
+          "count": 229,
+          "percentage": 2.292062856570914
+        },
+        {
+          "value": -122.4836,
+          "count": 203,
+          "percentage": 2.0318286457812027
+        },
+        {
+          "value": -73.9996,
+          "count": 193,
+          "percentage": 1.9317385647082372
+        }
+      ],
+      "numerical_stats": {
+        "min": -123.0998,
+        "max": -68.7918,
+        "mean": -94.3565,
+        "median": -87.7328,
+        "std_dev": 18.0578,
+        "quartiles": {
+          "q1": -122.60007999999999,
+          "q25": -117.2521,
+          "q75": -77.3948,
+          "q99": -71.167
+        },
+        "zero_count": 0,
+        "negative_count": 9991,
+        "positive_count": 0
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    }
+  },
+  "relationships": {
+    "primary_key_candidates": [],
+    "foreign_key_candidates": {
+      "Store_ID": [
+        "store"
+      ]
+    },
+    "correlations": {
+      "PostalCode <-> longitude": 0.9519,
+      "Sales <-> SalesForecast": 1.0,
+      "Sales <-> SalesperCustomer": 1.0,
+      "SalesForecast <-> SalesperCustomer": 1.0
+    },
+    "functional_dependencies": [
+      {
+        "determines": "OrderDate",
+        "determined_by": "Country"
+      },
+      {
+        "determines": "Store_ID",
+        "determined_by": "City"
+      },
+      {
+        "determines": "Store_ID",
+        "determined_by": "Country"
+      },
+      {
+        "determines": "Category",
+        "determined_by": "Country"
+      },
+      {
+        "determines": "City",
+        "determined_by": "Country"
+      },
+      {
+        "determines": "CustomerName",
+        "determined_by": "Segment"
+      },
+      {
+        "determines": "OrderID",
+        "determined_by": "PostalCode"
+      },
+      {
+        "determines": "OrderID",
+        "determined_by": "Region"
+      },
+      {
+        "determines": "OrderID",
+        "determined_by": "Segment"
+      },
+      {
+        "determines": "OrderID",
+        "determined_by": "ShipDate"
+      },
+      {
+        "determines": "OrderID",
+        "determined_by": "ShipMode"
+      },
+      {
+        "determines": "OrderID",
+        "determined_by": "State"
+      },
+      {
+        "determines": "OrderID",
+        "determined_by": "DaystoShipActual"
+      },
+      {
+        "determines": "OrderID",
+        "determined_by": "ShipStatus"
+      },
+      {
+        "determines": "OrderID",
+        "determined_by": "DaystoShipScheduled"
+      },
+      {
+        "determines": "OrderID",
+        "determined_by": "latitude"
+      },
+      {
+        "determines": "OrderID",
+        "determined_by": "longitude"
+      },
+      {
+        "determines": "PostalCode",
+        "determined_by": "Region"
+      },
+      {
+        "determines": "PostalCode",
+        "determined_by": "State"
+      },
+      {
+        "determines": "PostalCode",
+        "determined_by": "latitude"
+      },
+      {
+        "determines": "PostalCode",
+        "determined_by": "longitude"
+      },
+      {
+        "determines": "ShipMode",
+        "determined_by": "DaystoShipScheduled"
+      }
+    ]
+  }
+}

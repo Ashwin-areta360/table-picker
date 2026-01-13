@@ -1,0 +1,997 @@
+{
+  "directed": true,
+  "multigraph": true,
+  "graph": {},
+  "nodes": [
+    {
+      "node_type": "table",
+      "name": "faculty_info",
+      "row_count": 204,
+      "column_count": 6,
+      "size_bytes": 20400,
+      "label": "Table: faculty_info",
+      "id": "table_faculty_info"
+    },
+    {
+      "node_type": "column",
+      "name": "Faculty ID",
+      "position": 1,
+      "semantic_type": "categorical",
+      "nullable": false,
+      "null_percentage": 0.0,
+      "unique_count": 20,
+      "cardinality_ratio": 0.098,
+      "label": "Column: Faculty ID",
+      "id": "col_faculty_info_Faculty ID"
+    },
+    {
+      "node_type": "column",
+      "name": "Name",
+      "position": 2,
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 20,
+      "cardinality_ratio": 0.098,
+      "label": "Column: Name",
+      "id": "col_faculty_info_Name"
+    },
+    {
+      "node_type": "column",
+      "name": "Department",
+      "position": 3,
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 5,
+      "cardinality_ratio": 0.0245,
+      "label": "Column: Department",
+      "id": "col_faculty_info_Department"
+    },
+    {
+      "node_type": "column",
+      "name": "Contact Info",
+      "position": 4,
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 20,
+      "cardinality_ratio": 0.098,
+      "label": "Column: Contact Info",
+      "id": "col_faculty_info_Contact Info"
+    },
+    {
+      "node_type": "column",
+      "name": "Courses Taught",
+      "position": 5,
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 204,
+      "cardinality_ratio": 1.0,
+      "label": "Column: Courses Taught",
+      "id": "col_faculty_info_Courses Taught"
+    },
+    {
+      "node_type": "column",
+      "name": "Course Code",
+      "position": 6,
+      "semantic_type": "text",
+      "nullable": false,
+      "null_percentage": 0.0,
+      "unique_count": 204,
+      "cardinality_ratio": 1.0,
+      "label": "Column: Course Code",
+      "id": "col_faculty_info_Course Code"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "label": "Type: VARCHAR",
+      "id": "dtype_1"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "not_null",
+      "label": "Not Null",
+      "id": "constraint_2"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_3"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "label": "Type: VARCHAR",
+      "id": "dtype_4"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_5"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "label": "Type: VARCHAR",
+      "id": "dtype_6"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_7"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "label": "Type: VARCHAR",
+      "id": "dtype_8"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_9"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "label": "Type: VARCHAR",
+      "id": "dtype_10"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_11"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "unique",
+      "cardinality_ratio": 1.0,
+      "label": "Unique",
+      "id": "constraint_12"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_13"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "label": "Type: VARCHAR",
+      "id": "dtype_14"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "not_null",
+      "label": "Not Null",
+      "id": "constraint_15"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "unique",
+      "cardinality_ratio": 1.0,
+      "label": "Unique",
+      "id": "constraint_16"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_17"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "foreign_key",
+      "references_table": "courses",
+      "label": "FK -> courses",
+      "id": "constraint_18"
+    },
+    {
+      "node_type": "pattern",
+      "pattern_type": "identifier",
+      "label": "Pattern: identifier",
+      "id": "pattern_19"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "categorical",
+      "entropy": 3.3016,
+      "is_balanced": true,
+      "unique_count": 20,
+      "label": "Categorical Stats",
+      "id": "stats_20"
+    },
+    {
+      "node_type": "category_value",
+      "value": "F5003",
+      "label": "Value: F5003",
+      "count": 17,
+      "percentage": 8.333333333333332,
+      "id": "catval_21"
+    },
+    {
+      "node_type": "category_value",
+      "value": "F5007",
+      "label": "Value: F5007",
+      "count": 14,
+      "percentage": 6.862745098039216,
+      "id": "catval_22"
+    },
+    {
+      "node_type": "category_value",
+      "value": "F5012",
+      "label": "Value: F5012",
+      "count": 14,
+      "percentage": 6.862745098039216,
+      "id": "catval_23"
+    },
+    {
+      "node_type": "category_value",
+      "value": "F5015",
+      "label": "Value: F5015",
+      "count": 14,
+      "percentage": 6.862745098039216,
+      "id": "catval_24"
+    },
+    {
+      "node_type": "category_value",
+      "value": "F5002",
+      "label": "Value: F5002",
+      "count": 14,
+      "percentage": 6.862745098039216,
+      "id": "catval_25"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "categorical",
+      "entropy": 3.3016,
+      "is_balanced": true,
+      "unique_count": 20,
+      "label": "Categorical Stats",
+      "id": "stats_26"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Prof. J. Patil",
+      "label": "Value: Prof. J. Patil",
+      "count": 17,
+      "percentage": 8.333333333333332,
+      "id": "catval_27"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Dr. O. Patel",
+      "label": "Value: Dr. O. Patel",
+      "count": 14,
+      "percentage": 6.862745098039216,
+      "id": "catval_28"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Dr. M. Choudhury",
+      "label": "Value: Dr. M. Choudhury",
+      "count": 14,
+      "percentage": 6.862745098039216,
+      "id": "catval_29"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Prof. P. Gupta",
+      "label": "Value: Prof. P. Gupta",
+      "count": 14,
+      "percentage": 6.862745098039216,
+      "id": "catval_30"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Prof. F. Joshi",
+      "label": "Value: Prof. F. Joshi",
+      "count": 14,
+      "percentage": 6.862745098039216,
+      "id": "catval_31"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "categorical",
+      "entropy": 2.2149,
+      "is_balanced": true,
+      "unique_count": 5,
+      "label": "Categorical Stats",
+      "id": "stats_32"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Civil Engineering",
+      "label": "Value: Civil Engineering",
+      "count": 61,
+      "percentage": 29.901960784313726,
+      "id": "catval_33"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Computer Engineering",
+      "label": "Value: Computer Engineering",
+      "count": 59,
+      "percentage": 28.921568627450984,
+      "id": "catval_34"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Electrical Engineering",
+      "label": "Value: Electrical Engineering",
+      "count": 32,
+      "percentage": 15.686274509803921,
+      "id": "catval_35"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Electronics Engineering",
+      "label": "Value: Electronics Engineering",
+      "count": 25,
+      "percentage": 12.254901960784313,
+      "id": "catval_36"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Mechanical Engineering",
+      "label": "Value: Mechanical Engineering",
+      "count": 27,
+      "percentage": 13.23529411764706,
+      "id": "catval_37"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "categorical",
+      "entropy": 3.3016,
+      "is_balanced": true,
+      "unique_count": 20,
+      "label": "Categorical Stats",
+      "id": "stats_38"
+    },
+    {
+      "node_type": "category_value",
+      "value": "pj.@ssmcollege.co.in",
+      "label": "Value: pj.@ssmcollege.co.in",
+      "count": 17,
+      "percentage": 8.333333333333332,
+      "id": "catval_39"
+    },
+    {
+      "node_type": "category_value",
+      "value": "pf.@ssmcollege.co.in",
+      "label": "Value: pf.@ssmcollege.co.in",
+      "count": 14,
+      "percentage": 6.862745098039216,
+      "id": "catval_40"
+    },
+    {
+      "node_type": "category_value",
+      "value": "dm.@ssmcollege.co.in",
+      "label": "Value: dm.@ssmcollege.co.in",
+      "count": 14,
+      "percentage": 6.862745098039216,
+      "id": "catval_41"
+    },
+    {
+      "node_type": "category_value",
+      "value": "pp.@ssmcollege.co.in",
+      "label": "Value: pp.@ssmcollege.co.in",
+      "count": 14,
+      "percentage": 6.862745098039216,
+      "id": "catval_42"
+    },
+    {
+      "node_type": "category_value",
+      "value": "do.@ssmcollege.co.in",
+      "label": "Value: do.@ssmcollege.co.in",
+      "count": 14,
+      "percentage": 6.862745098039216,
+      "id": "catval_43"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Manufacturing Processes",
+      "label": "Sample: Manufacturing Processes",
+      "sample_index": 1,
+      "id": "sample_44"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Drives Lab",
+      "label": "Sample: Drives Lab",
+      "sample_index": 2,
+      "id": "sample_45"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Engineering Graphics",
+      "label": "Sample: Engineering Graphics",
+      "sample_index": 3,
+      "id": "sample_46"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Smart Grid",
+      "label": "Sample: Smart Grid",
+      "sample_index": 4,
+      "id": "sample_47"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Switchgear & Protection",
+      "label": "Sample: Switchgear & Protection",
+      "sample_index": 5,
+      "id": "sample_48"
+    },
+    {
+      "node_type": "category_value",
+      "value": "BEE101",
+      "label": "Sample: BEE101",
+      "sample_index": 1,
+      "id": "sample_49"
+    },
+    {
+      "node_type": "category_value",
+      "value": "COM101",
+      "label": "Sample: COM101",
+      "sample_index": 2,
+      "id": "sample_50"
+    },
+    {
+      "node_type": "category_value",
+      "value": "AUE101",
+      "label": "Sample: AUE101",
+      "sample_index": 3,
+      "id": "sample_51"
+    },
+    {
+      "node_type": "category_value",
+      "value": "ELE111",
+      "label": "Sample: ELE111",
+      "sample_index": 4,
+      "id": "sample_52"
+    },
+    {
+      "node_type": "category_value",
+      "value": "HYD101",
+      "label": "Sample: HYD101",
+      "sample_index": 5,
+      "id": "sample_53"
+    },
+    {
+      "node_type": "table",
+      "name": "courses",
+      "is_reference": true,
+      "label": "\u2192 courses",
+      "id": "ref_courses"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "index_candidate",
+      "label": "Hint: Index Candidate",
+      "id": "hint_index_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "partition_candidate",
+      "label": "Hint: Partition Candidate",
+      "id": "hint_partition_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "aggregation_candidate",
+      "label": "Hint: Aggregation Candidate",
+      "id": "hint_aggregation_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "grouping_candidate",
+      "label": "Hint: Grouping Candidate",
+      "id": "hint_grouping_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "filtering_candidate",
+      "label": "Hint: Filtering Candidate",
+      "id": "hint_filtering_candidate"
+    }
+  ],
+  "links": [
+    {
+      "edge_type": "has_column",
+      "position": 1,
+      "source": "table_faculty_info",
+      "target": "col_faculty_info_Faculty ID",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 2,
+      "source": "table_faculty_info",
+      "target": "col_faculty_info_Name",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 3,
+      "source": "table_faculty_info",
+      "target": "col_faculty_info_Department",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 4,
+      "source": "table_faculty_info",
+      "target": "col_faculty_info_Contact Info",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 5,
+      "source": "table_faculty_info",
+      "target": "col_faculty_info_Courses Taught",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 6,
+      "source": "table_faculty_info",
+      "target": "col_faculty_info_Course Code",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_faculty_info_Faculty ID",
+      "target": "dtype_1",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_faculty_info_Faculty ID",
+      "target": "constraint_2",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_faculty_info_Faculty ID",
+      "target": "constraint_3",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_faculty_info_Faculty ID",
+      "target": "stats_20",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 8.333333333333332,
+      "source": "col_faculty_info_Faculty ID",
+      "target": "catval_21",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 6.862745098039216,
+      "source": "col_faculty_info_Faculty ID",
+      "target": "catval_22",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 6.862745098039216,
+      "source": "col_faculty_info_Faculty ID",
+      "target": "catval_23",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 6.862745098039216,
+      "source": "col_faculty_info_Faculty ID",
+      "target": "catval_24",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 6.862745098039216,
+      "source": "col_faculty_info_Faculty ID",
+      "target": "catval_25",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_faculty_info_Faculty ID",
+      "target": "col_faculty_info_Name",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_faculty_info_Faculty ID",
+      "target": "col_faculty_info_Department",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_faculty_info_Faculty ID",
+      "target": "col_faculty_info_Contact Info",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "categorical_column",
+      "source": "col_faculty_info_Faculty ID",
+      "target": "hint_grouping_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_faculty_info_Name",
+      "target": "dtype_4",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_faculty_info_Name",
+      "target": "constraint_5",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_faculty_info_Name",
+      "target": "stats_26",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 8.333333333333332,
+      "source": "col_faculty_info_Name",
+      "target": "catval_27",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 6.862745098039216,
+      "source": "col_faculty_info_Name",
+      "target": "catval_28",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 6.862745098039216,
+      "source": "col_faculty_info_Name",
+      "target": "catval_29",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 6.862745098039216,
+      "source": "col_faculty_info_Name",
+      "target": "catval_30",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 6.862745098039216,
+      "source": "col_faculty_info_Name",
+      "target": "catval_31",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_faculty_info_Name",
+      "target": "col_faculty_info_Department",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_faculty_info_Name",
+      "target": "col_faculty_info_Contact Info",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "categorical_column",
+      "source": "col_faculty_info_Name",
+      "target": "hint_grouping_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_faculty_info_Department",
+      "target": "dtype_6",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_faculty_info_Department",
+      "target": "constraint_7",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_faculty_info_Department",
+      "target": "stats_32",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 29.901960784313726,
+      "source": "col_faculty_info_Department",
+      "target": "catval_33",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 28.921568627450984,
+      "source": "col_faculty_info_Department",
+      "target": "catval_34",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 15.686274509803921,
+      "source": "col_faculty_info_Department",
+      "target": "catval_35",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 12.254901960784313,
+      "source": "col_faculty_info_Department",
+      "target": "catval_36",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 13.23529411764706,
+      "source": "col_faculty_info_Department",
+      "target": "catval_37",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "categorical_column",
+      "source": "col_faculty_info_Department",
+      "target": "hint_grouping_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_faculty_info_Contact Info",
+      "target": "dtype_8",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_faculty_info_Contact Info",
+      "target": "constraint_9",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_faculty_info_Contact Info",
+      "target": "stats_38",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 8.333333333333332,
+      "source": "col_faculty_info_Contact Info",
+      "target": "catval_39",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 6.862745098039216,
+      "source": "col_faculty_info_Contact Info",
+      "target": "catval_40",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 6.862745098039216,
+      "source": "col_faculty_info_Contact Info",
+      "target": "catval_41",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 6.862745098039216,
+      "source": "col_faculty_info_Contact Info",
+      "target": "catval_42",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 6.862745098039216,
+      "source": "col_faculty_info_Contact Info",
+      "target": "catval_43",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "categorical_column",
+      "source": "col_faculty_info_Contact Info",
+      "target": "hint_grouping_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_faculty_info_Courses Taught",
+      "target": "dtype_10",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_faculty_info_Courses Taught",
+      "target": "constraint_11",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_faculty_info_Courses Taught",
+      "target": "constraint_12",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_faculty_info_Courses Taught",
+      "target": "constraint_13",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_faculty_info_Courses Taught",
+      "target": "sample_44",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_faculty_info_Courses Taught",
+      "target": "sample_45",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_faculty_info_Courses Taught",
+      "target": "sample_46",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_faculty_info_Courses Taught",
+      "target": "sample_47",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_faculty_info_Courses Taught",
+      "target": "sample_48",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_faculty_info_Courses Taught",
+      "target": "col_faculty_info_Course Code",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "high_cardinality",
+      "source": "col_faculty_info_Courses Taught",
+      "target": "hint_index_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_faculty_info_Course Code",
+      "target": "dtype_14",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_faculty_info_Course Code",
+      "target": "constraint_15",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_faculty_info_Course Code",
+      "target": "constraint_16",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_faculty_info_Course Code",
+      "target": "constraint_17",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_faculty_info_Course Code",
+      "target": "constraint_18",
+      "key": 0
+    },
+    {
+      "edge_type": "has_pattern",
+      "source": "col_faculty_info_Course Code",
+      "target": "pattern_19",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_faculty_info_Course Code",
+      "target": "sample_49",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_faculty_info_Course Code",
+      "target": "sample_50",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_faculty_info_Course Code",
+      "target": "sample_51",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_faculty_info_Course Code",
+      "target": "sample_52",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_faculty_info_Course Code",
+      "target": "sample_53",
+      "key": 0
+    },
+    {
+      "edge_type": "references",
+      "label": "references",
+      "source": "col_faculty_info_Course Code",
+      "target": "ref_courses",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "high_cardinality",
+      "source": "col_faculty_info_Course Code",
+      "target": "hint_index_candidate",
+      "key": 0
+    }
+  ]
+}

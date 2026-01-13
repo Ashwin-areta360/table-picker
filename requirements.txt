@@ -1,0 +1,6 @@
+# Core dependencies
+duckdb>=0.9.0
+
+# Optional RAG dependencies (install with: pip install -r requirements.txt -r requirements-rag.txt)
+# chromadb>=0.4.0
+

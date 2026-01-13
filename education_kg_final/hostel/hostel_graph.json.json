@@ -1,0 +1,691 @@
+{
+  "directed": true,
+  "multigraph": true,
+  "graph": {},
+  "nodes": [
+    {
+      "node_type": "table",
+      "name": "hostel",
+      "row_count": 658,
+      "column_count": 4,
+      "size_bytes": 65800,
+      "label": "Table: hostel",
+      "id": "table_hostel"
+    },
+    {
+      "node_type": "column",
+      "name": "Student ID",
+      "position": 1,
+      "semantic_type": "text",
+      "nullable": false,
+      "null_percentage": 0.0,
+      "unique_count": 658,
+      "cardinality_ratio": 1.0,
+      "label": "Column: Student ID",
+      "id": "col_hostel_Student ID"
+    },
+    {
+      "node_type": "column",
+      "name": "Room Number",
+      "position": 2,
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 456,
+      "cardinality_ratio": 0.693,
+      "label": "Column: Room Number",
+      "id": "col_hostel_Room Number"
+    },
+    {
+      "node_type": "column",
+      "name": "Hostel Name",
+      "position": 3,
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 3,
+      "cardinality_ratio": 0.0046,
+      "label": "Column: Hostel Name",
+      "id": "col_hostel_Hostel Name"
+    },
+    {
+      "node_type": "column",
+      "name": "Date of Allotment",
+      "position": 4,
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 658,
+      "cardinality_ratio": 1.0,
+      "label": "Column: Date of Allotment",
+      "id": "col_hostel_Date of Allotment"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "label": "Type: VARCHAR",
+      "id": "dtype_1"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "not_null",
+      "label": "Not Null",
+      "id": "constraint_2"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "unique",
+      "cardinality_ratio": 1.0,
+      "label": "Unique",
+      "id": "constraint_3"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_4"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "foreign_key",
+      "references_table": "students_info",
+      "label": "FK -> students_info",
+      "id": "constraint_5"
+    },
+    {
+      "node_type": "pattern",
+      "pattern_type": "identifier",
+      "label": "Pattern: identifier",
+      "id": "pattern_6"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "label": "Type: BIGINT",
+      "id": "dtype_7"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_8"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "categorical",
+      "label": "Type: VARCHAR",
+      "id": "dtype_9"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_10"
+    },
+    {
+      "node_type": "dtype",
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "label": "Type: VARCHAR",
+      "id": "dtype_11"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "nullable",
+      "label": "Nullable",
+      "id": "constraint_12"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "unique",
+      "cardinality_ratio": 1.0,
+      "label": "Unique",
+      "id": "constraint_13"
+    },
+    {
+      "node_type": "constraint",
+      "constraint_type": "primary_key",
+      "label": "Primary Key Candidate",
+      "id": "constraint_14"
+    },
+    {
+      "node_type": "pattern",
+      "pattern_type": "identifier",
+      "label": "Pattern: identifier",
+      "id": "pattern_15"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUCE1025",
+      "label": "Sample: TUCE1025",
+      "sample_index": 1,
+      "id": "sample_16"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUCIV1003",
+      "label": "Sample: TUCIV1003",
+      "sample_index": 2,
+      "id": "sample_17"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUCIV1028",
+      "label": "Sample: TUCIV1028",
+      "sample_index": 3,
+      "id": "sample_18"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUCIV1045",
+      "label": "Sample: TUCIV1045",
+      "sample_index": 4,
+      "id": "sample_19"
+    },
+    {
+      "node_type": "category_value",
+      "value": "TUEE1012",
+      "label": "Sample: TUEE1012",
+      "sample_index": 5,
+      "id": "sample_20"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "numerical",
+      "label": "Numerical Stats",
+      "min": 100.0,
+      "max": 999.0,
+      "mean": 564.196,
+      "median": 570.0,
+      "std_dev": 262.4333,
+      "q1": 111.14,
+      "q25": 337.5,
+      "q75": 788.25,
+      "q99": 990.2899999999998,
+      "zero_count": 0,
+      "negative_count": 0,
+      "positive_count": 658,
+      "id": "stats_21"
+    },
+    {
+      "node_type": "distribution",
+      "label": "Distribution",
+      "skewness": "symmetric",
+      "iqr": 450.75,
+      "has_outliers": true,
+      "coefficient_of_variation": 0.4651456231522378,
+      "spread": "medium",
+      "id": "distribution_22"
+    },
+    {
+      "node_type": "category_value",
+      "value": "282",
+      "label": "Sample: 282",
+      "sample_index": 1,
+      "id": "sample_23"
+    },
+    {
+      "node_type": "category_value",
+      "value": "336",
+      "label": "Sample: 336",
+      "sample_index": 2,
+      "id": "sample_24"
+    },
+    {
+      "node_type": "category_value",
+      "value": "222",
+      "label": "Sample: 222",
+      "sample_index": 3,
+      "id": "sample_25"
+    },
+    {
+      "node_type": "category_value",
+      "value": "567",
+      "label": "Sample: 567",
+      "sample_index": 4,
+      "id": "sample_26"
+    },
+    {
+      "node_type": "category_value",
+      "value": "789",
+      "label": "Sample: 789",
+      "sample_index": 5,
+      "id": "sample_27"
+    },
+    {
+      "node_type": "stats",
+      "stats_type": "categorical",
+      "entropy": 0.2536,
+      "is_balanced": false,
+      "unique_count": 3,
+      "label": "Categorical Stats",
+      "id": "stats_28"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Boys Hostel",
+      "label": "Value: Boys Hostel",
+      "count": 11,
+      "percentage": 1.6717325227963524,
+      "id": "catval_29"
+    },
+    {
+      "node_type": "category_value",
+      "value": "General",
+      "label": "Value: General",
+      "count": 635,
+      "percentage": 96.50455927051672,
+      "id": "catval_30"
+    },
+    {
+      "node_type": "category_value",
+      "value": "Girls Hostel",
+      "label": "Value: Girls Hostel",
+      "count": 12,
+      "percentage": 1.82370820668693,
+      "id": "catval_31"
+    },
+    {
+      "node_type": "category_value",
+      "value": "2024-07-04",
+      "label": "Sample: 2024-07-04",
+      "sample_index": 1,
+      "id": "sample_32"
+    },
+    {
+      "node_type": "category_value",
+      "value": "2024-07-06",
+      "label": "Sample: 2024-07-06",
+      "sample_index": 2,
+      "id": "sample_33"
+    },
+    {
+      "node_type": "category_value",
+      "value": "2024-07-17",
+      "label": "Sample: 2024-07-17",
+      "sample_index": 3,
+      "id": "sample_34"
+    },
+    {
+      "node_type": "category_value",
+      "value": "2024-07-18",
+      "label": "Sample: 2024-07-18",
+      "sample_index": 4,
+      "id": "sample_35"
+    },
+    {
+      "node_type": "category_value",
+      "value": "2024-07-19",
+      "label": "Sample: 2024-07-19",
+      "sample_index": 5,
+      "id": "sample_36"
+    },
+    {
+      "node_type": "table",
+      "name": "students_info",
+      "is_reference": true,
+      "label": "\u2192 students_info",
+      "id": "ref_students_info"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "index_candidate",
+      "label": "Hint: Index Candidate",
+      "id": "hint_index_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "partition_candidate",
+      "label": "Hint: Partition Candidate",
+      "id": "hint_partition_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "aggregation_candidate",
+      "label": "Hint: Aggregation Candidate",
+      "id": "hint_aggregation_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "grouping_candidate",
+      "label": "Hint: Grouping Candidate",
+      "id": "hint_grouping_candidate"
+    },
+    {
+      "node_type": "hint",
+      "hint_type": "filtering_candidate",
+      "label": "Hint: Filtering Candidate",
+      "id": "hint_filtering_candidate"
+    }
+  ],
+  "links": [
+    {
+      "edge_type": "has_column",
+      "position": 1,
+      "source": "table_hostel",
+      "target": "col_hostel_Student ID",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 2,
+      "source": "table_hostel",
+      "target": "col_hostel_Room Number",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 3,
+      "source": "table_hostel",
+      "target": "col_hostel_Hostel Name",
+      "key": 0
+    },
+    {
+      "edge_type": "has_column",
+      "position": 4,
+      "source": "table_hostel",
+      "target": "col_hostel_Date of Allotment",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_hostel_Student ID",
+      "target": "dtype_1",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_hostel_Student ID",
+      "target": "constraint_2",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_hostel_Student ID",
+      "target": "constraint_3",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_hostel_Student ID",
+      "target": "constraint_4",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_hostel_Student ID",
+      "target": "constraint_5",
+      "key": 0
+    },
+    {
+      "edge_type": "has_pattern",
+      "source": "col_hostel_Student ID",
+      "target": "pattern_6",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_hostel_Student ID",
+      "target": "sample_16",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_hostel_Student ID",
+      "target": "sample_17",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_hostel_Student ID",
+      "target": "sample_18",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_hostel_Student ID",
+      "target": "sample_19",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_hostel_Student ID",
+      "target": "sample_20",
+      "key": 0
+    },
+    {
+      "edge_type": "references",
+      "label": "references",
+      "source": "col_hostel_Student ID",
+      "target": "ref_students_info",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_hostel_Student ID",
+      "target": "col_hostel_Room Number",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_hostel_Student ID",
+      "target": "col_hostel_Hostel Name",
+      "key": 0
+    },
+    {
+      "edge_type": "determines",
+      "label": "determines",
+      "source": "col_hostel_Student ID",
+      "target": "col_hostel_Date of Allotment",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "high_cardinality",
+      "source": "col_hostel_Student ID",
+      "target": "hint_index_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_hostel_Room Number",
+      "target": "dtype_7",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_hostel_Room Number",
+      "target": "constraint_8",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_hostel_Room Number",
+      "target": "stats_21",
+      "key": 0
+    },
+    {
+      "edge_type": "has_distribution",
+      "source": "col_hostel_Room Number",
+      "target": "distribution_22",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_hostel_Room Number",
+      "target": "sample_23",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_hostel_Room Number",
+      "target": "sample_24",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_hostel_Room Number",
+      "target": "sample_25",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_hostel_Room Number",
+      "target": "sample_26",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_hostel_Room Number",
+      "target": "sample_27",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "numerical_column",
+      "source": "col_hostel_Room Number",
+      "target": "hint_aggregation_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "moderate_cardinality",
+      "source": "col_hostel_Room Number",
+      "target": "hint_filtering_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_hostel_Hostel Name",
+      "target": "dtype_9",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_hostel_Hostel Name",
+      "target": "constraint_10",
+      "key": 0
+    },
+    {
+      "edge_type": "has_stats",
+      "source": "col_hostel_Hostel Name",
+      "target": "stats_28",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 1.6717325227963524,
+      "source": "col_hostel_Hostel Name",
+      "target": "catval_29",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 96.50455927051672,
+      "source": "col_hostel_Hostel Name",
+      "target": "catval_30",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "weight": 1.82370820668693,
+      "source": "col_hostel_Hostel Name",
+      "target": "catval_31",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "categorical_column",
+      "source": "col_hostel_Hostel Name",
+      "target": "hint_grouping_candidate",
+      "key": 0
+    },
+    {
+      "edge_type": "has_type",
+      "source": "col_hostel_Date of Allotment",
+      "target": "dtype_11",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_hostel_Date of Allotment",
+      "target": "constraint_12",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_hostel_Date of Allotment",
+      "target": "constraint_13",
+      "key": 0
+    },
+    {
+      "edge_type": "has_constraint",
+      "source": "col_hostel_Date of Allotment",
+      "target": "constraint_14",
+      "key": 0
+    },
+    {
+      "edge_type": "has_pattern",
+      "source": "col_hostel_Date of Allotment",
+      "target": "pattern_15",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 1,
+      "source": "col_hostel_Date of Allotment",
+      "target": "sample_32",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 2,
+      "source": "col_hostel_Date of Allotment",
+      "target": "sample_33",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 3,
+      "source": "col_hostel_Date of Allotment",
+      "target": "sample_34",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 4,
+      "source": "col_hostel_Date of Allotment",
+      "target": "sample_35",
+      "key": 0
+    },
+    {
+      "edge_type": "has_value",
+      "sample_order": 5,
+      "source": "col_hostel_Date of Allotment",
+      "target": "sample_36",
+      "key": 0
+    },
+    {
+      "edge_type": "has_hint",
+      "reason": "high_cardinality",
+      "source": "col_hostel_Date of Allotment",
+      "target": "hint_index_candidate",
+      "key": 0
+    }
+  ]
+}

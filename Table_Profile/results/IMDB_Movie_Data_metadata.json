@@ -1,0 +1,1037 @@
+{
+  "table_name": "IMDB_Movie_Data",
+  "row_count": 1000,
+  "column_count": 12,
+  "size_bytes": 100000,
+  "columns": {
+    "Rank": {
+      "position": 1,
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 1000,
+      "cardinality_ratio": 1.0,
+      "sample_values": [
+        16,
+        23,
+        32,
+        33,
+        53,
+        82,
+        93,
+        98,
+        133,
+        164
+      ],
+      "top_values": [
+        {
+          "value": 1,
+          "count": 1,
+          "percentage": 0.1
+        },
+        {
+          "value": 2,
+          "count": 1,
+          "percentage": 0.1
+        },
+        {
+          "value": 3,
+          "count": 1,
+          "percentage": 0.1
+        },
+        {
+          "value": 4,
+          "count": 1,
+          "percentage": 0.1
+        },
+        {
+          "value": 5,
+          "count": 1,
+          "percentage": 0.1
+        }
+      ],
+      "numerical_stats": {
+        "min": 1.0,
+        "max": 1000.0,
+        "mean": 500.5,
+        "median": 500.5,
+        "std_dev": 288.8194,
+        "quartiles": {
+          "q1": 10.99,
+          "q25": 250.75,
+          "q75": 750.25,
+          "q99": 990.01
+        },
+        "zero_count": 0,
+        "negative_count": 0,
+        "positive_count": 1000
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": true,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": true,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "Title": {
+      "position": 2,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 999,
+      "cardinality_ratio": 0.999,
+      "sample_values": [
+        "5- 25- 77",
+        "The Last Face",
+        "Collateral Beauty",
+        "Zootopia",
+        "Prisoners",
+        "10 Cloverfield Lane",
+        "The Revenant",
+        "Hot Fuzz",
+        "Central Intelligence",
+        "Allegiant"
+      ],
+      "top_values": [
+        {
+          "value": "The Host",
+          "count": 2,
+          "percentage": 0.2
+        },
+        {
+          "value": "Collateral Beauty",
+          "count": 1,
+          "percentage": 0.1
+        },
+        {
+          "value": "The Last Face",
+          "count": 1,
+          "percentage": 0.1
+        },
+        {
+          "value": "Prisoners",
+          "count": 1,
+          "percentage": 0.1
+        },
+        {
+          "value": "Zootopia",
+          "count": 1,
+          "percentage": 0.1
+        }
+      ],
+      "text_stats": {
+        "avg_length": 14.54,
+        "min_length": 2,
+        "max_length": 61,
+        "patterns": {
+          "email": false,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": true,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": true,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "Genre": {
+      "position": 3,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 207,
+      "cardinality_ratio": 0.207,
+      "sample_values": [
+        "Comedy,Family,Musical",
+        "Mystery,Thriller",
+        "Action,Adventure,Crime",
+        "Crime,Drama,History",
+        "Action,Horror",
+        "Comedy,Mystery",
+        "Adventure,Comedy,Sci-Fi",
+        "Drama,Horror,Musical",
+        "Action,Comedy,Horror",
+        "Comedy"
+      ],
+      "top_values": [
+        {
+          "value": "Action,Adventure,Sci-Fi",
+          "count": 50,
+          "percentage": 5.0
+        },
+        {
+          "value": "Drama",
+          "count": 48,
+          "percentage": 4.8
+        },
+        {
+          "value": "Comedy,Drama,Romance",
+          "count": 35,
+          "percentage": 3.5000000000000004
+        },
+        {
+          "value": "Comedy",
+          "count": 32,
+          "percentage": 3.2
+        },
+        {
+          "value": "Drama,Romance",
+          "count": 31,
+          "percentage": 3.1
+        }
+      ],
+      "text_stats": {
+        "avg_length": 18.09,
+        "min_length": 5,
+        "max_length": 26,
+        "patterns": {
+          "email": false,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": true
+      }
+    },
+    "Description": {
+      "position": 4,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 1000,
+      "cardinality_ratio": 1.0,
+      "sample_values": [
+        "A young woman must save herself and her friends from an ancient evil that stalks its victims through the real-life phenomenon of sleep paralysis.",
+        "A former secretary, newly appointed as a scriptwriter for propaganda films, joins the cast and crew of a major production while the Blitz rages around them.",
+        "Literature student Anastasia Steele's life changes forever when she meets handsome, yet tormented, billionaire Christian Grey.",
+        "A man's nervous breakdown causes him to leave his wife and live in his attic for several months.",
+        "A personal shopper in Paris refuses to leave the city until she makes contact with her twin brother who previously died there. Her life becomes more complicated when a mysterious person contacts her via text message.",
+        "A dystopian love story in a Texas wasteland and set in a community of cannibals.",
+        "A middle-aged husband's life changes dramatically when his wife asks him for a divorce. He seeks to rediscover his manhood with the help of a newfound friend, Jacob, learning to pick up girls at bars.",
+        "A cryptic message from Bond's past sends him on a trail to uncover a sinister organization. While M battles political forces to keep the secret service alive, Bond peels back the layers of deceit to reveal the terrible truth behind SPECTRE.",
+        "Two estranged brothers reunite at their missing father's video store and find a VCR board game dubbed 'Beyond The Gates' that holds a connection to their father's disappearance.",
+        "A family in 1630s New England is torn apart by the forces of witchcraft, black magic and possession."
+      ],
+      "top_values": [
+        {
+          "value": "A spacecraft traveling to a distant colony planet and transporting thousands of people has a malfunction in its sleep chambers. As a result, two passengers are awakened 90 years early.",
+          "count": 1,
+          "percentage": 0.1
+        },
+        {
+          "value": "A cold-blooded predatory couple while cruising the streets in search of their next victim, will stumble upon a 17-year-old high school girl, who will be sedated, abducted and chained in the strangers' guest room.",
+          "count": 1,
+          "percentage": 0.1
+        },
+        {
+          "value": "When three overworked and under-appreciated moms are pushed beyond their limits, they ditch their conventional responsibilities for a jolt of long overdue freedom, fun, and comedic self-indulgence.",
+          "count": 1,
+          "percentage": 0.1
+        },
+        {
+          "value": "Set during the last days of the Ottoman Empire, The Promise follows a love triangle between Michael, a brilliant medical student, the beautiful and sophisticated Ana, and Chris - a renowned American journalist based in Paris.",
+          "count": 1,
+          "percentage": 0.1
+        },
+        {
+          "value": "When Tony Stark and Bruce Banner try to jump-start a dormant peacekeeping program called Ultron, things go horribly wrong and it's up to Earth's mightiest heroes to stop the villainous Ultron from enacting his terrible plan.",
+          "count": 1,
+          "percentage": 0.1
+        }
+      ],
+      "text_stats": {
+        "avg_length": 163.23,
+        "min_length": 42,
+        "max_length": 421,
+        "patterns": {
+          "email": false,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": true,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": true,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "Director": {
+      "position": 5,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 644,
+      "cardinality_ratio": 0.644,
+      "sample_values": [
+        "M. Night Shyamalan",
+        "Shawn Burkett",
+        "Katie Holmes",
+        "Ana Lily Amirpour",
+        "Catherine Hardwicke",
+        "John Lasseter",
+        "Pete Docter",
+        "Joseph Cedar",
+        "Justin Simien",
+        "Lars von Trier"
+      ],
+      "top_values": [
+        {
+          "value": "Ridley Scott",
+          "count": 8,
+          "percentage": 0.8
+        },
+        {
+          "value": "Michael Bay",
+          "count": 6,
+          "percentage": 0.6
+        },
+        {
+          "value": "M. Night Shyamalan",
+          "count": 6,
+          "percentage": 0.6
+        },
+        {
+          "value": "David Yates",
+          "count": 6,
+          "percentage": 0.6
+        },
+        {
+          "value": "Paul W.S. Anderson",
+          "count": 6,
+          "percentage": 0.6
+        }
+      ],
+      "text_stats": {
+        "avg_length": 13.14,
+        "min_length": 3,
+        "max_length": 32,
+        "patterns": {
+          "email": false,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": true
+      }
+    },
+    "Actors": {
+      "position": 6,
+      "native_type": "VARCHAR",
+      "semantic_type": "text",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 996,
+      "cardinality_ratio": 0.996,
+      "sample_values": [
+        "Noomi Rapace, Logan Marshall-Green, Michael Fassbender, Charlize Theron",
+        "Emma Booth, Ashleigh Cummings, Stephen Curry,Susie Porter",
+        "Jocelin Donahue, Jesse Bradford, Jesse Borrego,Lori Petty",
+        "Amy Adams, Jake Gyllenhaal, Michael Shannon, Aaron Taylor-Johnson",
+        "Brittany Blanton, Ayse Howard, Roman Jossart,Nadia White",
+        "Andrew Garfield, Adam Driver, Liam Neeson,Tadanobu Asano",
+        "Oscar Isaac, Charlotte Le Bon, Christian Bale, Daniel Gim\u00e9nez Cacho",
+        "Will Smith, Edward Norton, Kate Winslet, Michael Pe\u00f1a",
+        "Kristen Stewart, Lars Eidinger, Sigrid Bouaziz,Anders Danielsen Lie",
+        "Chris Hemsworth, Anthony Hopkins, Natalie Portman, Tom Hiddleston"
+      ],
+      "top_values": [
+        {
+          "value": "Shia LaBeouf, Megan Fox, Josh Duhamel, Tyrese Gibson",
+          "count": 2,
+          "percentage": 0.2
+        },
+        {
+          "value": "Daniel Radcliffe, Emma Watson, Rupert Grint, Michael Gambon",
+          "count": 2,
+          "percentage": 0.2
+        },
+        {
+          "value": "Jennifer Lawrence, Josh Hutcherson, Liam Hemsworth, Woody Harrelson",
+          "count": 2,
+          "percentage": 0.2
+        },
+        {
+          "value": "Gerard Butler, Aaron Eckhart, Morgan Freeman,Angela Bassett",
+          "count": 2,
+          "percentage": 0.2
+        },
+        {
+          "value": "Ben Affleck, Rosamund Pike, Neil Patrick Harris,Tyler Perry",
+          "count": 1,
+          "percentage": 0.1
+        }
+      ],
+      "text_stats": {
+        "avg_length": 58.29,
+        "min_length": 43,
+        "max_length": 77,
+        "patterns": {
+          "email": false,
+          "url": false,
+          "uuid": false
+        },
+        "looks_like_identifier": false
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": true,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": true,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "Year": {
+      "position": 7,
+      "native_type": "BIGINT",
+      "semantic_type": "categorical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 11,
+      "cardinality_ratio": 0.011,
+      "sample_values": [
+        2006,
+        2016,
+        2014,
+        2013,
+        2012,
+        2009,
+        2010,
+        2007,
+        2015,
+        2011
+      ],
+      "top_values": [
+        {
+          "value": 2016,
+          "count": 297,
+          "percentage": 29.7
+        },
+        {
+          "value": 2015,
+          "count": 127,
+          "percentage": 12.7
+        },
+        {
+          "value": 2014,
+          "count": 98,
+          "percentage": 9.8
+        },
+        {
+          "value": 2013,
+          "count": 91,
+          "percentage": 9.1
+        },
+        {
+          "value": 2012,
+          "count": 64,
+          "percentage": 6.4
+        }
+      ],
+      "categorical_stats": {
+        "all_unique_values": [
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016
+        ],
+        "top_10_values": [
+          {
+            "value": 2016,
+            "count": 297,
+            "percentage": 29.7
+          },
+          {
+            "value": 2015,
+            "count": 127,
+            "percentage": 12.7
+          },
+          {
+            "value": 2014,
+            "count": 98,
+            "percentage": 9.8
+          },
+          {
+            "value": 2013,
+            "count": 91,
+            "percentage": 9.1
+          },
+          {
+            "value": 2012,
+            "count": 64,
+            "percentage": 6.4
+          },
+          {
+            "value": 2011,
+            "count": 63,
+            "percentage": 6.3
+          },
+          {
+            "value": 2010,
+            "count": 60,
+            "percentage": 6.0
+          },
+          {
+            "value": 2007,
+            "count": 53,
+            "percentage": 5.3
+          },
+          {
+            "value": 2008,
+            "count": 52,
+            "percentage": 5.2
+          },
+          {
+            "value": 2009,
+            "count": 51,
+            "percentage": 5.1
+          }
+        ],
+        "entropy": 3.0264,
+        "is_balanced": true
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": false,
+        "good_for_grouping": true,
+        "good_for_filtering": false
+      }
+    },
+    "Runtime (Minutes)": {
+      "position": 8,
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 94,
+      "cardinality_ratio": 0.094,
+      "sample_values": [
+        159,
+        100,
+        115,
+        113,
+        84,
+        95,
+        116,
+        140,
+        87,
+        91
+      ],
+      "top_values": [
+        {
+          "value": 108,
+          "count": 31,
+          "percentage": 3.1
+        },
+        {
+          "value": 100,
+          "count": 28,
+          "percentage": 2.8000000000000003
+        },
+        {
+          "value": 117,
+          "count": 27,
+          "percentage": 2.7
+        },
+        {
+          "value": 106,
+          "count": 26,
+          "percentage": 2.6
+        },
+        {
+          "value": 110,
+          "count": 26,
+          "percentage": 2.6
+        }
+      ],
+      "numerical_stats": {
+        "min": 66.0,
+        "max": 191.0,
+        "mean": 113.172,
+        "median": 111.0,
+        "std_dev": 18.8109,
+        "quartiles": {
+          "q1": 81.99000000000001,
+          "q25": 100.0,
+          "q75": 123.0,
+          "q99": 166.02999999999997
+        },
+        "zero_count": 0,
+        "negative_count": 0,
+        "positive_count": 1000
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "Rating": {
+      "position": 9,
+      "native_type": "DOUBLE",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 55,
+      "cardinality_ratio": 0.055,
+      "sample_values": [
+        4.9,
+        5.1,
+        7.2,
+        4.4,
+        6.6,
+        6.3,
+        9.0,
+        4.1,
+        3.9,
+        7.3
+      ],
+      "top_values": [
+        {
+          "value": 7.1,
+          "count": 52,
+          "percentage": 5.2
+        },
+        {
+          "value": 6.7,
+          "count": 48,
+          "percentage": 4.8
+        },
+        {
+          "value": 7.0,
+          "count": 46,
+          "percentage": 4.6
+        },
+        {
+          "value": 6.3,
+          "count": 44,
+          "percentage": 4.3999999999999995
+        },
+        {
+          "value": 7.3,
+          "count": 42,
+          "percentage": 4.2
+        }
+      ],
+      "numerical_stats": {
+        "min": 1.9,
+        "max": 9.0,
+        "mean": 6.7232,
+        "median": 6.8,
+        "std_dev": 0.9454,
+        "quartiles": {
+          "q1": 3.9,
+          "q25": 6.2,
+          "q75": 7.4,
+          "q99": 8.5
+        },
+        "zero_count": 0,
+        "negative_count": 0,
+        "positive_count": 1000
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "Votes": {
+      "position": 10,
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 0.0,
+      "unique_count": 997,
+      "cardinality_ratio": 0.997,
+      "sample_values": [
+        485820,
+        258682,
+        127553,
+        120690,
+        162122,
+        10181,
+        117590,
+        526324,
+        33418,
+        97623
+      ],
+      "top_values": [
+        {
+          "value": 1427,
+          "count": 2,
+          "percentage": 0.2
+        },
+        {
+          "value": 291,
+          "count": 2,
+          "percentage": 0.2
+        },
+        {
+          "value": 97141,
+          "count": 2,
+          "percentage": 0.2
+        },
+        {
+          "value": 258682,
+          "count": 1,
+          "percentage": 0.1
+        },
+        {
+          "value": 120690,
+          "count": 1,
+          "percentage": 0.1
+        }
+      ],
+      "numerical_stats": {
+        "min": 61.0,
+        "max": 1791916.0,
+        "mean": 169808.255,
+        "median": 110799.0,
+        "std_dev": 188762.6475,
+        "quartiles": {
+          "q1": 221.98000000000002,
+          "q25": 36309.0,
+          "q75": 239909.75,
+          "q99": 865614.1799999995
+        },
+        "zero_count": 0,
+        "negative_count": 0,
+        "positive_count": 1000
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": true,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": true,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "Revenue (Millions)": {
+      "position": 11,
+      "native_type": "DOUBLE",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 12.8,
+      "unique_count": 814,
+      "cardinality_ratio": 0.9335,
+      "sample_values": [
+        234.02,
+        30.35,
+        125.07,
+        116.87,
+        760.51,
+        54.12,
+        0.15,
+        35.05,
+        241.41,
+        0.0
+      ],
+      "top_values": [
+        {
+          "value": 0.03,
+          "count": 7,
+          "percentage": 0.7000000000000001
+        },
+        {
+          "value": 0.01,
+          "count": 5,
+          "percentage": 0.5
+        },
+        {
+          "value": 0.02,
+          "count": 4,
+          "percentage": 0.4
+        },
+        {
+          "value": 0.32,
+          "count": 4,
+          "percentage": 0.4
+        },
+        {
+          "value": 0.05,
+          "count": 4,
+          "percentage": 0.4
+        }
+      ],
+      "numerical_stats": {
+        "min": 0.0,
+        "max": 936.63,
+        "mean": 82.9564,
+        "median": 47.985,
+        "std_dev": 103.2535,
+        "quartiles": {
+          "q1": 0.02,
+          "q25": 13.270000000000001,
+          "q75": 113.715,
+          "q99": 431.4591999999991
+        },
+        "zero_count": 1,
+        "negative_count": 0,
+        "positive_count": 871
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    },
+    "Metascore": {
+      "position": 12,
+      "native_type": "BIGINT",
+      "semantic_type": "numerical",
+      "nullable": true,
+      "null_percentage": 6.4,
+      "unique_count": 84,
+      "cardinality_ratio": 0.0897,
+      "sample_values": [
+        42,
+        63,
+        33,
+        78,
+        66,
+        94,
+        27,
+        22,
+        37,
+        11
+      ],
+      "top_values": [
+        {
+          "value": 72,
+          "count": 25,
+          "percentage": 2.5
+        },
+        {
+          "value": 66,
+          "count": 25,
+          "percentage": 2.5
+        },
+        {
+          "value": 68,
+          "count": 25,
+          "percentage": 2.5
+        },
+        {
+          "value": 64,
+          "count": 24,
+          "percentage": 2.4
+        },
+        {
+          "value": 57,
+          "count": 23,
+          "percentage": 2.3
+        }
+      ],
+      "numerical_stats": {
+        "min": 11.0,
+        "max": 100.0,
+        "mean": 58.985,
+        "median": 59.5,
+        "std_dev": 17.1948,
+        "quartiles": {
+          "q1": 22.0,
+          "q25": 47.0,
+          "q75": 72.0,
+          "q99": 94.64999999999998
+        },
+        "zero_count": 0,
+        "negative_count": 0,
+        "positive_count": 936
+      },
+      "relationship_hints": {
+        "is_primary_key_candidate": false,
+        "is_foreign_key_candidate": false,
+        "foreign_key_references": []
+      },
+      "optimization_hints": {
+        "good_for_indexing": false,
+        "good_for_partitioning": false,
+        "good_for_aggregation": true,
+        "good_for_grouping": false,
+        "good_for_filtering": false
+      }
+    }
+  },
+  "relationships": {
+    "primary_key_candidates": [
+      "Rank",
+      "Title",
+      "Description",
+      "Actors",
+      "Votes"
+    ],
+    "foreign_key_candidates": {},
+    "correlations": {},
+    "functional_dependencies": [
+      {
+        "determines": "Rank",
+        "determined_by": "Title"
+      },
+      {
+        "determines": "Rank",
+        "determined_by": "Genre"
+      },
+      {
+        "determines": "Rank",
+        "determined_by": "Description"
+      },
+      {
+        "determines": "Rank",
+        "determined_by": "Director"
+      },
+      {
+        "determines": "Rank",
+        "determined_by": "Actors"
+      },
+      {
+        "determines": "Rank",
+        "determined_by": "Year"
+      },
+      {
+        "determines": "Rank",
+        "determined_by": "Runtime (Minutes)"
+      },
+      {
+        "determines": "Rank",
+        "determined_by": "Rating"
+      },
+      {
+        "determines": "Rank",
+        "determined_by": "Votes"
+      },
+      {
+        "determines": "Rank",
+        "determined_by": "Revenue (Millions)"
+      },
+      {
+        "determines": "Rank",
+        "determined_by": "Metascore"
+      },
+      {
+        "determines": "Description",
+        "determined_by": "Director"
+      },
+      {
+        "determines": "Description",
+        "determined_by": "Actors"
+      },
+      {
+        "determines": "Description",
+        "determined_by": "Year"
+      },
+      {
+        "determines": "Description",
+        "determined_by": "Runtime (Minutes)"
+      },
+      {
+        "determines": "Description",
+        "determined_by": "Rating"
+      },
+      {
+        "determines": "Description",
+        "determined_by": "Votes"
+      },
+      {
+        "determines": "Description",
+        "determined_by": "Revenue (Millions)"
+      },
+      {
+        "determines": "Description",
+        "determined_by": "Metascore"
+      }
+    ]
+  }
+}
