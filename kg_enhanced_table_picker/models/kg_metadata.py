@@ -164,6 +164,13 @@ class KGTableMetadata:
     referenced_by: List[str] = field(default_factory=list)  # Tables that FK to this
     references: List[str] = field(default_factory=list)  # Tables this FKs to
     is_hub_table: bool = False  # High centrality in FK graph
+    
+    # Centrality metrics (calculated during KG build)
+    degree_centrality: float = 0.0  # Weighted degree: incoming*1.0 + outgoing*0.5
+    normalized_centrality: float = 0.0  # Normalized to 0-1 scale
+    incoming_fk_count: int = 0  # Number of tables that reference this table
+    outgoing_fk_count: int = 0  # Number of tables this table references
+    betweenness_centrality: Optional[float] = None  # Optional: path importance
 
     def get_column(self, column_name: str) -> Optional[KGColumnMetadata]:
         """Get column metadata by name"""

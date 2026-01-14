@@ -266,7 +266,7 @@ class KGRepository:
             return None
 
     def _extract_relationships_from_combined_graph(self, kg_metadata: KGTableMetadata, table_name: str) -> None:
-        """Extract relationship info from combined graph"""
+        """Extract relationship info and centrality data from combined graph"""
         if not self.combined_graph:
             return
 
@@ -284,8 +284,27 @@ class KGRepository:
                     if to_table not in kg_metadata.references:
                         kg_metadata.references.append(to_table)
 
-        # Determine if hub table (many references)
-        kg_metadata.is_hub_table = len(kg_metadata.referenced_by) >= 3
+        # Extract centrality metrics from table node (if calculated during KG build)
+        table_node_id = f"{table_name}:table_{table_name}"
+        if table_node_id in self.combined_graph:
+            table_node = self.combined_graph.nodes[table_node_id]
+            
+            # Read centrality metrics if available
+            kg_metadata.degree_centrality = table_node.get('degree_centrality', 0.0)
+            kg_metadata.normalized_centrality = table_node.get('normalized_centrality', 0.0)
+            kg_metadata.incoming_fk_count = table_node.get('incoming_fk_count', 0)
+            kg_metadata.outgoing_fk_count = table_node.get('outgoing_fk_count', 0)
+            kg_metadata.betweenness_centrality = table_node.get('betweenness_centrality')
+            kg_metadata.is_hub_table = table_node.get('is_hub_table', False)
+        
+        # Fallback: If centrality not in graph, calculate from relationships
+        if kg_metadata.degree_centrality == 0.0:
+            incoming_count = len(kg_metadata.referenced_by)
+            outgoing_count = len(kg_metadata.references)
+            kg_metadata.degree_centrality = incoming_count * 1.0 + outgoing_count * 0.5
+            kg_metadata.incoming_fk_count = incoming_count
+            kg_metadata.outgoing_fk_count = outgoing_count
+            kg_metadata.is_hub_table = incoming_count >= 3
 
     # Public API Methods
 

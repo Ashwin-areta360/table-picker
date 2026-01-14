@@ -35,6 +35,14 @@ class ScoringService:
     SCORE_HINT_MATCH = 3
     SCORE_SAMPLE_VALUE_MATCH = 2
     SCORE_TOP_VALUE_MATCH = 2
+    
+    # Centrality boost (for generic queries)
+    CENTRALITY_BOOST_MAX = 10  # Maximum points from centrality (generic queries)
+    CENTRALITY_BOOST_CAP = 5   # Cap for mixed queries (don't override specific matches)
+    GENERIC_QUERY_THRESHOLD = 5  # Max base_score threshold to consider query generic
+    
+    # Domain mismatch detection
+    SEMANTIC_MISMATCH_THRESHOLD = 0.3  # Max similarity below this = domain mismatch
 
     # Filtering thresholds
     ABSOLUTE_THRESHOLD = 5  # Minimum score to be considered
@@ -210,9 +218,10 @@ class ScoringService:
         """
         Score all tables based on query relevance
 
-        Uses hybrid approach if embeddings available:
+        Multi-phase approach:
         - Phase 1: Fast exact matching (all tables)
-        - Phase 2: Semantic similarity (top 20 only)
+        - Phase 2: Semantic similarity (top 20 only, if embeddings available)
+        - Phase 3: Centrality boost (if generic query detected)
 
         Args:
             query: Natural language query
@@ -220,16 +229,41 @@ class ScoringService:
         Returns:
             List of TableScore objects, sorted by score descending
         """
-        # Check if embeddings are available
+        # PHASE 1 & 2: Normal scoring (exact + semantic)
         use_embeddings = (
             self.embedding_service is not None and
             self.kg_service.repo.has_embeddings()
         )
 
         if use_embeddings:
-            return self._score_hybrid(query)
+            scores = self._score_hybrid(query)
         else:
-            return self._score_exact_only(query)
+            scores = self._score_exact_only(query)
+        
+        # PHASE 3: Check for domain mismatch BEFORE centrality boost
+        is_mismatch = self.is_domain_mismatch(scores, query)
+        
+        if is_mismatch:
+            # Domain mismatch: Don't apply centrality boost
+            # Return scores as-is (all 0 or very low)
+            # Confidence calculation will handle this with appropriate message
+            return scores
+        
+        # PHASE 4: Centrality boost for generic queries (only if not domain mismatch)
+        is_generic = self.is_generic_query(scores, query)
+        
+        if is_generic:
+            # Apply full centrality boost
+            scores = self.apply_centrality_boost(scores, is_generic=True, query=query)
+            # Re-sort after boosting
+            scores.sort(reverse=True)
+        elif any(s.base_score > 0 for s in scores):
+            # Mixed query (has some matches but not strong)
+            # Apply capped centrality boost (don't override specific matches)
+            scores = self.apply_centrality_boost(scores, is_generic=False, query=query)
+            scores.sort(reverse=True)
+        
+        return scores
 
     def _score_exact_only(self, query: str) -> List[TableScore]:
         """
@@ -724,5 +758,213 @@ class ScoringService:
         """
         # Extract entities from query for coverage calculation
         query_entities = self.extract_query_entities(query) if query else None
+        
+        # Check for domain mismatch
+        is_mismatch = self.is_domain_mismatch(candidates, query) if query else False
 
-        return ConfidenceResult.from_candidates(candidates, query_entities)
+        return ConfidenceResult.from_candidates(candidates, query_entities, is_domain_mismatch=is_mismatch)
+
+    def is_generic_query(self, scores: List[TableScore], query: str) -> bool:
+        """
+        Detect if query is too generic for specific matching
+        
+        A query is considered generic if:
+        1. No strong matches (max base_score < GENERIC_QUERY_THRESHOLD)
+        2. No specific entities (all filtered as vague terms)
+        3. Query contains only generic action verbs
+        
+        Args:
+            scores: List of scored tables
+            query: Original query string
+            
+        Returns:
+            True if query is generic (should apply centrality boost)
+            
+        Examples:
+            Generic queries:
+            - "show me data"
+            - "what information do you have"
+            - "display records"
+            - "get some tables"
+            
+            Specific queries:
+            - "student grades" → has entity "student"
+            - "course enrollment" → has entity "course"
+            - "hostel information" → has entity "hostel"
+        """
+        if not scores:
+            return True  # No matches at all = generic
+        
+        # Check 1: No strong matches (all scores below threshold)
+        max_base_score = max(c.base_score for c in scores) if scores else 0
+        has_strong_match = max_base_score >= self.GENERIC_QUERY_THRESHOLD
+        
+        if has_strong_match:
+            return False  # Has at least one good match = not generic
+        
+        # Check 2: No specific entities (all are vague terms)
+        query_entities = self.extract_query_entities(query)
+        has_specific_entities = len(query_entities) > 0
+        
+        if has_specific_entities:
+            return False  # Has specific entities = not generic
+        
+        # Check 3: Query contains only generic terms
+        query_terms = set(self.extract_query_terms(query))
+        
+        # If query has no meaningful terms at all, it's generic
+        if not query_terms:
+            return True
+        
+        # Generic terms = stopwords + vague terms
+        generic_terms = self.STOPWORDS | self.VAGUE_TERMS
+        
+        # If all query terms are generic, it's a generic query
+        non_generic_terms = query_terms - generic_terms
+        
+        if not non_generic_terms:
+            return True  # Only generic terms = generic query
+        
+        # Otherwise, it's specific enough
+        return False
+
+    def apply_centrality_boost(
+        self, 
+        scores: List[TableScore], 
+        is_generic: bool,
+        query: str = ""
+    ) -> List[TableScore]:
+        """
+        Boost scores based on table centrality in FK graph
+        
+        Applied when query is generic (no specific entity matches).
+        Returns "important" hub tables as sensible starting points.
+        
+        Strategy:
+        - Generic queries: Full boost (up to 10 pts) - structural importance IS relevance
+        - Mixed queries: Capped boost (up to 5 pts) - don't override specific matches
+        
+        Args:
+            scores: Current scored tables
+            is_generic: True if query is generic (full boost), False for mixed (capped)
+            query: Original query (for logging/explanations)
+            
+        Returns:
+            Scores with centrality boosts applied (mutates in place, also returns for chaining)
+            
+        Example:
+            Generic query "show me data":
+            - students_info (centrality: 1.0) → +10 pts
+            - courses (centrality: 0.6) → +6 pts
+            - grades (centrality: 0.2) → +2 pts
+        """
+        max_boost = self.CENTRALITY_BOOST_MAX if is_generic else self.CENTRALITY_BOOST_CAP
+        
+        boosted_count = 0
+        
+        for score_obj in scores:
+            metadata = self.kg_service.get_table_metadata(score_obj.table_name)
+            if not metadata:
+                continue
+            
+            # Get pre-computed centrality (0-1 scale)
+            centrality = metadata.normalized_centrality
+            
+            if centrality > 0:
+                # Scale to points
+                points = centrality * max_boost
+                
+                # Build explanation
+                hub_indicator = "hub table" if metadata.is_hub_table else "central table"
+                reason = f"{hub_indicator} (centrality: {centrality:.2f}, {metadata.incoming_fk_count} incoming FKs)"
+                
+                # Add as centrality signal
+                score_obj.add_score(
+                    points,
+                    reason,
+                    signal_type=SignalType.CENTRALITY,
+                    is_fk_boost=False  # Add to base_score (structural importance = relevance for generic queries)
+                )
+                
+                boosted_count += 1
+        
+        # Log boost application (for debugging)
+        if boosted_count > 0:
+            boost_type = "FULL" if is_generic else "CAPPED"
+            print(f"  → Applied centrality boost ({boost_type}, max {max_boost} pts) to {boosted_count} tables")
+        
+        return scores
+
+    def is_domain_mismatch(self, scores: List[TableScore], query: str) -> bool:
+        """
+        Detect if query is about a different domain than the database
+        
+        Uses multiple signals to detect domain mismatch:
+        1. Semantic similarity (if embeddings available): max similarity < threshold
+        2. Entity matching: query has entities but zero matches
+        
+        Args:
+            scores: List of scored tables
+            query: Original query string
+            
+        Returns:
+            True if query is likely irrelevant to database domain
+            
+        Examples:
+            Domain mismatch:
+            - "show me weather data" (in education DB) → True
+            - "get stock prices" (in education DB) → True
+            
+            Domain match:
+            - "show me educational data" (in education DB) → False
+            - "student grades" (in education DB) → False
+        """
+        # Check 1: Semantic similarity (if embeddings available)
+        if self.embedding_service and self.kg_service.repo.has_embeddings():
+            max_similarity = self._get_max_semantic_similarity(scores, query)
+            if max_similarity < self.SEMANTIC_MISMATCH_THRESHOLD:
+                return True  # Very low similarity = domain mismatch
+        
+        # Check 2: Has entities but no matches
+        query_entities = self.extract_query_entities(query)
+        if query_entities:
+            # Query has specific entities
+            has_any_matches = any(
+                score.base_score > 0 and score.matched_entities
+                for score in scores
+            )
+            if not has_any_matches:
+                # Has entities but zero matches = likely mismatch
+                return True
+        
+        return False
+
+    def _get_max_semantic_similarity(self, scores: List[TableScore], query: str) -> float:
+        """
+        Get maximum semantic similarity between query and top tables
+        
+        Args:
+            scores: List of scored tables
+            query: Original query string
+            
+        Returns:
+            Maximum similarity score (0-1)
+        """
+        if not self.embedding_service:
+            return 0.0
+        
+        query_embedding = self.embedding_service.get_query_embedding(query)
+        max_similarity = 0.0
+        
+        # Check top 5 tables (or all if fewer)
+        top_n = min(5, len(scores))
+        for score in scores[:top_n]:
+            table_embedding = self.kg_service.repo.get_table_embedding(score.table_name)
+            if table_embedding is not None:
+                similarity = self.embedding_service.compute_similarity(
+                    query_embedding,
+                    table_embedding
+                )
+                max_similarity = max(max_similarity, similarity)
+        
+        return max_similarity

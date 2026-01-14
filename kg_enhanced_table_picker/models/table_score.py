@@ -29,6 +29,7 @@ class SignalType(Enum):
     TOP_VALUE_MATCH = "top_value_match"
     FK_RELATIONSHIP = "fk_relationship"
     HINT_MATCH = "hint_match"
+    CENTRALITY = "centrality"  # Table importance in FK graph (for generic queries)
 
 
 # Deprecated - keeping for backward compatibility
@@ -275,25 +276,33 @@ class ConfidenceResult:
     num_core_tables: int  # NEW: tables with strong base scores
     entity_coverage: float  # NEW: percentage of query entities matched
     recommendation: str
+    is_domain_mismatch: bool = False  # NEW: Query doesn't match database domain
 
     # Core table threshold (table/column name match = 10 points)
     CORE_THRESHOLD = 10
 
     @classmethod
-    def from_candidates(cls, candidates: List[TableScore], query_entities: Optional[List[str]] = None) -> 'ConfidenceResult':
+    def from_candidates(
+        cls, 
+        candidates: List[TableScore], 
+        query_entities: Optional[List[str]] = None,
+        is_domain_mismatch: bool = False
+    ) -> 'ConfidenceResult':
         """
         Calculate confidence using coverage-based approach
 
         KEY CHANGE: Uses base_score only (ignores FK boost) and entity coverage.
 
         Logic:
-        1. Identify core tables (base_score >= CORE_THRESHOLD)
-        2. Calculate entity coverage (% of query entities matched)
-        3. Determine confidence based on coverage + number of core tables
+        1. Check for domain mismatch (query doesn't match database domain)
+        2. Identify core tables (base_score >= CORE_THRESHOLD)
+        3. Calculate entity coverage (% of query entities matched)
+        4. Determine confidence based on coverage + number of core tables
 
         Args:
             candidates: List of candidate tables (should be sorted by total score)
             query_entities: List of entities extracted from query (optional)
+            is_domain_mismatch: True if query is about different domain (optional)
 
         Returns:
             ConfidenceResult with confidence assessment
@@ -307,7 +316,22 @@ class ConfidenceResult:
                 num_candidates=0,
                 num_core_tables=0,
                 entity_coverage=0.0,
+                is_domain_mismatch=is_domain_mismatch,
                 recommendation="No candidates found. Query may be too vague or database mismatch."
+            )
+        
+        # Handle domain mismatch case
+        if is_domain_mismatch:
+            return cls(
+                confidence_score=0.0,
+                confidence_level=ConfidenceLevel.LOW,
+                top_base_score=max(c.base_score for c in candidates) if candidates else 0.0,
+                total_base_score=sum(c.base_score for c in candidates),
+                num_candidates=len(candidates),
+                num_core_tables=0,
+                entity_coverage=0.0,
+                is_domain_mismatch=True,
+                recommendation="Query doesn't match database domain. This database contains education data, not the requested information."
             )
 
         # Identify core tables (base_score >= CORE_THRESHOLD)
@@ -324,6 +348,7 @@ class ConfidenceResult:
                 num_candidates=len(candidates),
                 num_core_tables=0,
                 entity_coverage=0.0,
+                is_domain_mismatch=False,
                 recommendation="Low confidence - no strong table matches found. Consider broader terms."
             )
 
@@ -387,6 +412,7 @@ class ConfidenceResult:
             num_candidates=len(candidates),
             num_core_tables=len(core_tables),
             entity_coverage=entity_coverage,
+            is_domain_mismatch=False,
             recommendation=recommendation
         )
 
@@ -412,5 +438,6 @@ class ConfidenceResult:
             'num_candidates': self.num_candidates,
             'num_core_tables': self.num_core_tables,
             'entity_coverage': self.entity_coverage,
+            'is_domain_mismatch': self.is_domain_mismatch,
             'recommendation': self.recommendation
         }

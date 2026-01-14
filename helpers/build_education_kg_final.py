@@ -23,6 +23,94 @@ from table_profile_graph.graph.serializer import GraphSerializer
 from table_profile_graph.visualizer import D3Visualizer
 import networkx as nx
 
+
+def calculate_table_centrality(combined_graph: nx.MultiDiGraph, all_metadata: dict) -> dict:
+    """
+    Calculate centrality metrics for all tables based on FK relationships
+    
+    Metrics calculated:
+    - degree_centrality: Weighted count of FK relationships (incoming*1.0 + outgoing*0.5)
+    - normalized_centrality: Normalized to 0-1 scale
+    - incoming_fk_count: Number of tables that reference this table (referenced_by)
+    - outgoing_fk_count: Number of tables this table references
+    - is_hub_table: True if normalized_centrality >= 0.8
+    
+    Args:
+        combined_graph: The combined knowledge graph
+        all_metadata: Dictionary of table metadata
+        
+    Returns:
+        Dictionary mapping table_name -> centrality metrics dict
+    """
+    print("\nAnalyzing FK relationships for centrality...")
+    
+    centrality_data = {}
+    
+    # Calculate degree centrality for each table
+    for table_name, metadata in all_metadata.items():
+        # Count incoming FKs (tables that reference this table)
+        incoming_count = len(metadata.referenced_by) if hasattr(metadata, 'referenced_by') else 0
+        
+        # Count outgoing FKs (tables this table references)
+        outgoing_count = len(metadata.foreign_key_candidates) if metadata.foreign_key_candidates else 0
+        
+        # Weighted degree (incoming weighted higher - dimension tables > fact tables)
+        degree = incoming_count * 1.0 + outgoing_count * 0.5
+        
+        centrality_data[table_name] = {
+            'degree_centrality': degree,
+            'incoming_fk_count': incoming_count,
+            'outgoing_fk_count': outgoing_count,
+            'normalized_centrality': 0.0,  # Will normalize after getting max
+            'is_hub_table': False  # Will set after normalization
+        }
+    
+    # Normalize to 0-1 scale
+    if centrality_data:
+        max_degree = max(data['degree_centrality'] for data in centrality_data.values())
+        
+        if max_degree > 0:
+            for table_name, data in centrality_data.items():
+                data['normalized_centrality'] = data['degree_centrality'] / max_degree
+                # Hub tables are top 20% by centrality (or threshold of 0.8)
+                data['is_hub_table'] = data['normalized_centrality'] >= 0.8
+    
+    # Calculate betweenness centrality (optional - more expensive but valuable)
+    # Build a simplified table-level FK graph for betweenness calculation
+    try:
+        fk_graph = nx.DiGraph()
+        
+        # Add nodes
+        for table_name in all_metadata.keys():
+            fk_graph.add_node(table_name)
+        
+        # Add edges based on FK relationships
+        for table_name, metadata in all_metadata.items():
+            if metadata.foreign_key_candidates:
+                for fk_col, ref_tables in metadata.foreign_key_candidates.items():
+                    for ref_table in ref_tables:
+                        if ref_table in all_metadata:
+                            fk_graph.add_edge(table_name, ref_table)
+        
+        # Calculate betweenness if graph has edges
+        if fk_graph.number_of_edges() > 0:
+            print("  Calculating betweenness centrality...")
+            betweenness = nx.betweenness_centrality(fk_graph)
+            
+            for table_name, score in betweenness.items():
+                if table_name in centrality_data:
+                    centrality_data[table_name]['betweenness_centrality'] = score
+        else:
+            print("  Skipping betweenness (no FK edges)")
+            
+    except Exception as e:
+        print(f"  Warning: Could not calculate betweenness centrality: {e}")
+    
+    print(f"  ✓ Calculated centrality for {len(centrality_data)} tables")
+    
+    return centrality_data
+
+
 def main():
     # Connect to education.duckdb
     db_path = "education.duckdb"
@@ -170,6 +258,42 @@ def main():
     print(f"  - Total nodes: {combined_graph.number_of_nodes()}")
     print(f"  - Total edges: {combined_graph.number_of_edges()}")
     print(f"  - FK relationship edges: {fk_edge_count}")
+
+    # Populate referenced_by lists (needed for centrality calculation)
+    print("\nBuilding reverse FK relationship map...")
+    for source_table, metadata in all_metadata.items():
+        if not metadata.foreign_key_candidates:
+            continue
+        
+        for fk_col, ref_tables in metadata.foreign_key_candidates.items():
+            for ref_table in ref_tables:
+                if ref_table in all_metadata:
+                    # Add source_table to ref_table's referenced_by list
+                    if not hasattr(all_metadata[ref_table], 'referenced_by'):
+                        all_metadata[ref_table].referenced_by = []
+                    if source_table not in all_metadata[ref_table].referenced_by:
+                        all_metadata[ref_table].referenced_by.append(source_table)
+    
+    print(f"  ✓ Populated referenced_by for all tables")
+
+    # Calculate table centrality metrics
+    print("\n" + "=" * 80)
+    print("CALCULATING TABLE CENTRALITY METRICS")
+    print("=" * 80)
+    centrality_data = calculate_table_centrality(combined_graph, all_metadata)
+    
+    # Add centrality data to table nodes in graph
+    for table_name, centrality in centrality_data.items():
+        table_node_id = f"{table_name}:table_{table_name}"
+        if table_node_id in combined_graph:
+            combined_graph.nodes[table_node_id].update(centrality)
+            
+            print(f"  {table_name:20s} | "
+                  f"degree: {centrality['degree_centrality']:4.1f} | "
+                  f"norm: {centrality['normalized_centrality']:.2f} | "
+                  f"in: {centrality['incoming_fk_count']} | "
+                  f"out: {centrality['outgoing_fk_count']} | "
+                  f"{'🌟 HUB' if centrality['is_hub_table'] else ''}")
 
     # Save combined graph
     print("\n" + "=" * 80)
