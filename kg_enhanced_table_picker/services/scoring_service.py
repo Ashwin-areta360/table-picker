@@ -4,6 +4,7 @@ Scoring Service - Score tables based on query relevance
 Public API:
 - score_all_tables(query) -> List[TableScore]
 - filter_by_threshold(scores) -> List[TableScore]
+- calculate_confidence(candidates) -> ConfidenceResult
 - extract_query_terms(query) -> List[str]
 """
 
@@ -11,7 +12,7 @@ from typing import List, Optional, Set, TYPE_CHECKING
 import re
 import numpy as np
 
-from ..models.table_score import TableScore, SignalType
+from ..models.table_score import TableScore, SignalType, ConfidenceResult
 from ..models.kg_metadata import SemanticType
 from .kg_service import KGService
 
@@ -67,6 +68,12 @@ class ScoringService:
         'all', 'some', 'any', 'each', 'every',
         # Question words (too generic to be useful)
         'what', 'who', 'which', 'how'
+    }
+
+    # Vague terms that don't represent entities (for coverage calculation)
+    VAGUE_TERMS = {
+        'data', 'information', 'details', 'records', 'info', 'things',
+        'stuff', 'items', 'entries', 'values', 'results', 'output'
     }
     
     # Minimum term length (to avoid matching short substrings like 's' or 'id')
@@ -166,12 +173,38 @@ class ScoringService:
         # Remove stopwords, numbers-only terms, and very short terms
         terms = [
             term for term in terms
-            if term not in self.STOPWORDS 
+            if term not in self.STOPWORDS
             and not term.isdigit()
             and len(term) >= self.MIN_TERM_LENGTH
         ]
 
         return terms
+
+    def extract_query_entities(self, query: str) -> List[str]:
+        """
+        Extract distinct entities from query (for coverage calculation)
+
+        Filters out vague terms that don't represent specific entities.
+        This is used for confidence calculation to measure if we found
+        tables for all query entities.
+
+        Examples:
+            "student grades courses" → ["student", "grades", "courses"]
+            "student data" → ["student"]  # "data" is vague
+            "show me information" → []  # all vague terms
+
+        Args:
+            query: Natural language query
+
+        Returns:
+            List of entity terms (meaningful, non-vague)
+        """
+        terms = self.extract_query_terms(query)
+
+        # Filter out vague terms that don't represent entities
+        entities = [term for term in terms if term not in self.VAGUE_TERMS]
+
+        return entities
 
     def score_all_tables(self, query: str) -> List[TableScore]:
         """
@@ -254,7 +287,7 @@ class ScoringService:
         Returns:
             TableScore object
         """
-        score_obj = TableScore(table_name=table_name, score=0.0)
+        score_obj = TableScore(table_name=table_name)  # Uses default base_score=0.0, fk_boost=0.0
         metadata = self.kg_service.get_table_metadata(table_name)
 
         if not metadata:
@@ -289,7 +322,9 @@ class ScoringService:
             if self._token_match(term, table_name):
                 score_obj.add_score(
                     self.SCORE_TABLE_NAME_MATCH,
-                    f"table name contains '{term}'"
+                    f"table name contains '{term}'",
+                    signal_type=SignalType.TABLE_NAME_MATCH,
+                    matched_entity=term  # Track which entity this matched
                 )
 
     def _score_column_names(self, score_obj: TableScore, metadata, query_terms: List[str]):
@@ -301,7 +336,8 @@ class ScoringService:
                         self.SCORE_COLUMN_NAME_MATCH,
                         f"column '{col_name}' matches '{term}'",
                         column=col_name,
-                        signal_type=SignalType.COLUMN_NAME_MATCH
+                        signal_type=SignalType.COLUMN_NAME_MATCH,
+                        matched_entity=term  # Track which entity this matched
                     )
 
     def _score_synonyms(self, score_obj: TableScore, metadata, query_terms: List[str]):
@@ -318,7 +354,8 @@ class ScoringService:
                         self.SCORE_SYNONYM_MATCH,
                         f"column '{col_name}' synonym matches '{term}'",
                         column=col_name,
-                        signal_type=SignalType.SYNONYM_MATCH
+                        signal_type=SignalType.SYNONYM_MATCH,
+                        matched_entity=term  # Track which entity this matched
                     )
 
     def _score_semantic_types(self, score_obj: TableScore, metadata, query: str):
@@ -359,35 +396,65 @@ class ScoringService:
                 )
 
     def _score_sample_values(self, score_obj: TableScore, metadata, query_terms: List[str]):
-        """Score based on sample value matches"""
+        """
+        Score based on sample value matches using n-gram tokenization
+
+        Tokenizes sample values to improve recall:
+        - Sample: "Computer Science" → {"computer", "science"}
+        - Query term "computer" → MATCH ✓
+
+        This dramatically improves matching for multi-word values.
+        """
         for col_name, col_meta in metadata.columns.items():
             if not col_meta.sample_values:
                 continue
 
-            sample_values_lower = [str(v).lower() for v in col_meta.sample_values]
+            # Tokenize all sample values
+            sample_tokens = set()
+            for value in col_meta.sample_values:
+                value_str = str(value).lower()
+                # Extract word tokens (alphanumeric only)
+                tokens = re.findall(r'\b\w+\b', value_str)
+                sample_tokens.update(tokens)
 
             for term in query_terms:
-                if term in sample_values_lower:
+                if term in sample_tokens:
                     score_obj.add_score(
                         self.SCORE_SAMPLE_VALUE_MATCH,
-                        f"column '{col_name}' has sample value '{term}'",
-                        column=col_name
+                        f"column '{col_name}' has sample value containing '{term}'",
+                        column=col_name,
+                        signal_type=SignalType.SAMPLE_VALUE_MATCH
                     )
 
     def _score_top_values(self, score_obj: TableScore, metadata, query_terms: List[str]):
-        """Score based on top value matches (categorical columns)"""
+        """
+        Score based on top value matches (categorical columns) using n-gram tokenization
+
+        Tokenizes top values to improve recall:
+        - Top value: "Computer Science" → {"computer", "science"}
+        - Query term "computer" → MATCH ✓
+
+        This dramatically improves matching for multi-word categorical values.
+        """
         for col_name, col_meta in metadata.columns.items():
             if not col_meta.top_values:
                 continue
 
-            top_values_lower = [str(v).lower() for v in col_meta.top_values]
+            # Tokenize all top values
+            top_value_tokens = set()
+            for value in col_meta.top_values:
+                value_str = str(value).lower()
+                # Extract word tokens (alphanumeric only)
+                tokens = re.findall(r'\b\w+\b', value_str)
+                top_value_tokens.update(tokens)
 
             for term in query_terms:
-                if term in top_values_lower:
+                if term in top_value_tokens:
                     score_obj.add_score(
                         self.SCORE_TOP_VALUE_MATCH,
-                        f"'{term}' is a top value in '{col_name}'",
-                        column=col_name
+                        f"'{term}' is a token in top values of '{col_name}'",
+                        column=col_name,
+                        signal_type=SignalType.TOP_VALUE_MATCH
                     )
 
     def _score_hints(self, score_obj: TableScore, metadata, query: str):
@@ -537,9 +604,14 @@ class ScoringService:
 
         return candidates
 
-    def enhance_with_fk_relationships(self, candidates: List[TableScore]) -> List[TableScore]:
+    def enhance_with_fk_relationships(self, candidates: List[TableScore], all_scores: List[TableScore]) -> List[TableScore]:
         """
         Boost scores for tables with FK relationships to top candidates
+
+        GLOBAL FK RESCUE:
+        - Allows reintroduction of tables that failed the initial threshold
+        - If a table connects ≥2 top tables (junction table), add it even if it was filtered out
+        - This matches how humans reason about joins
 
         Enhanced strategy:
         - Consider relationships with top 3 candidates (not just #1)
@@ -547,10 +619,11 @@ class ScoringService:
         - This helps identify important junction/bridge tables
 
         Args:
-            candidates: List of candidate tables
+            candidates: List of candidate tables (after filtering)
+            all_scores: List of all table scores (before filtering)
 
         Returns:
-            Enhanced list with boosted scores
+            Enhanced list with boosted scores (may include rescued tables)
         """
         if len(candidates) < 2:
             return candidates
@@ -564,9 +637,15 @@ class ScoringService:
         for table in top_tables:
             relationships[table] = self.kg_service.find_related_tables(table, max_depth=1)
 
-        # Boost tables that have relationships with top candidates
-        for candidate in candidates:
-            table_name = candidate.table_name
+        # Track tables already in candidates
+        candidate_names = {c.table_name for c in candidates}
+
+        # Track rescued tables (to add them later)
+        rescued_tables = []
+
+        # Check ALL tables (not just candidates) for FK relationships
+        for score_obj in all_scores:
+            table_name = score_obj.table_name
 
             # Skip if this is already a top table
             if table_name in top_tables:
@@ -578,23 +657,72 @@ class ScoringService:
                 if table_name in relationships.get(top_table, []):
                     connected_to.append(top_table)
 
-            # Boost based on number of connections
+            # Boost or rescue based on number of connections
             if connected_to:
                 # Higher boost for tables connecting multiple top candidates
                 boost = self.SCORE_FK_RELATIONSHIP * len(connected_to)
 
                 if len(connected_to) == 1:
-                    candidate.add_score(
-                        boost,
-                        f"has FK relationship with '{connected_to[0]}'"
-                    )
+                    reason = f"has FK relationship with '{connected_to[0]}'"
                 else:
-                    candidate.add_score(
-                        boost,
-                        f"connects {len(connected_to)} top candidates: {', '.join(connected_to)}"
-                    )
+                    reason = f"connects {len(connected_to)} top candidates: {', '.join(connected_to)}"
 
-        # Re-sort after boosting
+                # If table is already a candidate, boost it
+                if table_name in candidate_names:
+                    # Find the candidate and boost its score
+                    for candidate in candidates:
+                        if candidate.table_name == table_name:
+                            candidate.add_score(
+                                boost,
+                                reason,
+                                signal_type=SignalType.FK_RELATIONSHIP,
+                                is_fk_boost=True
+                            )
+                            break
+                # GLOBAL RESCUE: If table connects ≥2 top tables, rescue it
+                elif len(connected_to) >= 2:
+                    # Create a new score object with the boost
+                    rescued_score = TableScore(table_name=table_name)  # base_score=0.0, fk_boost=0.0
+                    rescued_score.add_score(
+                        boost,
+                        f"[RESCUED] {reason}",
+                        signal_type=SignalType.FK_RELATIONSHIP,
+                        is_fk_boost=True
+                    )
+                    rescued_tables.append(rescued_score)
+
+        # Add rescued tables to candidates
+        if rescued_tables:
+            candidates.extend(rescued_tables)
+
+        # Re-sort after boosting and rescuing
         candidates.sort(reverse=True)
 
         return candidates
+
+    def calculate_confidence(self, candidates: List[TableScore], query: str = "") -> ConfidenceResult:
+        """
+        Calculate confidence score for SQL generation safety
+
+        NEW APPROACH (coverage-based):
+        - Uses base_score only (ignores FK boost)
+        - Checks entity coverage from query
+        - Core tables must have base_score >= 10
+
+        Returns:
+            ConfidenceResult with confidence level and recommendation
+
+        Example:
+            >>> candidates = scoring_service.enhance_with_fk_relationships(filtered, all_scores)
+            >>> confidence = scoring_service.calculate_confidence(candidates, query)
+            >>> if confidence.should_auto_generate():
+            >>>     generate_sql(candidates)
+            >>> elif confidence.needs_clarification():
+            >>>     ask_user_for_clarification()
+            >>> else:
+            >>>     use_fallback_strategy()
+        """
+        # Extract entities from query for coverage calculation
+        query_entities = self.extract_query_entities(query) if query else None
+
+        return ConfidenceResult.from_candidates(candidates, query_entities)
