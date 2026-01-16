@@ -12,9 +12,10 @@ from typing import List, Optional, Set, TYPE_CHECKING
 import re
 import numpy as np
 
-from ..models.table_score import TableScore, SignalType, ConfidenceResult
+from ..models.table_score import TableScore, SignalType, ConfidenceResult, ConfidenceLevel
 from ..models.kg_metadata import SemanticType
 from .kg_service import KGService
+from .query_processor import QueryProcessor, QueryIntent, ContextualPhrase, QueryAnalysis
 
 if TYPE_CHECKING:
     from .embedding_service import EmbeddingService
@@ -36,6 +37,11 @@ class ScoringService:
     SCORE_SAMPLE_VALUE_MATCH = 2
     SCORE_TOP_VALUE_MATCH = 2
     
+    # Phase 2 scoring weights
+    SCORE_CONTEXTUAL_MATCH = 6  # Context-aware phrase matching (between synonym and column)
+    SCORE_INTENT_ALIGNMENT = 2  # Table aligns with query intent
+    SCORE_DEPENDENCY_MATCH = 3  # Dependency relation matches column relationships
+    
     # Centrality boost (for generic queries)
     CENTRALITY_BOOST_MAX = 10  # Maximum points from centrality (generic queries)
     CENTRALITY_BOOST_CAP = 5   # Cap for mixed queries (don't override specific matches)
@@ -49,6 +55,7 @@ class ScoringService:
     RELATIVE_THRESHOLD = 0.3  # Percentage of top score
     MAX_CANDIDATES = 8  # Maximum candidates to send to LLM
     MIN_FALLBACK = 5  # Minimum candidates if threshold yields too few
+    MIN_BASE_SCORE_FOR_WEAK_CANDIDATES = 3  # Minimum base score to include weak candidates (no pure intent matches)
 
     # Stopwords to ignore in query (common words that shouldn't match)
     STOPWORDS = {
@@ -87,16 +94,30 @@ class ScoringService:
     # Minimum term length (to avoid matching short substrings like 's' or 'id')
     MIN_TERM_LENGTH = 2
 
-    def __init__(self, kg_service: KGService, embedding_service: Optional['EmbeddingService'] = None):
+    def __init__(self, kg_service: KGService, embedding_service: Optional['EmbeddingService'] = None, 
+                 enable_phase2: bool = True):
         """
         Initialize Scoring Service
 
         Args:
             kg_service: KG service for accessing metadata
             embedding_service: Optional embedding service for semantic similarity
+            enable_phase2: Enable Phase 2 advanced NLP features (default: True)
         """
         self.kg_service = kg_service
         self.embedding_service = embedding_service
+        self.enable_phase2 = enable_phase2
+
+        # Initialize spaCy-based query processor
+        # Falls back to regex-based extraction if spaCy unavailable
+        try:
+            self.query_processor = QueryProcessor()
+            self._use_spacy = True
+        except (ImportError, OSError) as e:
+            print(f"Warning: spaCy not available, falling back to regex-based extraction: {e}")
+            self.query_processor = None
+            self._use_spacy = False
+            self.enable_phase2 = False  # Phase 2 requires spaCy
 
     def _tokenize_identifier(self, text: str) -> Set[str]:
         # TODO: Change to proper toekniser if possible
@@ -164,7 +185,45 @@ class ScoringService:
 
     def extract_query_terms(self, query: str) -> List[str]:
         """
-        Extract meaningful terms from query
+        Extract meaningful terms from query using spaCy NLP pipeline
+
+        NEW IMPLEMENTATION (Phase 1 NLP improvements):
+        - Uses spaCy for advanced linguistic processing
+        - Lemmatization: "child's" → "child", "fees" → "fee", "grades" → "grade"
+        - POS-based filtering: Keep NOUN, PROPN, VERB, ADJ; skip generic words
+        - Context-aware: Distinguishes "name" in "student name" vs. standalone "name"
+        - Falls back to regex-based extraction if spaCy unavailable
+
+        Key improvements:
+        1. Possessives handled correctly: "child's" → "child" (not "childs")
+        2. Plurals normalized: "fees" → "fee", "courses" → "course"
+        3. Generic nouns filtered in isolation but kept in phrases
+        4. Better stopword handling with linguistic context
+
+        Examples:
+            "What is my child's name" → ["child"]
+            "How much fees do I need to clear" → ["fee", "need", "clear"]
+            "Show me student grades for 2024" → ["show", "student", "grade", "2024"]
+
+        Args:
+            query: Natural language query
+
+        Returns:
+            List of query terms (lemmatized, lowercase, no stopwords)
+        """
+        if self._use_spacy and self.query_processor:
+            # Use spaCy-based extraction (Phase 1 NLP improvements)
+            return self.query_processor.extract_terms(query)
+        else:
+            # Fallback to regex-based extraction (legacy behavior)
+            return self._extract_query_terms_regex(query)
+
+    def _extract_query_terms_regex(self, query: str) -> List[str]:
+        """
+        Legacy regex-based term extraction (fallback when spaCy unavailable)
+
+        This is the original implementation, kept for backward compatibility
+        and as a fallback when spaCy is not installed.
 
         Args:
             query: Natural language query
@@ -327,14 +386,24 @@ class ScoringService:
         if not metadata:
             return score_obj
 
+        # Extract multi-word concepts for enhanced matching
+        multi_word_concepts = None
+        query_analysis = None
+        if self._use_spacy and self.query_processor:
+            multi_word_concepts = self.query_processor.extract_multi_word_concepts(query)
+            
+            # Phase 2: Get full query analysis if enabled
+            if self.enable_phase2:
+                query_analysis = self.query_processor.analyze_query_phase2(query)
+
         # 1. Table name matching
         self._score_table_name(score_obj, table_name, query_terms)
 
         # 2. Column name matching
         self._score_column_names(score_obj, metadata, query_terms)
 
-        # 3. Synonym matching (user-defined keywords)
-        self._score_synonyms(score_obj, metadata, query_terms)
+        # 3. Synonym matching (user-defined keywords) - NOW WITH N-GRAM SUPPORT
+        self._score_synonyms(score_obj, metadata, query_terms, multi_word_concepts)
 
         # 4. Semantic type matching
         self._score_semantic_types(score_obj, metadata, query)
@@ -347,6 +416,20 @@ class ScoringService:
 
         # 7. Hint matching (for query operations)
         self._score_hints(score_obj, metadata, query)
+        
+        # PHASE 2: Advanced scoring methods
+        if self.enable_phase2 and query_analysis:
+            # 8. Context-aware phrase matching
+            self._score_contextual_phrases(score_obj, metadata, query_analysis)
+            
+            # 9. Intent alignment scoring
+            self._score_intent_alignment(score_obj, metadata, query_analysis)
+            
+            # 10. Dependency-based matching
+            self._score_dependencies(score_obj, metadata, query_analysis)
+            
+            # 11. Synonym expansion matching
+            self._score_expanded_synonyms(score_obj, metadata, query_analysis)
 
         return score_obj
 
@@ -374,14 +457,51 @@ class ScoringService:
                         matched_entity=term  # Track which entity this matched
                     )
 
-    def _score_synonyms(self, score_obj: TableScore, metadata, query_terms: List[str]):
-        """Score based on user-defined synonyms/keywords (capped at 2 per table)"""
+    def _score_synonyms(self, score_obj: TableScore, metadata, query_terms: List[str],
+                        multi_word_concepts: List[str] = None):
+        """
+        Score based on user-defined synonyms/keywords (capped at 2 per table)
+
+        Now supports both single-word and multi-word synonym matching:
+        - Single-word: "fee" matches synonym "fee"
+        - Multi-word: "my child name" matches synonym "my child name"
+        - Multi-word partial: "hostel fee" matches synonym "hostel fee"
+
+        Multi-word matches receive higher scores than single-word matches
+        to reflect higher specificity.
+
+        Args:
+            score_obj: TableScore to update
+            metadata: Table metadata
+            query_terms: Individual query terms (for backward compatibility)
+            multi_word_concepts: Multi-word concepts extracted from query (optional)
+        """
         for col_name, col_meta in metadata.columns.items():
             if not col_meta.synonyms:
                 continue
 
             synonyms_lower = [s.lower() for s in col_meta.synonyms]
 
+            # Strategy 1: Multi-word synonym matching (higher priority)
+            if multi_word_concepts:
+                for concept in multi_word_concepts:
+                    if concept in synonyms_lower:
+                        # Count words in concept to determine specificity bonus
+                        word_count = len(concept.split())
+
+                        # Multi-word matches get bonus (more specific = higher score)
+                        # 2-word: +1 bonus, 3-word: +2 bonus, etc.
+                        bonus = min(word_count - 1, 3)  # Cap bonus at +3
+
+                        score_obj.add_score(
+                            self.SCORE_SYNONYM_MATCH + bonus,
+                            f"column '{col_name}' synonym matches multi-word '{concept}'",
+                            column=col_name,
+                            signal_type=SignalType.SYNONYM_MATCH,
+                            matched_entity=concept  # Track which entity this matched
+                        )
+
+            # Strategy 2: Single-word term matching (original behavior)
             for term in query_terms:
                 if term in synonyms_lower:
                     score_obj.add_score(
@@ -586,24 +706,27 @@ class ScoringService:
         """
         Filter scores using adaptive threshold strategy
         
+        NEW: Enhanced filtering with base_score validation to prevent weak intent-only matches
+        
         Adaptive filtering logic:
         1. Keep ALL tables with score >= ABSOLUTE_THRESHOLD (default 5)
         2. If too many (> MAX_CANDIDATES), use relative threshold (30% of top scorer)
            but ensure at least ABSOLUTE_THRESHOLD
         3. If too few (< 2), fall back to top MIN_FALLBACK (default 5) tables
-           BUT only include tables with score > 0 (strict filtering)
+           BUT only include tables with score > 0 AND base_score >= MIN_BASE_SCORE_FOR_WEAK_CANDIDATES
+           This prevents returning tables that only matched on weak intent signals
         4. Cap at MAX_CANDIDATES (default 8) maximum
         
         This adapts to query complexity:
         - Simple queries: 3-5 tables (score >= 5)
         - Complex queries: up to 8 tables (all with score >= 5 or 30% of top)
-        - Poor queries: 1-5 tables (only those with score > 0)
+        - Poor queries: 1-5 tables (only those with meaningful semantic matches)
 
         Args:
             scores: List of scored tables (should be sorted by score descending)
 
         Returns:
-            Filtered list of candidates (never includes 0-scoring tables)
+            Filtered list of candidates (never includes pure intent-only matches)
         """
         if not scores:
             return []
@@ -622,15 +745,29 @@ class ScoringService:
             candidates = [s for s in scores if s.score >= threshold]
 
         # Strategy 3: Ensure minimum coverage (if too few candidates)
-        # For vague queries, ensure we have at least MIN_FALLBACK candidates
-        # BUT only include tables that actually scored something (> 0)
+        # NEW: Apply base_score filter to prevent intent-only matches
         if len(candidates) < 2:
-            # Take top MIN_FALLBACK, but only if they scored > 0
-            candidates = [s for s in scores[:self.MIN_FALLBACK] if s.score > 0]
+            # Take top MIN_FALLBACK, but only if they have meaningful semantic matches
+            # Filter: score > 0 AND base_score >= MIN_BASE_SCORE_FOR_WEAK_CANDIDATES
+            # This prevents tables that only matched on intent alignment (2 pts)
+            candidates = [
+                s for s in scores[:self.MIN_FALLBACK] 
+                if s.score > 0 and s.base_score >= self.MIN_BASE_SCORE_FOR_WEAK_CANDIDATES
+            ]
             
-            # If no candidates at all, return at least the top scorer (even if 0)
+            # If still no candidates, check if we have ANY with base_score > 0
+            if not candidates:
+                candidates = [s for s in scores[:self.MIN_FALLBACK] if s.base_score > 0]
+            
+            # If STILL no candidates (complete matching failure), return empty
+            # This triggers early exit with proper error message
             if not candidates and scores:
-                candidates = [scores[0]]
+                # Only return top scorer if it has ANY semantic match
+                if scores[0].base_score > 0:
+                    candidates = [scores[0]]
+                else:
+                    # Complete semantic matching failure - return empty
+                    candidates = []
 
         # Strategy 4: Cap at maximum (for token limits)
         if len(candidates) > self.MAX_CANDIDATES:
@@ -742,6 +879,7 @@ class ScoringService:
         - Uses base_score only (ignores FK boost)
         - Checks entity coverage from query
         - Core tables must have base_score >= 10
+        - Early exit if no candidates (complete matching failure)
 
         Returns:
             ConfidenceResult with confidence level and recommendation
@@ -756,6 +894,20 @@ class ScoringService:
             >>> else:
             >>>     use_fallback_strategy()
         """
+        # Early exit if no candidates (complete matching failure)
+        if not candidates:
+            return ConfidenceResult(
+                confidence_score=0.0,
+                confidence_level=ConfidenceLevel.LOW,
+                top_base_score=0.0,
+                total_base_score=0.0,
+                num_candidates=0,
+                num_core_tables=0,
+                entity_coverage=0.0,
+                is_domain_mismatch=False,
+                recommendation="No relevant tables found. The query may be too vague, use terms not in the database, or request information outside the database domain. Please rephrase with more specific table or column names."
+            )
+        
         # Extract entities from query for coverage calculation
         query_entities = self.extract_query_entities(query) if query else None
         
@@ -894,6 +1046,239 @@ class ScoringService:
             print(f"  → Applied centrality boost ({boost_type}, max {max_boost} pts) to {boosted_count} tables")
         
         return scores
+
+    # =========================================================================
+    # PHASE 2: ADVANCED SCORING METHODS
+    # =========================================================================
+
+    def _score_contextual_phrases(self, score_obj: TableScore, metadata, query_analysis: QueryAnalysis):
+        """
+        Phase 2: Score based on context-aware phrase matching
+        
+        Matches phrases considering their semantic context, not just literal text.
+        Example: "student name" should boost person-name columns more than generic "name".
+        
+        Strategy:
+        - Match head word (e.g., "name") with column names
+        - If modifier exists (e.g., "student"), check if it's semantically relevant
+        - Higher score for contextually appropriate matches
+        
+        Args:
+            score_obj: TableScore to update
+            metadata: Table metadata
+            query_analysis: Phase 2 query analysis
+        """
+        for phrase_info in query_analysis.contextual_phrases:
+            head_word = phrase_info.head_word
+            modifier = phrase_info.modifier
+            
+            # Check each column
+            for col_name, col_meta in metadata.columns.items():
+                col_tokens = self._tokenize_identifier(col_name)
+                
+                # Match head word
+                if head_word in col_tokens or any(head_word in token for token in col_tokens):
+                    # Check if context (modifier) is relevant
+                    context_match = False
+                    if modifier:
+                        # Check if modifier matches table name or column context
+                        table_tokens = self._tokenize_identifier(score_obj.table_name)
+                        if any(mod_word in table_tokens or mod_word in col_tokens 
+                               for mod_word in modifier.split()):
+                            context_match = True
+                        
+                        # Check if modifier matches semantic type
+                        if col_meta.semantic_type:
+                            semantic_keywords = {
+                                'student': 'PERSON', 'child': 'PERSON', 'parent': 'PERSON',
+                                'teacher': 'PERSON', 'faculty': 'PERSON', 'instructor': 'PERSON',
+                                'course': 'CATEGORICAL', 'subject': 'CATEGORICAL',
+                                'fee': 'NUMERICAL', 'amount': 'NUMERICAL', 'grade': 'NUMERICAL',
+                                'date': 'TEMPORAL', 'time': 'TEMPORAL', 'year': 'TEMPORAL'
+                            }
+                            for mod_word in modifier.split():
+                                if mod_word in semantic_keywords:
+                                    expected_type = semantic_keywords[mod_word]
+                                    if expected_type == col_meta.semantic_type.name:
+                                        context_match = True
+                    
+                    # Calculate score
+                    if context_match:
+                        # Higher score for contextually relevant match
+                        score_obj.add_score(
+                            self.SCORE_CONTEXTUAL_MATCH,
+                            f"contextual match: '{phrase_info.phrase}' → column '{col_name}'",
+                            column=col_name,
+                            signal_type=SignalType.COLUMN_NAME_MATCH
+                        )
+                    else:
+                        # Lower score for head word match without context
+                        score_obj.add_score(
+                            self.SCORE_CONTEXTUAL_MATCH * 0.5,
+                            f"partial contextual match: '{head_word}' in '{col_name}'",
+                            column=col_name,
+                            signal_type=SignalType.COLUMN_NAME_MATCH
+                        )
+
+    def _score_intent_alignment(self, score_obj: TableScore, metadata, query_analysis: QueryAnalysis):
+        """
+        Phase 2: Score based on query intent alignment
+        
+        Boosts tables that align with the detected query intent.
+        Example: AGGREGATION intent → boost tables with numerical columns
+        
+        Args:
+            score_obj: TableScore to update
+            metadata: Table metadata
+            query_analysis: Phase 2 query analysis
+        """
+        intent = query_analysis.intent
+        
+        if intent == QueryIntent.AGGREGATION:
+            # Boost tables with numerical columns (good for aggregation)
+            numerical_cols = [
+                col_name for col_name, col_meta in metadata.columns.items()
+                if col_meta.semantic_type == SemanticType.NUMERICAL
+            ]
+            if numerical_cols:
+                score_obj.add_score(
+                    self.SCORE_INTENT_ALIGNMENT,
+                    f"table has {len(numerical_cols)} numerical columns (intent: aggregation)",
+                    signal_type=SignalType.HINT_MATCH,
+                    signal_subtype="aggregation"
+                )
+        
+        elif intent == QueryIntent.FILTERING:
+            # Boost tables with filterable columns
+            filterable_cols = [
+                col_name for col_name, col_meta in metadata.columns.items()
+                if col_meta.good_for_filtering
+            ]
+            if filterable_cols:
+                score_obj.add_score(
+                    self.SCORE_INTENT_ALIGNMENT,
+                    f"table has {len(filterable_cols)} filterable columns (intent: filtering)",
+                    signal_type=SignalType.HINT_MATCH,
+                    signal_subtype="filtering"
+                )
+        
+        elif intent == QueryIntent.LOOKUP:
+            # Boost tables with unique identifiers (good for lookup)
+            has_id_column = any(
+                'id' in col_name.lower() or getattr(col_meta, 'is_unique', False)
+                for col_name, col_meta in metadata.columns.items()
+            )
+            if has_id_column:
+                score_obj.add_score(
+                    self.SCORE_INTENT_ALIGNMENT,
+                    "table has unique identifier (intent: lookup)",
+                    signal_type=SignalType.HINT_MATCH,
+                    signal_subtype="lookup"
+                )
+        
+        elif intent == QueryIntent.COMPARISON:
+            # Boost tables with multiple numerical/categorical columns
+            comparable_cols = [
+                col_name for col_name, col_meta in metadata.columns.items()
+                if col_meta.semantic_type in {SemanticType.NUMERICAL, SemanticType.CATEGORICAL}
+            ]
+            if len(comparable_cols) >= 2:
+                score_obj.add_score(
+                    self.SCORE_INTENT_ALIGNMENT,
+                    f"table has {len(comparable_cols)} comparable columns (intent: comparison)",
+                    signal_type=SignalType.HINT_MATCH,
+                    signal_subtype="comparison"
+                )
+
+    def _score_dependencies(self, score_obj: TableScore, metadata, query_analysis: QueryAnalysis):
+        """
+        Phase 2: Score based on dependency relations
+        
+        Uses grammatical dependencies to understand relationships.
+        Example: "child's name" (possessive) → boost person-related columns
+        
+        Args:
+            score_obj: TableScore to update
+            metadata: Table metadata
+            query_analysis: Phase 2 query analysis
+        """
+        for dep in query_analysis.dependencies:
+            # Possessive relations (child's name, student's grade)
+            if dep.relation_type == 'poss':
+                # The head is what we're looking for (name, grade)
+                # The dependent is the possessor (child, student)
+                
+                # Match head word with columns
+                for col_name, col_meta in metadata.columns.items():
+                    col_tokens = self._tokenize_identifier(col_name)
+                    
+                    if dep.head in col_tokens:
+                        # Check if possessor matches table context
+                        table_tokens = self._tokenize_identifier(score_obj.table_name)
+                        if dep.dependent in table_tokens:
+                            score_obj.add_score(
+                                self.SCORE_DEPENDENCY_MATCH,
+                                f"possessive relation: '{dep.dependent}' owns '{dep.head}' in '{col_name}'",
+                                column=col_name,
+                                signal_type=SignalType.COLUMN_NAME_MATCH
+                            )
+            
+            # Compound nouns (student ID, course code)
+            elif dep.relation_type == 'compound':
+                # Both parts should match
+                compound_phrase = f"{dep.dependent} {dep.head}"
+                
+                for col_name, col_meta in metadata.columns.items():
+                    col_lower = col_name.lower().replace('_', ' ')
+                    if compound_phrase in col_lower:
+                        score_obj.add_score(
+                            self.SCORE_DEPENDENCY_MATCH,
+                            f"compound match: '{compound_phrase}' in '{col_name}'",
+                            column=col_name,
+                            signal_type=SignalType.COLUMN_NAME_MATCH
+                        )
+
+    def _score_expanded_synonyms(self, score_obj: TableScore, metadata, query_analysis: QueryAnalysis):
+        """
+        Phase 2: Score based on WordNet synonym expansion
+        
+        Matches expanded synonyms against column names and metadata.
+        Example: "student" → ["pupil", "learner"] → match "learner_id" column
+        
+        Args:
+            score_obj: TableScore to update
+            metadata: Table metadata
+            query_analysis: Phase 2 query analysis
+        """
+        if not query_analysis.expanded_synonyms:
+            return
+        
+        # Check each expanded term and its synonyms
+        for original_term, synonyms in query_analysis.expanded_synonyms.items():
+            for synonym in synonyms:
+                # Match against column names
+                for col_name, col_meta in metadata.columns.items():
+                    col_tokens = self._tokenize_identifier(col_name)
+                    
+                    if synonym in col_tokens or any(synonym in token for token in col_tokens):
+                        score_obj.add_score(
+                            self.SCORE_SAMPLE_VALUE_MATCH,  # Lower weight than direct matches
+                            f"synonym expansion: '{original_term}' → '{synonym}' matches column '{col_name}'",
+                            column=col_name,
+                            signal_type=SignalType.SYNONYM_MATCH
+                        )
+                
+                # Match against synonyms in metadata
+                for col_name, col_meta in metadata.columns.items():
+                    if col_meta.synonyms:
+                        synonyms_lower = [s.lower() for s in col_meta.synonyms]
+                        if synonym in synonyms_lower:
+                            score_obj.add_score(
+                                self.SCORE_SAMPLE_VALUE_MATCH,
+                                f"synonym expansion: '{original_term}' → '{synonym}' in synonyms of '{col_name}'",
+                                column=col_name,
+                                signal_type=SignalType.SYNONYM_MATCH
+                            )
 
     def is_domain_mismatch(self, scores: List[TableScore], query: str) -> bool:
         """
