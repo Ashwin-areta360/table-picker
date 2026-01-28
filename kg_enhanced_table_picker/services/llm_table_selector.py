@@ -93,6 +93,16 @@ class LLMTableSelector:
         if max_tables and len(selected) > max_tables:
             selected = selected[:max_tables]
 
+        # Filter out hallucinated table names: only allow tables that exist in the schema
+        allowed_tables = set((model_input.get("all_tables") or {}).keys())
+        if allowed_tables:
+            before = len(selected)
+            selected = [t for t in selected if t in allowed_tables]
+            dropped = before - len(selected)
+            if dropped:
+                suffix = f"[filtered] Removed {dropped} invalid/hallucinated table name(s); use only schema tables."
+                reasoning = (reasoning + " " if reasoning else "") + suffix
+
         # If LLM returns nothing, fall back to rule-based top tables
         if not selected:
             selected = [c.table_name for c in rule_based_candidates[: min(max_tables, len(rule_based_candidates))]]
@@ -133,8 +143,9 @@ class LLMTableSelector:
     def _system_prompt(self) -> str:
         return (
             "You are a data assistant. Your job is to pick the minimum set of database tables "
-            "needed to answer the user query. Use the provided schema metadata and any scoring "
-            "signals as guidance. Return only valid JSON."
+            "needed to answer the user query. Use the provided schema metadata as guidance. "
+            "You MUST use ONLY table names from the explicit allowed list; do NOT invent or use "
+            "any other names. Return only valid JSON."
         )
 
     def _build_prompt(self, model_input: Dict[str, Any], max_tables: int, role: Optional[str] = None) -> str:
@@ -142,19 +153,24 @@ class LLMTableSelector:
         Provide the LLM with:
         - query
         - full schema metadata for all tables
+        - explicit allowed table names (use ONLY these)
         - role (optional): student | faculty | parent
         """
         payload_str = json.dumps(model_input, ensure_ascii=False)
         role_placeholder = (str(role).strip().lower() if role else "unspecified")
+        all_tables = model_input.get("all_tables") or {}
+        allowed = sorted(all_tables.keys())
+        allowed_str = ", ".join(allowed) if allowed else "(none)"
 
         return (
             "Select the database tables needed to answer the user query.\n\n"
             f"Role: {role_placeholder}\n\n"
+            f"Allowed table names (use ONLY these; do NOT invent or use any other names):\n"
+            f"  {allowed_str}\n\n"
             f"Constraints:\n"
-            f"- Select between 1 and {max_tables} tables.\n"
+            f"- Select between 1 and {max_tables} tables from the allowed list above.\n"
             "- Prefer the smallest sufficient set.\n"
             "- Use bridge/junction tables only if joins require them.\n"
-            "- Do NOT invent tables.\n"
             "- When the query uses first-person language (my, mine, I, me) and role is set, "
             "you MUST include the identity table for that role: students_info (student), "
             "faculty_info (faculty), parent_info (parent).\n\n"
