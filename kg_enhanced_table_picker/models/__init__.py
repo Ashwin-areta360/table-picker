@@ -6,6 +6,7 @@ from .table_score import TableScore, ScoringReason, ConfidenceLevel, ConfidenceR
 from .table_selection import TableSelection, Relationship
 from .kg_metadata import KGTableMetadata, KGColumnMetadata
 from .selection_candidate import TableCandidate, JudgeDecision
+from .judge_suggestion import SuggestionType, SuggestionSeverity, Suggestion, HandlerAction
 
 __all__ = [
     "TableScore",
@@ -18,5 +19,9 @@ __all__ = [
     "KGColumnMetadata",
     "TableCandidate",
     "JudgeDecision",
+    "SuggestionType",
+    "SuggestionSeverity",
+    "Suggestion",
+    "HandlerAction",
 ]
 
