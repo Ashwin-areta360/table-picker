@@ -93,9 +93,11 @@ def calculate_table_centrality(combined_graph: nx.MultiDiGraph, all_metadata: di
                             fk_graph.add_edge(table_name, ref_table)
         
         # Calculate betweenness if graph has edges
+        # Use undirected graph for betweenness (FK relationships work both ways for connectivity)
         if fk_graph.number_of_edges() > 0:
-            print("  Calculating betweenness centrality...")
-            betweenness = nx.betweenness_centrality(fk_graph)
+            print("  Calculating betweenness centrality (undirected graph)...")
+            fk_graph_undirected = fk_graph.to_undirected()
+            betweenness = nx.betweenness_centrality(fk_graph_undirected)
             
             for table_name, score in betweenness.items():
                 if table_name in centrality_data:
@@ -274,7 +276,7 @@ def main():
                     if source_table not in all_metadata[ref_table].referenced_by:
                         all_metadata[ref_table].referenced_by.append(source_table)
     
-    print(f"  ✓ Populated referenced_by for all tables")
+    print(f"Populated referenced_by for all tables")
 
     # Calculate table centrality metrics
     print("\n" + "=" * 80)

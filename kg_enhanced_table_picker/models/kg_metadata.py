@@ -123,6 +123,10 @@ class KGColumnMetadata:
                 result['hints'].append('good_for_grouping')
             if self.good_for_aggregation:
                 result['hints'].append('good_for_aggregation')
+            if self.good_for_indexing:
+                result['hints'].append('good_for_indexing')
+            if self.good_for_partitioning:
+                result['hints'].append('good_for_partitioning')
 
             # Add statistics if available
             if self.numerical_stats:

@@ -237,16 +237,16 @@
     },
     {
       "node_type": "category_value",
-      "value": "MAT102",
-      "label": "Value: MAT102",
+      "value": "MAT103",
+      "label": "Value: MAT103",
       "count": 1278,
       "percentage": 2.4156050353457075,
       "id": "catval_24"
     },
     {
       "node_type": "category_value",
-      "value": "MAT101",
-      "label": "Value: MAT101",
+      "value": "MAT102",
+      "label": "Value: MAT102",
       "count": 1278,
       "percentage": 2.4156050353457075,
       "id": "catval_25"
@@ -261,8 +261,8 @@
     },
     {
       "node_type": "category_value",
-      "value": "MAT103",
-      "label": "Value: MAT103",
+      "value": "MAT101",
+      "label": "Value: MAT101",
       "count": 1278,
       "percentage": 2.4156050353457075,
       "id": "catval_27"
@@ -400,16 +400,16 @@
     },
     {
       "node_type": "category_value",
-      "value": "8.185714285714287",
-      "label": "Value: 8.185714285714287",
+      "value": "8.057142857142857",
+      "label": "Value: 8.057142857142857",
       "count": 763,
       "percentage": 1.4421804710240804,
       "id": "catval_44"
     },
     {
       "node_type": "category_value",
-      "value": "8.057142857142857",
-      "label": "Value: 8.057142857142857",
+      "value": "8.185714285714287",
+      "label": "Value: 8.185714285714287",
       "count": 763,
       "percentage": 1.4421804710240804,
       "id": "catval_45"
@@ -483,7 +483,7 @@
       "id": "hint_filtering_candidate"
     }
   ],
-  "links": [
+  "edges": [
     {
       "edge_type": "has_column",
       "position": 1,

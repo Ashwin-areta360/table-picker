@@ -148,12 +148,18 @@ class LLMTableJudge:
                 {"role": "system", "content": self._prompts.system_prompt(role)},
                 {"role": "user", "content": prompt},
             ]
-            response = self._client.chat.completions.create(
-                messages=messages,
-                temperature=temperature,
-                max_tokens=max_tokens,
-                response_format={"type": "json_object"},
-            )
+            # Some providers / hosted models (notably via Groq) may not support strict JSON mode
+            # and will fail with json_validate_failed. In that case, rely on prompt discipline
+            # and our defensive JSON parsing instead.
+            create_kwargs: Dict[str, Any] = {
+                "messages": messages,
+                "temperature": temperature,
+                "max_tokens": max_tokens,
+            }
+            if str(self.provider).lower() != "groq":
+                create_kwargs["response_format"] = {"type": "json_object"}
+
+            response = self._client.chat.completions.create(**create_kwargs)
             raw = response.choices[0].message.content
         except ProviderError as e:
             # If the provider fails JSON validation (e.g. minor syntax issue),
@@ -202,6 +208,49 @@ class LLMTableJudge:
             }
 
         parsed = self._parse_llm_json(raw)
+
+        # If the model didn't return the expected top-level structure, fall back instead
+        # of producing an empty judge output.
+        decisions_raw = parsed.get("decisions") if isinstance(parsed, dict) else None
+        if not isinstance(decisions_raw, list):
+            intersection = [
+                c["table_name"]
+                for c in candidates
+                if c.get("from_rule_based") and c.get("from_llm")
+            ]
+            all_names = [c["table_name"] for c in candidates if c.get("table_name")]
+            kept_names = intersection or all_names[:max_tables]
+
+            fallback_decisions: List[Dict[str, Any]] = []
+            for name in all_names:
+                fallback_decisions.append(
+                    {
+                        "table_name": name,
+                        "keep": name in kept_names,
+                        "relevance_score": 0.0,
+                        "reason": "[fallback] Judge returned invalid/missing 'decisions'; using intersection/first-N heuristic.",
+                    }
+                )
+
+            return {
+                "decisions": fallback_decisions,
+                "suggestions": [],
+                "analysis": {
+                    "intersection_tables": intersection,
+                    "rule_based_only": [
+                        c["table_name"]
+                        for c in candidates
+                        if c.get("from_rule_based") and not c.get("from_llm")
+                    ],
+                    "llm_only": [
+                        c["table_name"]
+                        for c in candidates
+                        if c.get("from_llm") and not c.get("from_rule_based")
+                    ],
+                },
+                "validation_passed": False,
+                "validation_errors": ["Missing or invalid 'decisions' key in response"],
+            }
 
         # Drop any suggestions that use unknown types before validation.
         allowed_types = {t.value for t in SuggestionType}

@@ -3,7 +3,10 @@
 Batch runner for table picker using the entry point.
 
 Reads test.xlsx and runs each query through the table picker pipeline,
-comparing rule-based, LLM-only, and judge ensemble strategies.
+comparing rule-based, LLM-only, and judge (iterative) strategies.
+
+Judge mode uses the latest pipeline: IterativeTableSelector (rule + LLM + judge,
+suggestion handling, query rephrasing, needs_clarification).
 
 Usage:
   python helpers/batch_run_table_picker.py --mode judge
@@ -13,9 +16,10 @@ Usage:
 """
 
 import argparse
+import json
 import sys
 from pathlib import Path
-from typing import List
+from typing import Any, List, Optional, Tuple
 
 import pandas as pd
 
@@ -28,13 +32,9 @@ from kg_enhanced_table_picker.services.kg_service import KGService
 from kg_enhanced_table_picker.services.scoring_service import ScoringService
 from kg_enhanced_table_picker.services.llm_table_selector import LLMTableSelector
 from kg_enhanced_table_picker.services.llm_table_judge import LLMTableJudge
-from kg_enhanced_table_picker.services.candidate_service import TableCandidateService
-from kg_enhanced_table_picker.services.identity_service import (
-    ROLE_IDENTITY_TABLE,
-    identity_table_for_role,
-    query_uses_first_person,
-    apply_identity_guardrail,
-)
+from kg_enhanced_table_picker.services.iterative_selector import IterativeTableSelector
+from kg_enhanced_table_picker.services.query_rephraser import QueryRephraser
+from kg_enhanced_table_picker.services.identity_service import ROLE_IDENTITY_TABLE
 
 
 VALID_ROLES = tuple(ROLE_IDENTITY_TABLE.keys())
@@ -104,157 +104,42 @@ def run_llm_only(
     return selection.selected_tables
 
 
-def run_with_judge(
+def build_iterative_selector(
     kg_service: KGService,
     scoring_service: ScoringService,
-    query: str,
     top_n: int,
-    provider: str,
-    model: str | None,
-    role: str | None = None,
-) -> List[str]:
-    """Run ensemble: rule-based + LLM selector + LLM judge."""
-    selector = LLMTableSelector(kg_service=kg_service, provider=provider, model=model, api_key=None)
-    judge = LLMTableJudge(kg_service=kg_service, provider=provider, model=model, api_key=None)
-    candidate_service = TableCandidateService(kg_service=kg_service)
-
-    scores = scoring_service.score_all_tables(query)
-    candidates_before = scoring_service.filter_by_threshold(scores)
-    rule_candidates = scoring_service.enhance_with_fk_relationships(candidates_before, scores)
-
-    selection = selector.select_tables(
-        query=query,
-        all_scores=scores,
-        rule_based_candidates=rule_candidates,
+    provider: str = "groq",
+    model: Optional[str] = None,
+    max_iterations: int = 2,
+) -> IterativeTableSelector:
+    """Build IterativeTableSelector (rule + LLM + judge + rephrasing)."""
+    llm_selector = LLMTableSelector(kg_service=kg_service, provider=provider, model=model, api_key=None)
+    llm_judge = LLMTableJudge(kg_service=kg_service, provider=provider, model=model, api_key=None)
+    rephraser = QueryRephraser(provider=provider, model=model, api_key=None)
+    return IterativeTableSelector(
+        kg_service=kg_service,
+        scoring_service=scoring_service,
+        llm_selector=llm_selector,
+        llm_judge=llm_judge,
+        rephraser=rephraser,
+        max_iterations=max_iterations,
         max_tables=top_n,
-        detail_level="medium",
-        role=role,
-    )
-    llm_tables = set(selection.selected_tables)
-
-    candidates = candidate_service.build_union_candidates(
-        rule_candidates=rule_candidates,
-        llm_tables=llm_tables,
-        detail_level="medium",
-    )
-    union_names = [c.table_name for c in candidates]
-    candidates_for_judge = TableCandidateService.to_judge_payload(candidates)
-
-    decisions = judge.judge_tables(
-        query=query,
-        candidates=candidates_for_judge,
-        max_tables=top_n,
-        role=role,
     )
 
-    by_name = {c["table_name"]: c for c in candidates_for_judge}
-    kept = []
-    for d in decisions:
-        if not d.get("keep"):
-            continue
-        name = d.get("table_name")
-        if name not in by_name:
-            continue
-        score = float(d.get("relevance_score", 0.0))
-        flags = by_name[name]
-        if flags.get("from_rule_based") and flags.get("from_llm"):
-            score += 0.1
-        kept.append((name, score))
 
-    kept_sorted = sorted(kept, key=lambda x: x[1], reverse=True)
-    return apply_identity_guardrail(kept_sorted, query, role, union_names, top_n)
-
-
-def run_with_judge_diagnostic(
-    kg_service: KGService,
-    scoring_service: ScoringService,
+def run_iterative_selector(
+    selector: IterativeTableSelector,
     query: str,
-    top_n: int,
-    provider: str,
-    model: str | None,
-    role: str | None = None,
-) -> tuple[List[str], dict]:
+    role: Optional[str] = None,
+) -> Tuple[List[str], bool, List[dict]]:
     """
-    Same as run_with_judge but returns (final_tables, diagnostics) for analyzing
-    partial (serious) cases. diagnostics has:
-      all_scores: dict[table_name, score]
-      candidates_before: list[table_name] (after threshold, before FK)
-      rule_candidates: list[{table_name, score}]
-      llm_tables: list[table_name]
-      union: set[table_name]
-      judge_decisions: list[{table_name, keep, relevance_score, reason, from_rule_based, from_llm}]
+    Run iterative table selection (latest pipeline).
+
+    Returns:
+        (final_tables, needs_clarification, unresolved_issues)
     """
-    selector = LLMTableSelector(kg_service=kg_service, provider=provider, model=model, api_key=None)
-    judge = LLMTableJudge(kg_service=kg_service, provider=provider, model=model, api_key=None)
-    candidate_service = TableCandidateService(kg_service=kg_service)
-
-    scores = scoring_service.score_all_tables(query)
-    all_scores = {s.table_name: s.score for s in scores}
-    thresholded = scoring_service.filter_by_threshold(scores)
-    candidates_before = [s.table_name for s in thresholded]
-    rule_candidates = scoring_service.enhance_with_fk_relationships(thresholded, scores)
-    rule_list = [{"table_name": c.table_name, "score": c.score} for c in rule_candidates]
-
-    selection = selector.select_tables(
-        query=query,
-        all_scores=scores,
-        rule_based_candidates=rule_candidates,
-        max_tables=top_n,
-        detail_level="medium",
-        role=role,
-    )
-    llm_tables = list(selection.selected_tables)
-    candidates = candidate_service.build_union_candidates(
-        rule_candidates=rule_candidates,
-        llm_tables=llm_tables,
-        detail_level="medium",
-    )
-    union_names = [c.table_name for c in candidates]
-
-    candidates_for_judge = TableCandidateService.to_judge_payload(candidates)
-
-    decisions = judge.judge_tables(
-        query=query,
-        candidates=candidates_for_judge,
-        max_tables=top_n,
-        role=role,
-    )
-    by_name = {c["table_name"]: c for c in candidates_for_judge}
-    judge_decisions = []
-    for d in decisions:
-        name = d.get("table_name")
-        if name not in by_name:
-            continue
-        flags = by_name[name]
-        judge_decisions.append({
-            "table_name": name,
-            "keep": bool(d.get("keep", False)),
-            "relevance_score": float(d.get("relevance_score", 0.0)),
-            "reason": (d.get("reason") or ""),
-            "from_rule_based": flags.get("from_rule_based", False),
-            "from_llm": flags.get("from_llm", False),
-        })
-
-    kept = []
-    for d in judge_decisions:
-        if not d["keep"]:
-            continue
-        score = d["relevance_score"]
-        if d["from_rule_based"] and d["from_llm"]:
-            score += 0.1
-        kept.append((d["table_name"], score))
-    kept_sorted = sorted(kept, key=lambda x: x[1], reverse=True)
-    final = apply_identity_guardrail(kept_sorted, query, role, union_names, top_n)
-
-    diagnostics = {
-        "all_scores": all_scores,
-        "candidates_before": candidates_before,
-        "rule_candidates": rule_list,
-        "llm_tables": llm_tables,
-        "union": union_names,
-        "judge_decisions": judge_decisions,
-    }
-    return final, diagnostics
+    result = selector.select_tables(query=query, role=role, verbose=False)
+    return result.final_tables, result.needs_clarification, result.unresolved_issues
 
 
 def calculate_metrics(expected: str, predicted: str) -> tuple[str, bool, bool, bool, bool]:
@@ -330,8 +215,8 @@ def main() -> int:
     parser.add_argument(
         "--model",
         type=str,
-        default=None,
-        help="LLM model name (optional; provider default is used if not set).",
+        default="openai/gpt-oss-120b",
+        help="LLM model name (default: openai/gpt-oss-120b).",
     )
     parser.add_argument(
         "--role",
@@ -341,6 +226,12 @@ def main() -> int:
         help="User role: student | faculty | parent. Injected into LLM/judge prompts and enables identity-table guardrail for 'my/mine' queries.",
     )
     parser.add_argument("--limit", type=int, default=None, help="Max number of test rows to process (default: all).")
+    parser.add_argument(
+        "--max-iterations",
+        type=int,
+        default=2,
+        help="Max iterations for iterative selector in judge mode (default: 2).",
+    )
 
     args = parser.parse_args()
 
@@ -358,14 +249,25 @@ def main() -> int:
     # Get column names
     question_col = df.columns[0]
     expected_col = df.columns[1] if len(df.columns) > 1 else None
+    
+    # Check for role column (case-insensitive)
+    role_col = None
+    for col in df.columns:
+        if col.lower() == "role":
+            role_col = col
+            break
 
     print(f"Found {len(df)} test cases")
     print(f"Question column: '{question_col}'")
     if expected_col:
         print(f"Expected column: '{expected_col}'")
+    if role_col:
+        print(f"Role column: '{role_col}' (will use per-query roles)")
     print(f"Mode: {args.mode}")
-    if args.role:
-        print(f"Role: {args.role}")
+    if args.role and not role_col:
+        print(f"Global role: {args.role}")
+    elif args.role and role_col:
+        print(f"Global role (fallback): {args.role}")
 
     to_process = df.head(args.limit) if args.limit else df
     if args.limit:
@@ -375,6 +277,19 @@ def main() -> int:
     kg_service = load_kg()
     scoring_service = ScoringService(kg_service, None, enable_phase2=True)
 
+    # Build iterative selector once when using judge (latest pipeline)
+    iterative_selector: Optional[IterativeTableSelector] = None
+    if args.mode == "judge":
+        iterative_selector = build_iterative_selector(
+            kg_service=kg_service,
+            scoring_service=scoring_service,
+            top_n=args.top_n,
+            provider=args.provider,
+            model=args.model,
+            max_iterations=args.max_iterations,
+        )
+        print(f"Judge mode: iterative pipeline (max_iterations={args.max_iterations})")
+
     # Run predictions
     print("\n" + "=" * 80)
     print("RUNNING PREDICTIONS")
@@ -382,10 +297,32 @@ def main() -> int:
     rule_predictions: List[str] = []
     llm_predictions: List[str] = []
     judge_predictions: List[str] = []
+    needs_clarification_list: List[bool] = []
+    unresolved_issues_list: List[str] = []
+    used_roles: List[str] = []
 
     for ni, (idx, row) in enumerate(to_process.iterrows(), 1):
         query = str(row[question_col])
-        print(f"\n[{ni}/{len(to_process)}] Processing: {query[:60]}...")
+        
+        # Get role for this query: from row if available, otherwise from args
+        query_role = None
+        if role_col and role_col in row:
+            row_role_value = row[role_col]
+            # Handle NaN, empty strings, etc.
+            if pd.notna(row_role_value) and str(row_role_value).strip():
+                query_role = str(row_role_value).strip().lower()
+                # Validate role
+                if query_role not in VALID_ROLES:
+                    print(f"  ⚠ Warning: Invalid role '{query_role}' in row {ni}, using fallback")
+                    query_role = args.role
+        else:
+            query_role = args.role
+        
+        role_display = f" [role: {query_role}]" if query_role else ""
+        print(f"\n[{ni}/{len(to_process)}] Processing: {query[:60]}...{role_display}")
+        
+        # Track the role used for this query
+        used_roles.append(query_role if query_role else "")
 
         try:
             # Always compute rule-based prediction (fast, deterministic).
@@ -402,27 +339,27 @@ def main() -> int:
                     top_n=args.top_n,
                     provider=args.provider,
                     model=args.model,
-                    role=args.role,
+                    role=query_role,
                 )
                 llm_predicted = ", ".join(llm_tables) if llm_tables else ""
             else:
                 llm_predicted = ""
             llm_predictions.append(llm_predicted)
 
-            # Compute final judge prediction (only in judge mode).
-            if args.mode == "judge":
-                final_tables, _diagnostics = run_with_judge_diagnostic(
-                    kg_service=kg_service,
-                    scoring_service=scoring_service,
+            # Compute final judge prediction via iterative pipeline (judge mode only).
+            if args.mode == "judge" and iterative_selector is not None:
+                final_tables, needs_clar, issues = run_iterative_selector(
+                    selector=iterative_selector,
                     query=query,
-                    top_n=args.top_n,
-                    provider=args.provider,
-                    model=args.model,
-                    role=args.role,
+                    role=query_role,
                 )
                 judge_predicted = ", ".join(final_tables) if final_tables else ""
+                needs_clarification_list.append(needs_clar)
+                unresolved_issues_list.append(json.dumps(issues, default=str) if issues else "")
             else:
                 judge_predicted = ""
+                needs_clarification_list.append(False)
+                unresolved_issues_list.append("")
             judge_predictions.append(judge_predicted)
 
             # Choose the "active" prediction to print in the familiar way.
@@ -438,6 +375,9 @@ def main() -> int:
                 print(f"  rules → {rule_predicted}")
                 print(f"   llm  → {llm_predicted}")
                 print(f"  judge → {judge_predicted}")
+                if needs_clarification_list and needs_clarification_list[-1]:
+                    u = unresolved_issues_list[-1]
+                    print(f"  ⚠ needs_clarification ← {(u[:77] + '...') if len(u) > 80 else u}")
             else:
                 print(f"  → {active_predicted}")
 
@@ -446,6 +386,9 @@ def main() -> int:
             rule_predictions.append("")
             llm_predictions.append("")
             judge_predictions.append("")
+            needs_clarification_list.append(False)
+            unresolved_issues_list.append("")
+            # Note: used_roles already appended before try block
 
     # Add predictions to dataframe (use to_process: we only ran on that subset)
     to_process = to_process.copy()
@@ -453,6 +396,9 @@ def main() -> int:
     to_process["predicted_tables_rule"] = rule_predictions
     to_process["predicted_tables_llm"] = llm_predictions
     to_process["predicted_tables_judge"] = judge_predictions
+    to_process["needs_clarification"] = needs_clarification_list
+    to_process["unresolved_issues"] = unresolved_issues_list
+    to_process["used_role"] = used_roles
     if args.mode == "rule":
         to_process["predicted_tables"] = rule_predictions
     elif args.mode == "llm":
@@ -503,6 +449,11 @@ def main() -> int:
             print(f"  No Matches:          {no_matches:3d} / {total_valid} ({no_matches/total_valid*100:5.1f}%)")
             print(f"  Total Valid:         {total_valid}")
 
+        if args.mode == "judge" and "needs_clarification" in to_process.columns:
+            n_clar = sum(1 for x in to_process["needs_clarification"] if x)
+            if n_clar:
+                print(f"\n  ⚠ Needs clarification: {n_clar} / {len(to_process)}")
+
         if partial_serious > 0 and expected_col:
             print("\n" + "-" * 80)
             print("⚠ PARTIAL (SERIOUS) – REVIEW THESE (missing expected tables)")
@@ -536,6 +487,9 @@ def main() -> int:
             print(f"   Rules:     {row['predicted_tables_rule']}")
             print(f"   LLM:       {row['predicted_tables_llm']}")
             print(f"   Judge:     {row['predicted_tables_judge']}")
+            if row.get("needs_clarification"):
+                u = str(row.get("unresolved_issues", ""))[:60]
+                print(f"   ⚠ Needs clarification: {u}...")
         else:
             print(f"   Predicted: {row['predicted_tables']}")
 

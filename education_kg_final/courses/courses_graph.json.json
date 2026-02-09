@@ -168,36 +168,36 @@
     },
     {
       "node_type": "category_value",
-      "value": "Basic Civil Eng.",
-      "label": "Sample: Basic Civil Eng.",
+      "value": "Water Resources",
+      "label": "Sample: Water Resources",
       "sample_index": 1,
       "id": "sample_17"
     },
     {
       "node_type": "category_value",
-      "value": "M1",
-      "label": "Sample: M1",
+      "value": "DBMS",
+      "label": "Sample: DBMS",
       "sample_index": 2,
       "id": "sample_18"
     },
     {
       "node_type": "category_value",
-      "value": "Highway Engineering",
-      "label": "Sample: Highway Engineering",
+      "value": "Data Mining",
+      "label": "Sample: Data Mining",
       "sample_index": 3,
       "id": "sample_19"
     },
     {
       "node_type": "category_value",
-      "value": "Seminar",
-      "label": "Sample: Seminar",
+      "value": "Power Systems Lab",
+      "label": "Sample: Power Systems Lab",
       "sample_index": 4,
       "id": "sample_20"
     },
     {
       "node_type": "category_value",
-      "value": "Project Lab",
-      "label": "Sample: Project Lab",
+      "value": "Energy Lab",
+      "label": "Sample: Energy Lab",
       "sample_index": 5,
       "id": "sample_21"
     },
@@ -306,7 +306,7 @@
       "id": "hint_filtering_candidate"
     }
   ],
-  "links": [
+  "edges": [
     {
       "edge_type": "has_column",
       "position": 1,

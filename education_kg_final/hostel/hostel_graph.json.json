@@ -159,36 +159,36 @@
     },
     {
       "node_type": "category_value",
-      "value": "TUCE1025",
-      "label": "Sample: TUCE1025",
+      "value": "TUCE1012",
+      "label": "Sample: TUCE1012",
       "sample_index": 1,
       "id": "sample_16"
     },
     {
       "node_type": "category_value",
-      "value": "TUCIV1003",
-      "label": "Sample: TUCIV1003",
+      "value": "TUCE1034",
+      "label": "Sample: TUCE1034",
       "sample_index": 2,
       "id": "sample_17"
     },
     {
       "node_type": "category_value",
-      "value": "TUCIV1028",
-      "label": "Sample: TUCIV1028",
+      "value": "TUCIV1012",
+      "label": "Sample: TUCIV1012",
       "sample_index": 3,
       "id": "sample_18"
     },
     {
       "node_type": "category_value",
-      "value": "TUCIV1045",
-      "label": "Sample: TUCIV1045",
+      "value": "TUCIV1017",
+      "label": "Sample: TUCIV1017",
       "sample_index": 4,
       "id": "sample_19"
     },
     {
       "node_type": "category_value",
-      "value": "TUEE1012",
-      "label": "Sample: TUEE1012",
+      "value": "TUCIV1048",
+      "label": "Sample: TUCIV1048",
       "sample_index": 5,
       "id": "sample_20"
     },
@@ -361,7 +361,7 @@
       "id": "hint_filtering_candidate"
     }
   ],
-  "links": [
+  "edges": [
     {
       "edge_type": "has_column",
       "position": 1,

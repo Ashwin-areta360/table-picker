@@ -144,7 +144,26 @@ class InteractiveTester:
         print(f"ENHANCING WITH FK RELATIONSHIPS:")
         print(f"{'-' * 80}")
 
-        candidates = self.scoring_service.enhance_with_fk_relationships(candidates_before)
+        candidates = self.scoring_service.enhance_with_fk_relationships(candidates_before, scores)
+
+        # Calculate confidence
+        print(f"\n{'-' * 80}")
+        print(f"CONFIDENCE ASSESSMENT:")
+        print(f"{'-' * 80}")
+
+        confidence = self.scoring_service.calculate_confidence(candidates, query)
+        print(f"Confidence Score: {confidence.confidence_score:.3f}")
+        print(f"Confidence Level: {confidence.confidence_level.value.upper()}")
+        print(f"Core Tables: {confidence.num_core_tables}")
+        print(f"Entity Coverage: {confidence.entity_coverage:.1%}")
+        print(f"Recommendation: {confidence.recommendation}")
+
+        if confidence.should_auto_generate():
+            print("\n✓ SAFE TO AUTO-GENERATE SQL")
+        elif confidence.needs_clarification():
+            print("\n⚠ SHOULD ASK FOR CLARIFICATION")
+        else:
+            print("\n⚠ SHOULD USE FALLBACK STRATEGY")
 
         # Show final results
         print(f"\n{'=' * 80}")

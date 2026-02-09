@@ -18,6 +18,7 @@ class SuggestionType(Enum):
 
     MISSING_IDENTITY_TABLE = "missing_identity_table"
     QUERY_AMBIGUOUS = "query_ambiguous"
+    QUERY_CONCEPT_NOT_IN_SCHEMA = "query_concept_not_in_schema"
     RULE_PATTERN_MISSING = "rule_pattern_missing"
     LLM_SEMANTIC_MISS = "llm_semantic_miss"
     INCONSISTENT_SELECTION = "inconsistent_selection"

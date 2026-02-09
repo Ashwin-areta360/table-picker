@@ -15,7 +15,7 @@ import numpy as np
 from ..models.table_score import TableScore, SignalType, ConfidenceResult, ConfidenceLevel
 from ..models.kg_metadata import SemanticType
 from .kg_service import KGService
-from .query_processor import QueryProcessor, QueryIntent, ContextualPhrase, QueryAnalysis
+from .query_processor import QueryProcessor, QueryIntent, QueryAnalysis
 
 if TYPE_CHECKING:
     from .embedding_service import EmbeddingService
@@ -108,15 +108,10 @@ class ScoringService:
         self.embedding_service = embedding_service
         self.enable_phase2 = enable_phase2
 
-        # Initialize spaCy-based query processor
-        # Falls back to regex-based extraction if spaCy unavailable
-        try:
-            self.query_processor = QueryProcessor()
-            self._use_spacy = True
-        except (ImportError, OSError) as e:
-            print(f"Warning: spaCy not available, falling back to regex-based extraction: {e}")
-            self.query_processor = None
-            self._use_spacy = False
+        # Initialize query processor with graceful degradation (spaCy → NLTK → regex)
+        self.query_processor = QueryProcessor(backend="auto", enable_phase2=self.enable_phase2)
+        self._use_spacy = (self.query_processor.backend == "spacy")
+        if not self._use_spacy:
             self.enable_phase2 = False  # Phase 2 requires spaCy
 
     def _tokenize_identifier(self, text: str) -> Set[str]:
@@ -217,6 +212,12 @@ class ScoringService:
         else:
             # Fallback to regex-based extraction (legacy behavior)
             return self._extract_query_terms_regex(query)
+
+    def analyze_query_comprehensive(self, query: str) -> QueryAnalysis:
+        """Get comprehensive query analysis"""
+        if self.query_processor:
+            return self.query_processor.analyze_query_comprehensive(query)
+        return QueryAnalysis(terms=self.extract_query_terms(query))
 
     def _extract_query_terms_regex(self, query: str) -> List[str]:
         """
@@ -393,8 +394,8 @@ class ScoringService:
             multi_word_concepts = self.query_processor.extract_multi_word_concepts(query)
             
             # Phase 2: Get full query analysis if enabled
-            if self.enable_phase2:
-                query_analysis = self.query_processor.analyze_query_phase2(query)
+            if self._use_spacy:
+                query_analysis = self.analyze_query_comprehensive(query)
 
         # 1. Table name matching
         self._score_table_name(score_obj, table_name, query_terms)
@@ -781,13 +782,14 @@ class ScoringService:
 
         GLOBAL FK RESCUE:
         - Allows reintroduction of tables that failed the initial threshold
-        - If a table connects ≥2 top tables (junction table), add it even if it was filtered out
+        - If a table connects multiple top tables, add it even if it was filtered out
         - This matches how humans reason about joins
 
         Enhanced strategy:
         - Consider relationships with top 3 candidates (not just #1)
         - Tables that connect multiple top candidates get higher boost
-        - This helps identify important junction/bridge tables
+        - Uses both direct FK adjacency (1-hop) and join paths between top tables
+          to identify important junction/bridge tables
 
         Args:
             candidates: List of candidate tables (after filtering)
@@ -803,10 +805,56 @@ class ScoringService:
         top_count = min(3, len(candidates))
         top_tables = [c.table_name for c in candidates[:top_count]]
 
-        # Build relationship map for top tables
+        # ------------------------------------------------------------------
+        # 1. Direct FK adjacency map (1-hop relationships around top tables)
+        # ------------------------------------------------------------------
         relationships = {}
         for table in top_tables:
             relationships[table] = self.kg_service.find_related_tables(table, max_depth=1)
+
+        # ------------------------------------------------------------------
+        # 2. Bridge table map based on actual join paths between top tables
+        #    A table is considered a bridge if it appears as an intermediate
+        #    node on the shortest FK path between two top candidates.
+        # ------------------------------------------------------------------
+        bridge_connections = {}  # bridge_table -> set(top_tables it connects)
+        if len(top_tables) >= 2:
+            for i in range(len(top_tables)):
+                for j in range(i + 1, len(top_tables)):
+                    table_a = top_tables[i]
+                    table_b = top_tables[j]
+
+                    # Use KGService.find_join_path which already wraps the
+                    # NetworkX shortest_path logic over the combined graph.
+                    join_path = self.kg_service.find_join_path(table_a, table_b)
+                    if not join_path:
+                        continue
+
+                    # Reconstruct ordered list of tables along the path:
+                    # [table_a, ..., table_b]
+                    path_tables = []
+                    for k, rel in enumerate(join_path):
+                        if k == 0:
+                            path_tables.append(rel.from_table)
+                        path_tables.append(rel.to_table)
+
+                    if len(path_tables) <= 2:
+                        # No intermediates between the two top tables
+                        continue
+
+                    # Intermediate tables (strictly between endpoints)
+                    intermediates = path_tables[1:-1]
+
+                    for bridge_table in intermediates:
+                        # Skip if the intermediate is itself one of the top tables
+                        if bridge_table in top_tables:
+                            continue
+
+                        if bridge_table not in bridge_connections:
+                            bridge_connections[bridge_table] = set()
+
+                        # Record that this bridge connects both endpoints
+                        bridge_connections[bridge_table].update({table_a, table_b})
 
         # Track tables already in candidates
         candidate_names = {c.table_name for c in candidates}
@@ -822,45 +870,68 @@ class ScoringService:
             if table_name in top_tables:
                 continue
 
-            # Count relationships to top tables
-            connected_to = []
+            # ----------------------------
+            # 2a. Direct FK adjacency
+            # ----------------------------
+            direct_connected_to = []
             for top_table in top_tables:
                 if table_name in relationships.get(top_table, []):
-                    connected_to.append(top_table)
+                    direct_connected_to.append(top_table)
 
-            # Boost or rescue based on number of connections
-            if connected_to:
-                # Higher boost for tables connecting multiple top candidates
-                boost = self.SCORE_FK_RELATIONSHIP * len(connected_to)
+            # ----------------------------
+            # 2b. Bridge via join paths
+            # ----------------------------
+            bridge_connected_to = list(bridge_connections.get(table_name, []))
 
-                if len(connected_to) == 1:
-                    reason = f"has FK relationship with '{connected_to[0]}'"
+            # Merge connections, keeping uniqueness
+            all_connected = sorted(set(direct_connected_to) | set(bridge_connected_to))
+
+            # If this table doesn't connect to any top table (directly or as a bridge), skip
+            if not all_connected:
+                continue
+
+            # Prefer a more descriptive reason for bridge tables
+            is_bridge = len(bridge_connected_to) > 0
+
+            # Higher boost for tables connecting multiple top candidates
+            boost = self.SCORE_FK_RELATIONSHIP * len(all_connected)
+
+            if len(all_connected) == 1:
+                conn = all_connected[0]
+                if is_bridge:
+                    reason = f"lies on join path with top table '{conn}'"
                 else:
-                    reason = f"connects {len(connected_to)} top candidates: {', '.join(connected_to)}"
+                    reason = f"has FK relationship with '{conn}'"
+            else:
+                joined = ", ".join(all_connected)
+                if is_bridge:
+                    reason = f"connects top candidates via join paths: {joined}"
+                else:
+                    reason = f"connects {len(all_connected)} top candidates: {joined}"
 
-                # If table is already a candidate, boost it
-                if table_name in candidate_names:
-                    # Find the candidate and boost its score
-                    for candidate in candidates:
-                        if candidate.table_name == table_name:
-                            candidate.add_score(
-                                boost,
-                                reason,
-                                signal_type=SignalType.FK_RELATIONSHIP,
-                                is_fk_boost=True
-                            )
-                            break
-                # GLOBAL RESCUE: If table connects ≥2 top tables, rescue it
-                elif len(connected_to) >= 2:
-                    # Create a new score object with the boost
-                    rescued_score = TableScore(table_name=table_name)  # base_score=0.0, fk_boost=0.0
-                    rescued_score.add_score(
-                        boost,
-                        f"[RESCUED] {reason}",
-                        signal_type=SignalType.FK_RELATIONSHIP,
-                        is_fk_boost=True
-                    )
-                    rescued_tables.append(rescued_score)
+            # If table is already a candidate, boost it
+            if table_name in candidate_names:
+                # Find the candidate and boost its score
+                for candidate in candidates:
+                    if candidate.table_name == table_name:
+                        candidate.add_score(
+                            boost,
+                            reason,
+                            signal_type=SignalType.FK_RELATIONSHIP,
+                            is_fk_boost=True
+                        )
+                        break
+            # GLOBAL RESCUE: If table connects ≥2 top tables (directly or as a bridge), rescue it
+            elif len(all_connected) >= 2:
+                # Create a new score object with the boost
+                rescued_score = TableScore(table_name=table_name)  # base_score=0.0, fk_boost=0.0
+                rescued_score.add_score(
+                    boost,
+                    f"[RESCUED] {reason}",
+                    signal_type=SignalType.FK_RELATIONSHIP,
+                    is_fk_boost=True
+                )
+                rescued_tables.append(rescued_score)
 
         # Add rescued tables to candidates
         if rescued_tables:

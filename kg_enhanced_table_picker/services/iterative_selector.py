@@ -20,6 +20,7 @@ from .llm_table_judge import LLMTableJudge
 from .candidate_service import TableCandidateService
 from .suggestion_handler import SuggestionHandler
 from .query_rephraser import QueryRephraser, QueryAnalyzer
+from .identity_service import apply_identity_guardrail
 from ..models import Suggestion, HandlerAction
 
 
@@ -35,6 +36,7 @@ class IterationResult:
     suggestions: List[Suggestion]
     actions_taken: List[str] = field(default_factory=list)
     timestamp: datetime = field(default_factory=datetime.now)
+    all_candidate_names: List[str] = field(default_factory=list)  # All tables considered by judge
 
 
 @dataclass
@@ -176,6 +178,7 @@ class IterativeTableSelector:
                         print(f"  - [{s.severity.value.upper()}] {s.type.value}: {s.description}")
 
             # Record iteration result
+            all_candidate_names_iter = [c["table_name"] for c in candidates_for_judge if c.get("table_name")]
             iter_result = IterationResult(
                 iteration=iteration,
                 query=current_query,
@@ -183,6 +186,7 @@ class IterativeTableSelector:
                 llm_candidates=llm_tables,
                 judge_decisions=decisions,
                 suggestions=suggestions,
+                all_candidate_names=all_candidate_names_iter,
             )
             history.append(iter_result)
             last_suggestions = suggestions
@@ -244,11 +248,35 @@ class IterativeTableSelector:
 
         # Extract final tables from last iteration's decisions
         final_decisions = history[-1].judge_decisions if history else []
-        final_tables = [
-            d["table_name"]
-            for d in final_decisions
-            if isinstance(d, dict) and d.get("keep")
-        ]
+        
+        # Build kept_sorted list with (table_name, relevance_score) for identity guardrail
+        kept_sorted: List[tuple] = []
+        all_candidate_names: List[str] = []
+        
+        if history:
+            last_iter = history[-1]
+            # Get all candidate names from the last iteration
+            all_candidate_names = last_iter.all_candidate_names
+            
+            # Build kept_sorted from decisions
+            for d in final_decisions:
+                if isinstance(d, dict) and d.get("keep"):
+                    name = d.get("table_name")
+                    if name:
+                        score = float(d.get("relevance_score", 0.0))
+                        kept_sorted.append((name, score))
+        
+        # Sort by score descending
+        kept_sorted.sort(key=lambda x: x[1], reverse=True)
+        
+        # Apply identity guardrail
+        final_tables = apply_identity_guardrail(
+            kept_sorted=kept_sorted,
+            query=query,
+            role=role,
+            union_names=all_candidate_names if all_candidate_names else [name for name, _ in kept_sorted],
+            top_n=self.max_tables,
+        )
 
         # Determine if there are unresolved issues that require user clarification.
         # An issue is "unresolved" if:

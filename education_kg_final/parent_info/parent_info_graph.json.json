@@ -182,36 +182,36 @@
     },
     {
       "node_type": "category_value",
-      "value": "Nitesh Dayalan Vavili",
-      "label": "Sample: Nitesh Dayalan Vavili",
+      "value": "Jyothi Nair",
+      "label": "Sample: Jyothi Nair",
       "sample_index": 1,
       "id": "sample_21"
     },
     {
       "node_type": "category_value",
-      "value": "Vijay Venkatesh",
-      "label": "Sample: Vijay Venkatesh",
+      "value": "Harish Sundaram",
+      "label": "Sample: Harish Sundaram",
       "sample_index": 2,
       "id": "sample_22"
     },
     {
       "node_type": "category_value",
-      "value": "Vijay Srinivas",
-      "label": "Sample: Vijay Srinivas",
+      "value": "Rakesh Menon",
+      "label": "Sample: Rakesh Menon",
       "sample_index": 3,
       "id": "sample_23"
     },
     {
       "node_type": "category_value",
-      "value": "Karthik Pillai",
-      "label": "Sample: Karthik Pillai",
+      "value": "Neha Das",
+      "label": "Sample: Neha Das",
       "sample_index": 4,
       "id": "sample_24"
     },
     {
       "node_type": "category_value",
-      "value": "Sruthi Lakshmi",
-      "label": "Sample: Sruthi Lakshmi",
+      "value": "Anu Sundaram",
+      "label": "Sample: Anu Sundaram",
       "sample_index": 5,
       "id": "sample_25"
     },
@@ -288,7 +288,7 @@
       "id": "hint_filtering_candidate"
     }
   ],
-  "links": [
+  "edges": [
     {
       "edge_type": "has_column",
       "position": 1,

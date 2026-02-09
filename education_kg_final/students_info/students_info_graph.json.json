@@ -498,7 +498,7 @@
       "id": "hint_filtering_candidate"
     }
   ],
-  "links": [
+  "edges": [
     {
       "edge_type": "has_column",
       "position": 1,

@@ -68,12 +68,18 @@ class LLMTableSelector:
             {"role": "system", "content": self._system_prompt()},
             {"role": "user", "content": prompt},
         ]
-        response = self._client.chat.completions.create(
-            messages=messages,
-            temperature=temperature,
-            max_tokens=max_tokens,
-            response_format={"type": "json_object"},
-        )
+        # Some providers / hosted models (notably via Groq) may not support strict JSON mode
+        # and will fail with json_validate_failed. In that case, rely on prompt discipline
+        # and our defensive JSON parsing instead.
+        create_kwargs: Dict[str, Any] = {
+            "messages": messages,
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+        }
+        if str(self.provider).lower() != "groq":
+            create_kwargs["response_format"] = {"type": "json_object"}
+
+        response = self._client.chat.completions.create(**create_kwargs)
 
         raw = response.choices[0].message.content
 

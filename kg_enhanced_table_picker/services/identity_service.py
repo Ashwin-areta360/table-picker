@@ -48,6 +48,69 @@ def query_uses_first_person(query: str) -> bool:
     return any(p in q for p in first_person)
 
 
+def query_implies_role_identity(query: str, role: Optional[str]) -> bool:
+    """
+    Detect if query semantically implies the role's identity table even without first-person language.
+    
+    Examples:
+    - "faculty subjects" + role=faculty → implies "my subjects" → needs faculty_info
+    - "student grades" + role=student → implies "my grades" → needs students_info
+    - "parent children" + role=parent → implies "my children" → needs parent_info
+    
+    Args:
+        query: User's natural language query
+        role: Optional user role (student | faculty | parent)
+    
+    Returns:
+        True if query semantically implies the role's identity table
+    """
+    if not role:
+        return False
+    
+    q = " " + (query or "").lower() + " "
+    role_lower = str(role).strip().lower()
+    
+    # Role-specific semantic patterns that imply identity
+    patterns = {
+        "faculty": (
+            " faculty ",
+            " teacher ",
+            " instructor ",
+            " professor ",
+            " educator ",
+            " faculty subject",
+            " faculty course",
+            " teacher subject",
+            " teacher course",
+            " my subject",
+            " my course",
+            " my class",
+            " my student",
+            " students i teach",
+            " i teach",
+        ),
+        "student": (
+            " student ",
+            " my grade",
+            " my course",
+            " my class",
+            " my enrollment",
+            " my attendance",
+        ),
+        "parent": (
+            " parent ",
+            " my child",
+            " my son",
+            " my daughter",
+            " children",
+            " child ",
+        ),
+    }
+    
+    role_patterns = patterns.get(role_lower, ())
+    return any(p in q for p in role_patterns)
+
+
 def apply_identity_guardrail(
     kept_sorted: Sequence[Tuple[str, float]],
     query: str,
@@ -56,7 +119,7 @@ def apply_identity_guardrail(
     top_n: int,
 ) -> List[str]:
     """
-    Ensure the identity table is in the final list when role + first-person.
+    Ensure the identity table is in the final list when role + (first-person OR role-specific semantic query).
 
     Args:
         kept_sorted: Sequence of (table_name, score) sorted desc by score.
@@ -69,7 +132,16 @@ def apply_identity_guardrail(
     identity = identity_table_for_role(role)
     union_set: Set[str] = set(union_names)
 
-    if not identity or not query_uses_first_person(query) or identity not in union_set:
+    # Check if identity table should be included:
+    # 1. First-person language (my, mine, I, etc.)
+    # 2. OR role-specific semantic query (e.g., "faculty subjects" for faculty role)
+    should_include_identity = (
+        identity
+        and identity in union_set
+        and (query_uses_first_person(query) or query_implies_role_identity(query, role))
+    )
+
+    if not should_include_identity:
         return base
     if identity in base:
         return base

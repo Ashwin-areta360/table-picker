@@ -26,6 +26,7 @@ class SuggestionHandler:
         self._handlers = {
             SuggestionType.MISSING_IDENTITY_TABLE: self._handle_missing_identity,
             SuggestionType.QUERY_AMBIGUOUS: self._handle_ambiguous_query,
+            SuggestionType.QUERY_CONCEPT_NOT_IN_SCHEMA: self._handle_concept_not_in_schema,
             SuggestionType.RULE_PATTERN_MISSING: self._handle_rule_miss,
             SuggestionType.LLM_SEMANTIC_MISS: self._handle_llm_miss,
             SuggestionType.INCONSISTENT_SELECTION: self._handle_inconsistent,
@@ -101,6 +102,23 @@ class SuggestionHandler:
             parameters={
                 "rephrase_type": "clarify_ambiguity",
                 "ambiguity_description": suggestion.description,
+                "reason": suggestion.description or suggestion.action,
+            },
+        )
+
+    def _handle_concept_not_in_schema(self, suggestion: Suggestion) -> HandlerAction:
+        """
+        Handle query concept not in schema (CRITICAL).
+
+        We cannot add the concept; rephrase preserves intent. Iterate until max
+        iterations, then surface needs_clarification.
+        """
+        return HandlerAction(
+            action_type="rephrase_and_rerun",
+            rerun_selectors=["rule_based", "llm"],
+            parameters={
+                "rephrase_type": "clarify_ambiguity",
+                "ambiguity_description": suggestion.description or "Query asks for a concept not covered by schema.",
                 "reason": suggestion.description or suggestion.action,
             },
         )

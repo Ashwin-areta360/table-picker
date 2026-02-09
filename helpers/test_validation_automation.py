@@ -6,31 +6,64 @@ Loads test.xlsx, runs table picker on each question, and adds predicted tables a
 
 import sys
 from pathlib import Path
+from typing import Any, Optional
 import pandas as pd
 
 # Add project root to path for imports
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from kg_enhanced_table_picker.repository.kg_repository import KGRepository
-from kg_enhanced_table_picker.services.kg_service import KGService
-from kg_enhanced_table_picker.services.scoring_service import ScoringService
-
 
 class TestValidator:
     """Automated test validator for table picker"""
 
-    def __init__(self, kg_repo: KGRepository):
+    def __init__(self, kg_repo: Any):
+        # Local imports (after sys.path manipulation) to keep linters happy
+        from kg_enhanced_table_picker.services.kg_service import KGService
+        from kg_enhanced_table_picker.services.scoring_service import ScoringService
+        from kg_enhanced_table_picker.services.llm_table_judge import LLMTableJudge
+
         self.kg_service = KGService(kg_repo)
         self.scoring_service = ScoringService(self.kg_service, None, enable_phase2=True)
+        self.llm_selector: Optional[Any] = None
+        self.llm_judge: Optional[LLMTableJudge] = None
 
-    def predict_tables(self, query: str, top_n: int = 5) -> str:
+    def enable_llm_selector(self, provider: str = "groq", model: str = None, api_key: str = None):
+        """
+        Optional: enable LLM-based final selection using `aretai`.
+
+        If api_key is None, `aretai` will attempt to read it from environment variables.
+        """
+        from kg_enhanced_table_picker.services.llm_table_selector import LLMTableSelector
+
+        self.llm_selector = LLMTableSelector(
+            kg_service=self.kg_service,
+            provider=provider,
+            model=model,
+            api_key=api_key
+        )
+
+    def enable_llm_judge(self, provider: str = "groq", model: str = None, api_key: str = None):
+        """
+        Optional: enable LLM-based judge that arbitrates between rule-based and LLM picks.
+        """
+        from kg_enhanced_table_picker.services.llm_table_judge import LLMTableJudge
+
+        self.llm_judge = LLMTableJudge(
+            kg_service=self.kg_service,
+            provider=provider,
+            model=model,
+            api_key=api_key,
+        )
+
+    def predict_tables(self, query: str, top_n: int = 5, use_llm: bool = False) -> str:
         """
         Predict tables for a query and return as comma-separated string
 
         Args:
             query: Natural language query
             top_n: Maximum number of tables to return
+            use_llm: If True, call LLM to choose final tables using full model input
 
         Returns:
             Comma-separated table names
@@ -44,8 +77,93 @@ class TestValidator:
         # Enhance with FK relationships
         candidates = self.scoring_service.enhance_with_fk_relationships(candidates_before, scores)
 
-        # Get top N table names
-        top_tables = [candidate.table_name for candidate in candidates[:top_n]]
+        # Optionally let an LLM choose final tables (uses full metadata)
+        if use_llm:
+            if not self.llm_selector:
+                raise RuntimeError("LLM selector not enabled. Call enable_llm_selector() first.")
+
+            selection = self.llm_selector.select_tables(
+                query=query,
+                all_scores=scores,
+                rule_based_candidates=candidates,
+                max_tables=top_n,
+                detail_level="medium",
+            )
+            top_tables = selection.selected_tables
+        else:
+            # Default: rule-based top N
+            top_tables = [candidate.table_name for candidate in candidates[:top_n]]
+
+        return ", ".join(top_tables) if top_tables else ""
+
+    def predict_tables_with_judge(self, query: str, top_n: int = 5) -> str:
+        """
+        Predict tables using an ensemble:
+        - rule-based pipeline
+        - LLM selector (schema-only)
+        - LLM judge to arbitrate between both.
+        """
+        if not self.llm_selector:
+            raise RuntimeError("LLM selector not enabled. Call enable_llm_selector() first.")
+        if not self.llm_judge:
+            raise RuntimeError("LLM judge not enabled. Call enable_llm_judge() first.")
+
+        # 1) Rule-based pipeline
+        scores = self.scoring_service.score_all_tables(query)
+        candidates_before = self.scoring_service.filter_by_threshold(scores)
+        rule_candidates = self.scoring_service.enhance_with_fk_relationships(candidates_before, scores)
+
+        # 2) LLM-only selection (schema-only, no rule scores)
+        selection = self.llm_selector.select_tables(
+            query=query,
+            all_scores=scores,
+            rule_based_candidates=rule_candidates,
+            max_tables=top_n,
+            detail_level="medium",
+        )
+        llm_tables = set(selection.selected_tables)
+
+        # 3) Build union of candidates for judge
+        union_names = {c.table_name for c in rule_candidates} | llm_tables
+        candidates_for_judge = []
+        for name in sorted(union_names):
+            metadata = self.kg_service.get_table_metadata(name)
+            if not metadata:
+                continue
+            candidates_for_judge.append(
+                {
+                    "table_name": name,
+                    "metadata": metadata.to_dict(detail_level="medium"),
+                    "from_rule_based": any(c.table_name == name for c in rule_candidates),
+                    "from_llm": name in llm_tables,
+                }
+            )
+
+        # 4) Judge LLM decides keep/drop + relevance_score
+        decisions = self.llm_judge.judge_tables(
+            query=query,
+            candidates=candidates_for_judge,
+            max_tables=top_n,
+        )
+
+        # 5) Post-process: filter and rank kept tables
+        by_name = {c["table_name"]: c for c in candidates_for_judge}
+        kept = []
+        for d in decisions:
+            if not d.get("keep"):
+                continue
+            name = d.get("table_name")
+            if name not in by_name:
+                continue
+            score = float(d.get("relevance_score", 0.0))
+            flags = by_name[name]
+            # Small boost for intersection of rule-based and LLM picks
+            if flags.get("from_rule_based") and flags.get("from_llm"):
+                score += 0.1
+            kept.append((name, score))
+
+        kept_sorted = sorted(kept, key=lambda x: x[1], reverse=True)
+        top_tables = [name for name, _ in kept_sorted[:top_n]]
 
         return ", ".join(top_tables) if top_tables else ""
 
@@ -54,8 +172,10 @@ class TestValidator:
         Run validation on test file
 
         Args:
-            input_file: Path to test.xlsx
-            output_file: Path to output file (default: test_results.xlsx)
+            input_file: Path to input file (Supports .xlsx and .csv)
+            output_file: Path to output file
+                - If None and input is .xlsx → <name>_results.xlsx
+                - If None and input is .csv  → <name>_results.csv
         """
         print("=" * 80)
         print("TABLE PICKER TEST VALIDATION")
@@ -63,7 +183,10 @@ class TestValidator:
 
         # Load test data
         print(f"\nLoading test data from: {input_file}")
-        df = pd.read_excel(input_file)
+        if input_file.lower().endswith(".csv"):
+            df = pd.read_csv(input_file)
+        else:
+            df = pd.read_excel(input_file)
 
         # Get column names
         question_col = df.columns[0]
@@ -123,7 +246,7 @@ class TestValidator:
         total_valid = exact_matches + partial_matches + no_matches
 
         if total_valid > 0:
-            print(f"\nAccuracy Metrics:")
+            print("\nAccuracy Metrics:")
             print(f"  Exact Matches:    {exact_matches:3d} / {total_valid} ({exact_matches/total_valid*100:5.1f}%)")
             print(f"  Partial Matches:  {partial_matches:3d} / {total_valid} ({partial_matches/total_valid*100:5.1f}%)")
             print(f"  No Matches:       {no_matches:3d} / {total_valid} ({no_matches/total_valid*100:5.1f}%)")
@@ -131,10 +254,16 @@ class TestValidator:
 
         # Save results
         if output_file is None:
-            output_file = input_file.replace('.xlsx', '_results.xlsx')
+            if input_file.lower().endswith(".csv"):
+                output_file = input_file.replace('.csv', '_results.csv')
+            else:
+                output_file = input_file.replace('.xlsx', '_results.xlsx')
 
         print(f"\nSaving results to: {output_file}")
-        df.to_excel(output_file, index=False)
+        if output_file.lower().endswith(".csv"):
+            df.to_csv(output_file, index=False)
+        else:
+            df.to_excel(output_file, index=False)
 
         print("\n" + "=" * 80)
         print("SAMPLE RESULTS")
@@ -157,6 +286,9 @@ def main():
     print("LOADING KNOWLEDGE GRAPH")
     print("=" * 80)
 
+    # Local import (after sys.path manipulation) to keep linters happy
+    from kg_enhanced_table_picker.repository.kg_repository import KGRepository
+
     kg_repo = KGRepository()
 
     # Try to load with synonyms
@@ -176,11 +308,53 @@ def main():
     # Create validator
     validator = TestValidator(kg_repo)
 
+    # Optional: enable LLM selector / judge if environment has API key(s)
+    # Examples:
+    #   export GROQ_API_KEY=...
+    #   python helpers/test_validation_automation.py --use-llm
+    #   python helpers/test_validation_automation.py --use-judge
+    use_llm = ("--use-llm" in sys.argv)
+    use_judge = ("--use-judge" in sys.argv)
+    if use_llm or use_judge:
+        # Default provider is groq; override with e.g. --provider openai
+        provider = "groq"
+        model = None
+        if "--provider" in sys.argv:
+            try:
+                provider = sys.argv[sys.argv.index("--provider") + 1]
+            except Exception:
+                pass
+        if "--model" in sys.argv:
+            try:
+                model = sys.argv[sys.argv.index("--model") + 1]
+            except Exception:
+                pass
+
+        validator.enable_llm_selector(provider=provider, model=model, api_key=None)
+        if use_judge:
+            validator.enable_llm_judge(provider=provider, model=model, api_key=None)
+
     # Run validation
-    test_file = "test.xlsx"
-    output_file = "test_results.xlsx"
+    test_file = "helpers/test.xlsx"
+    output_file = "helpers/test_results.xlsx"
 
     try:
+        # NOTE: predict_tables() controls whether LLM / judge is used; run_validation
+        # currently calls predict_tables() without flags, so we monkeypatch via a lambda
+        # when needed.
+        if use_judge:
+            def _predict_with_judge(q, top_n=5):
+                return validator.predict_tables_with_judge(q, top_n=top_n)
+
+            validator.predict_tables = _predict_with_judge  # type: ignore
+        elif use_llm:
+            original_predict = validator.predict_tables
+
+            def _predict_with_llm(q, top_n=5):
+                return original_predict(q, top_n=top_n, use_llm=True)
+
+            validator.predict_tables = _predict_with_llm  # type: ignore
+
         validator.run_validation(test_file, output_file)
     except FileNotFoundError:
         print(f"\n❌ Error: Could not find {test_file}")

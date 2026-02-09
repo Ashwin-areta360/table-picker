@@ -6,7 +6,7 @@ import pickle
 import json
 import sys
 from pathlib import Path
-from typing import Dict, Optional, List
+from typing import Any, Dict, List, Optional
 import networkx as nx
 import numpy as np
 
@@ -214,6 +214,68 @@ class KGRepository:
             if synonym_data.description:
                 kg_col.description = synonym_data.description
 
+    def _get_sample_values_for_column(self, col_id: str, graph_data: Dict, max_samples: int = 10) -> List[Any]:
+        """
+        Collect sample values from category_value nodes linked to this column via has_value edges.
+        Column nodes do not store sample_values; they are in separate category_value nodes.
+        """
+        nodes_by_id = {n['id']: n for n in graph_data.get('nodes', []) if n.get('id')}
+        graph_edges = graph_data.get('edges', graph_data.get('links', []))
+        collected = []
+        for edge in graph_edges:
+            if edge.get('source') != col_id:
+                continue
+            edge_type = (edge.get('edge_type') or '').upper().replace(' ', '_')
+            if edge_type != 'HAS_VALUE':
+                continue
+            target_id = edge.get('target')
+            node = nodes_by_id.get(target_id)
+            if node and node.get('node_type') == 'category_value':
+                val = node.get('value')
+                if val is not None:
+                    order = edge.get('sample_order', edge.get('sample_index', 999))
+                    collected.append((order, val))
+        collected.sort(key=lambda x: (x[0], str(x[1])))
+        return [v for _, v in collected[:max_samples]]
+
+    # Map graph hint_type to KGColumnMetadata boolean fields
+    _HINT_TYPE_TO_FIELD = {
+        'filtering_candidate': 'good_for_filtering',
+        'grouping_candidate': 'good_for_grouping',
+        'aggregation_candidate': 'good_for_aggregation',
+        'index_candidate': 'good_for_indexing',
+        'partition_candidate': 'good_for_partitioning',
+    }
+
+    def _get_hints_for_column(self, col_id: str, graph_data: Dict) -> Dict[str, bool]:
+        """
+        Collect hint booleans from hint nodes linked to this column via has_hint edges.
+        Column nodes do not store good_for_*; they are in separate hint nodes (hint_type).
+        """
+        nodes_by_id = {n['id']: n for n in graph_data.get('nodes', []) if n.get('id')}
+        graph_edges = graph_data.get('edges', graph_data.get('links', []))
+        hints = {
+            'good_for_filtering': False,
+            'good_for_grouping': False,
+            'good_for_aggregation': False,
+            'good_for_indexing': False,
+            'good_for_partitioning': False,
+        }
+        for edge in graph_edges:
+            if edge.get('source') != col_id:
+                continue
+            edge_type = (edge.get('edge_type') or '').upper().replace(' ', '_')
+            if edge_type != 'HAS_HINT':
+                continue
+            target_id = edge.get('target')
+            node = nodes_by_id.get(target_id)
+            if node and node.get('node_type') == 'hint':
+                hint_type = (node.get('hint_type') or '').lower().replace(' ', '_')
+                field = self._HINT_TYPE_TO_FIELD.get(hint_type)
+                if field:
+                    hints[field] = True
+        return hints
+
     def _build_column_metadata(self, col_node: Dict, constraint_nodes: Dict, graph_data: Dict) -> Optional[KGColumnMetadata]:
         """Build KGColumnMetadata from column node"""
         try:
@@ -224,6 +286,20 @@ class KGRepository:
             except KeyError:
                 semantic_type = SemanticType.UNKNOWN
 
+            # Sample values: column node may have them, or we collect from category_value nodes via has_value edges
+            col_id = col_node.get('id')
+            sample_values = col_node.get('sample_values')
+            if not sample_values and col_id:
+                sample_values = self._get_sample_values_for_column(col_id, graph_data)
+
+            # Hints: column node may have good_for_*, or we collect from hint nodes via has_hint edges
+            hint_map = self._get_hints_for_column(col_id, graph_data) if col_id else {}
+            good_for_filtering = hint_map.get('good_for_filtering', col_node.get('good_for_filtering', False))
+            good_for_grouping = hint_map.get('good_for_grouping', col_node.get('good_for_grouping', False))
+            good_for_aggregation = hint_map.get('good_for_aggregation', col_node.get('good_for_aggregation', False))
+            good_for_indexing = hint_map.get('good_for_indexing', col_node.get('good_for_indexing', False))
+            good_for_partitioning = hint_map.get('good_for_partitioning', col_node.get('good_for_partitioning', False))
+
             kg_col = KGColumnMetadata(
                 name=col_node.get('name', ''),
                 native_type=col_node.get('native_type', ''),
@@ -232,30 +308,32 @@ class KGRepository:
                 null_percentage=col_node.get('null_percentage', 0.0),
                 cardinality_ratio=col_node.get('cardinality_ratio', 0.0),
                 unique_count=col_node.get('unique_count', 0),
-                sample_values=col_node.get('sample_values', []),
+                sample_values=sample_values or [],
                 top_values=col_node.get('top_values', []),
-                good_for_filtering=col_node.get('good_for_filtering', False),
-                good_for_grouping=col_node.get('good_for_grouping', False),
-                good_for_aggregation=col_node.get('good_for_aggregation', False),
-                good_for_indexing=col_node.get('good_for_indexing', False),
-                good_for_partitioning=col_node.get('good_for_partitioning', False),
+                good_for_filtering=good_for_filtering,
+                good_for_grouping=good_for_grouping,
+                good_for_aggregation=good_for_aggregation,
+                good_for_indexing=good_for_indexing,
+                good_for_partitioning=good_for_partitioning,
                 detected_pattern=col_node.get('pattern')
             )
 
-            # Check for PK/FK constraints from edges
+            # Check for PK/FK constraints from edges (Table_Profile uses "edges", others may use "links")
             col_id = col_node.get('id')
-            for edge in graph_data.get('links', []):
-                if edge.get('source') == col_id and edge.get('edge_type') == 'HAS_CONSTRAINT':
+            graph_edges = graph_data.get('edges', graph_data.get('links', []))
+            for edge in graph_edges:
+                edge_type = (edge.get('edge_type') or '').upper().replace(' ', '_')
+                if edge.get('source') == col_id and edge_type == 'HAS_CONSTRAINT':
                     constraint_id = edge.get('target')
                     constraint = constraint_nodes.get(constraint_id, {})
-                    constraint_type = constraint.get('constraint_type', '')
+                    constraint_type = (constraint.get('constraint_type') or '').lower().replace(' ', '_')
 
-                    if 'PRIMARY_KEY' in str(constraint_type):
+                    if 'primary_key' in constraint_type:
                         kg_col.is_primary_key = True
-                    elif 'FOREIGN_KEY' in str(constraint_type):
+                    elif 'foreign_key' in constraint_type:
                         kg_col.is_foreign_key = True
-                        # Try to extract referenced table from constraint
-                        ref_table = constraint.get('referenced_table')
+                        # Graph may use referenced_table or references_table
+                        ref_table = constraint.get('referenced_table') or constraint.get('references_table')
                         if ref_table:
                             kg_col.foreign_key_references.append(ref_table)
 

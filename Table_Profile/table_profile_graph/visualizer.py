@@ -579,10 +579,40 @@ class D3Visualizer:
             .data(graphData.nodes)
             .join("circle")
             .attr("class", "node")
-            .attr("r", d => sizes[d.type] || 8)
-            .attr("fill", d => colors[d.type] || "#95A5A6")
-            .attr("stroke", "#fff")
-            .attr("stroke-width", 2)
+            .attr("r", d => {{
+                // Use centrality to size table nodes (hub tables are larger)
+                if (d.type === 'table' && d.attrs && d.attrs.normalized_centrality) {{
+                    const centrality = parseFloat(d.attrs.normalized_centrality) || 0;
+                    const baseSize = sizes[d.type] || 12;
+                    // Scale: 0.0 centrality = baseSize, 1.0 centrality = baseSize * 1.8
+                    return baseSize + (centrality * baseSize * 0.8);
+                }}
+                return sizes[d.type] || 8;
+            }})
+            .attr("fill", d => {{
+                // Color hub tables differently
+                if (d.type === 'table' && d.attrs && 
+                    (d.attrs.is_hub_table === 'True' || d.attrs.is_hub_table === true)) {{
+                    return '#e74c3c'; // Red for hub tables
+                }}
+                return colors[d.type] || "#95A5A6";
+            }})
+            .attr("stroke", d => {{
+                // Highlight hub tables with gold border
+                if (d.type === 'table' && d.attrs && 
+                    (d.attrs.is_hub_table === 'True' || d.attrs.is_hub_table === true)) {{
+                    return '#f39c12'; // Gold border for hub tables
+                }}
+                return "#fff";
+            }})
+            .attr("stroke-width", d => {{
+                // Thicker border for hub tables
+                if (d.type === 'table' && d.attrs && 
+                    (d.attrs.is_hub_table === 'True' || d.attrs.is_hub_table === true)) {{
+                    return 3;
+                }}
+                return 2;
+            }})
             .call(dragBehavior(simulation))
             .on("click", handleNodeClick)
             .on("dblclick", handleNodeDoubleClick)
@@ -833,12 +863,58 @@ class D3Visualizer:
             let html = `<strong>${{d.label}}</strong><br>`;
             html += `<span style="color: #aaa;">Type: ${{d.type}}</span>`;
             
+            // Show centrality metrics prominently if available (for table nodes)
+            if (d.type === 'table' && d.attrs) {{
+                const centralityFields = ['degree_centrality', 'normalized_centrality', 
+                                         'incoming_fk_count', 'outgoing_fk_count', 
+                                         'is_hub_table', 'betweenness_centrality'];
+                const hasCentrality = centralityFields.some(field => d.attrs[field] && d.attrs[field] !== 'null' && d.attrs[field] !== 'None');
+                
+                if (hasCentrality) {{
+                    html += '<br><br><div style="background: #f0f8ff; padding: 8px; border-radius: 4px; margin: 5px 0; border-left: 3px solid #3498db;">';
+                    html += '<strong style="color: #2980b9;">📊 Centrality Metrics:</strong><br>';
+                    
+                    if (d.attrs.degree_centrality) {{
+                        html += `<div style="margin: 3px 0;"><span style="color: #555;">Degree:</span> <strong>${{d.attrs.degree_centrality}}</strong></div>`;
+                    }}
+                    if (d.attrs.normalized_centrality) {{
+                        const norm = parseFloat(d.attrs.normalized_centrality);
+                        const percent = (norm * 100).toFixed(1);
+                        html += `<div style="margin: 3px 0;"><span style="color: #555;">Normalized:</span> <strong>${{percent}}%</strong> <span style="color: #999;">(${{d.attrs.normalized_centrality}})</span></div>`;
+                    }}
+                    if (d.attrs.incoming_fk_count !== undefined) {{
+                        html += `<div style="margin: 3px 0;"><span style="color: #555;">Incoming FKs:</span> <strong>${{d.attrs.incoming_fk_count}}</strong></div>`;
+                    }}
+                    if (d.attrs.outgoing_fk_count !== undefined) {{
+                        html += `<div style="margin: 3px 0;"><span style="color: #555;">Outgoing FKs:</span> <strong>${{d.attrs.outgoing_fk_count}}</strong></div>`;
+                    }}
+                    if (d.attrs.is_hub_table === 'True' || d.attrs.is_hub_table === true) {{
+                        html += `<div style="margin: 3px 0;"><span style="color: #e74c3c;">🌟 Hub Table</span></div>`;
+                    }}
+                    if (d.attrs.betweenness_centrality) {{
+                        html += `<div style="margin: 3px 0;"><span style="color: #555;">Betweenness:</span> <strong>${{d.attrs.betweenness_centrality}}</strong></div>`;
+                    }}
+                    html += '</div>';
+                }}
+            }}
+            
+            // Show other attributes
             if (d.attrs && Object.keys(d.attrs).length > 0) {{
-                html += '<br><br>';
-                for (let key in d.attrs) {{
-                    const value = d.attrs[key];
-                    if (value && value !== 'null' && value !== 'None') {{
-                        html += `<div style="margin: 2px 0;"><span style="color: #bbb;">${{key}}:</span> ${{value}}</div>`;
+                const centralityFields = ['degree_centrality', 'normalized_centrality', 
+                                         'incoming_fk_count', 'outgoing_fk_count', 
+                                         'is_hub_table', 'betweenness_centrality'];
+                const otherAttrs = Object.keys(d.attrs).filter(key => 
+                    !centralityFields.includes(key) && 
+                    d.attrs[key] && 
+                    d.attrs[key] !== 'null' && 
+                    d.attrs[key] !== 'None'
+                );
+                
+                if (otherAttrs.length > 0) {{
+                    html += '<br><div style="color: #999; font-size: 11px; margin-top: 5px;">Other attributes:</div>';
+                    for (let key of otherAttrs) {{
+                        const value = d.attrs[key];
+                        html += `<div style="margin: 2px 0; font-size: 11px;"><span style="color: #bbb;">${{key}}:</span> ${{value}}</div>`;
                     }}
                 }}
             }}

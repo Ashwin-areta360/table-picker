@@ -1,0 +1,102 @@
+Implement n-gram-based keyword detection to improve multi-word matching in the table picker system.
+
+       Context:
+       We successfully implemented Phase 1 NLP improvements with spaCy (lemmatization, noun chunks, POS filtering). Now we need to enhance keyword detection
+       using n-grams.
+
+       Current State:
+       - QueryProcessor extracts individual terms: ['child', 'fee', 'grade']
+       - QueryProcessor extracts noun chunks: ['my child name', 'student grades']
+       - BUT: Noun chunks are NOT used in scoring yet
+       - Problem: Multi-word concepts not matched well against synonyms
+
+       Examples of issues:
+       1. Query: "fee payment patterns" → terms: ['fee', 'payment', 'pattern']
+         - Should match synonym "fee payment" or "payment due" as a unit
+       2. Query: "computer science department" → terms: ['computer', 'science', 'department']
+         - Should recognize "computer science" as a single concept
+       3. Query: "hostel fee information" → terms: ['hostel', 'fee', 'information']
+         - "hostel fee" is a specific concept, not just hostel + fee separately
+
+       Your Task:
+
+       1. Analyze Current Phrase Extraction
+
+       - Check what noun chunks are currently being extracted
+       - Check what's in column_synonyms.csv - are there multi-word synonyms?
+       - Identify gaps where n-grams would help
+
+       2. Implement N-gram Extraction
+
+       Add to QueryProcessor:
+       def extract_ngrams(self, query: str, n: int = 2) -> List[str]:
+           """Extract n-grams (bigrams, trigrams) from query"""
+           # Use spaCy tokens, not simple word splitting
+           # Skip stopwords in n-gram generation
+           # Return lemmatized n-grams
+
+       def extract_multi_word_concepts(self, query: str) -> List[str]:
+           """Extract meaningful multi-word concepts"""
+           # Combine:
+           # 1. Noun chunks (already extracted)
+           # 2. Bigrams of adjacent content words
+           # 3. Named entities as single units
+
+       3. Integrate N-grams into Scoring
+
+       Enhance scoring_service.py:
+       def _score_synonyms(self, score_obj, metadata, query_terms: List[str]):
+           # Current: matches single-word synonyms
+           # Add: match multi-word synonyms using n-grams
+
+           # If synonym is "fee payment" (2 words):
+           #   - Check if query has bigram "fee payment"
+           #   - Give higher score than individual matches
+
+       4. Smart N-gram Configuration
+
+       Decide:
+       - Should we generate bigrams, trigrams, or both?
+       - Should n-grams get higher scores than individual terms?
+       - How to avoid over-generation (e.g., "what is" as bigram is useless)
+
+       5. Enhance Column Synonyms (Optional)
+
+       Check if we should add multi-word synonyms:
+       feedue,Amount Due,"fee payment,payment due,outstanding fee,fee balance"
+       students_info,Program/Degree,"computer science,mechanical engineering,civil engineering"
+
+       6. Test & Benchmark
+
+       Test with queries like:
+       - "fee payment patterns"
+       - "computer science students"
+       - "hostel fee information"
+       - "student grade report"
+
+       Show:
+       - Before: individual term matching
+       - After: n-gram matching improves scores
+
+       7. Performance Considerations
+
+       - N-grams increase search space - measure performance impact
+       - Implement smart filtering to avoid useless n-grams
+       - Consider caching for common queries
+
+       Deliverables:
+
+       1. Enhanced QueryProcessor with n-gram methods
+       2. Updated scoring logic to use n-grams
+       3. Test script showing improvements
+       4. Performance analysis
+       5. Documentation
+
+       Files to work with:
+       - kg_enhanced_table_picker/services/query_processor.py (add n-gram methods)
+       - kg_enhanced_table_picker/services/scoring_service.py (use n-grams in matching)
+       - helpers/column_synonyms.csv (optionally add multi-word synonyms)
+       - Create: test_ngram_improvements.py (demonstrate improvements)
+       - Create: docs/NGRAM_IMPROVEMENT.md (document the approach)
+
+       Please implement this comprehensively and show clear before/after improvements.

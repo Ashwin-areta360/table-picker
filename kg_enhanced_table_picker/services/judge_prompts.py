@@ -60,16 +60,29 @@ class JudgePrompts:
         identity_rules = ""
         role_lower = role_placeholder
         if role_lower in ("student", "faculty", "parent"):
+            identity_table_map = {
+                "student": "students_info",
+                "faculty": "faculty_info",
+                "parent": "parent_info",
+            }
+            identity_table = identity_table_map.get(role_lower, "")
             identity_rules = f"""
 **CRITICAL IDENTITY RULE for role '{role_lower}':**
-When the query uses first-person language (my, mine, I, me, our, we), the identity table
-for this role MUST be included IF it appears in the candidate list:
-  - students_info (student)
-  - faculty_info (faculty)
-  - parent_info (parent)
+The identity table for this role MUST be included IF it appears in the candidate list when:
+1. The query uses first-person language (my, mine, I, me, our, we), OR
+2. The query semantically implies the role's identity (e.g., "faculty subjects" for faculty role
+   implies "my subjects", "student grades" for student role implies "my grades").
+
+Identity table: {identity_table}
+
+Examples:
+- "faculty needs the faculty subjects" + role=faculty → MUST include faculty_info
+- "my grades" + role=student → MUST include students_info
+- "parent children" + role=parent → MUST include parent_info
 
 If this identity table is MISSING from the candidate list but the query uses first-person
-language, you MUST create a CRITICAL suggestion with type 'missing_identity_table'.
+language OR semantically implies the role's identity, you MUST create a CRITICAL suggestion
+with type 'missing_identity_table'.
 """
 
         # Build input snapshot for the LLM
@@ -135,15 +148,22 @@ When you identify issues, create suggestions with these types:
    - When: Query is vague or could mean multiple things.
    - Action: Request query clarification + re-run LLM selector.
 
-3. **rule_pattern_missing** (IMPORTANT)
+3. **query_concept_not_in_schema** (CRITICAL)
+   - When: The query clearly asks for a specific concept (e.g. transport, attendance, hostel,
+     fees, facility) but **no** candidate table or column metadata supports that concept.
+     Do NOT keep tables solely because they match identity (parent/student/faculty)—if the
+     **subject** of the query is not covered by any candidate, you MUST emit this suggestion.
+   - Action: Flag for user clarification; we cannot fully answer without that schema.
+
+4. **rule_pattern_missing** (IMPORTANT)
    - When: LLM caught semantic intent that rule-based missed.
    - Action: Suggest enhancing rule patterns + re-run rule-based.
 
-4. **llm_semantic_miss** (IMPORTANT)
+5. **llm_semantic_miss** (IMPORTANT)
    - When: Rule-based caught structural requirement that LLM missed.
    - Action: Enhance LLM prompt with structural hints + re-run LLM.
 
-5. **inconsistent_selection** (MINOR)
+6. **inconsistent_selection** (MINOR)
    - When: Large disagreement between selectors without clear reason.
    - Action: Log for analysis, no immediate re-run.
 
@@ -191,6 +211,10 @@ Return ONLY valid JSON with this exact structure:
 - DO NOT invent new table names.
 - STRONGLY favor intersection tables when reasonable.
 - Create CRITICAL suggestions for missing identity tables when first-person language is used.
+- **Schema coverage:** If the query asks for a specific concept (e.g. transport, attendance,
+  hostel, facility) and no candidate table or column supports it, create a CRITICAL
+  `query_concept_not_in_schema` suggestion. Do not keep tables only for identity match
+  when the query subject is not covered.
 - Be concise in your reasons (one sentence per table).
 - Ensure all JSON is valid and parseable.
 """
@@ -205,6 +229,7 @@ class JudgeResponseValidator:
     ALLOWED_SUGGESTION_TYPES = {
         "missing_identity_table",
         "query_ambiguous",
+        "query_concept_not_in_schema",
         "rule_pattern_missing",
         "llm_semantic_miss",
         "inconsistent_selection",

@@ -36,8 +36,11 @@ This system automatically:
 - ✅ **Comprehensive Metadata Collection**: Uses Table_Profile to extract semantic types, statistics, and relationships
 - ✅ **Knowledge Graph Construction**: Builds graph representations of database schema and relationships
 - ✅ **Semantic Embeddings**: Pre-computes embeddings for fast semantic matching
+- ✅ **Advanced NLP Processing**: spaCy-based query understanding with lemmatization and phrase detection (Phase 1)
 - ✅ **Hybrid Scoring**: Combines exact matching, synonyms, semantic similarity, and relationship detection
 - ✅ **Relationship Detection**: Automatically identifies foreign keys, primary keys, and table relationships
+- ✅ **Global FK Rescue**: Recovers junction tables that connect multiple top candidates
+- ✅ **Confidence Scoring**: Safety guardrails for SQL generation (high/medium/low confidence)
 - ✅ **Synonym Support**: Manual synonyms for domain-specific terminology
 - ✅ **87%+ Accuracy**: Tested on 31 diverse queries with high success rate
 
@@ -112,6 +115,10 @@ python --version
 # DuckDB
 pip install duckdb
 
+# spaCy (for NLP improvements - Phase 1)
+pip install spacy>=3.7.0
+python -m spacy download en_core_web_sm
+
 # Optional: For semantic embeddings
 pip install sentence-transformers
 ```
@@ -124,6 +131,9 @@ cd table_picker
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Download spaCy language model (required for Phase 1 NLP improvements)
+python -m spacy download en_core_web_sm
 
 # Optional: Install sentence-transformers for embeddings
 pip install sentence-transformers
@@ -356,6 +366,52 @@ The table selection process uses a hybrid scoring system.
 | Semantic Type Match | 3 pts | Query operation matches column type |
 | Sample Value Match | 2 pts | Query value found in sample data |
 
+### Confidence Scoring
+
+**Safety guardrails before SQL generation:**
+
+The system calculates a confidence score to ensure safe SQL generation:
+
+```
+confidence = top_score / sum(all_candidate_scores)
+```
+
+| Confidence | Level | Behavior |
+|------------|-------|----------|
+| > 0.65 | **HIGH** | Auto-generate SQL safely |
+| 0.4 - 0.65 | **MEDIUM** | Ask for clarification or show explanation |
+| < 0.4 | **LOW** | Restrict joins or use fallback strategy |
+
+**Examples:**
+
+1. **High Confidence** (0.95+)
+   - Query: "Show me all students"
+   - Result: 1 clear winner (`students_info`)
+   - Action: Auto-generate SQL
+
+2. **Medium Confidence** (0.45)
+   - Query: "student data"
+   - Result: Multiple tables (students_info, grades, registration)
+   - Action: "Did you mean student contact info or academic records?"
+
+3. **Low Confidence** (0.15)
+   - Query: "show me some data"
+   - Result: Many low-scoring tables
+   - Action: Show all tables and ask user to choose
+
+**Usage:**
+
+```python
+confidence = scoring_service.calculate_confidence(candidates)
+
+if confidence.should_auto_generate():
+    generate_sql(candidates)
+elif confidence.needs_clarification():
+    ask_user_for_clarification(candidates)
+else:
+    use_fallback_strategy(candidates)
+```
+
 ### How It Works
 
 ```python
@@ -380,10 +436,25 @@ scores = scoring_service.score_all_tables(query)
 # 4. Filter by threshold (adaptive filtering)
 candidates = scoring_service.filter_by_threshold(scores)
 
-# 5. Enhance with FK relationships
-candidates = scoring_service.enhance_with_fk_relationships(candidates)
+# 5. Enhance with FK relationships (with global FK rescue)
+candidates = scoring_service.enhance_with_fk_relationships(candidates, scores)
 
-# 6. Get top tables
+# 6. Calculate confidence for SQL generation safety
+confidence = scoring_service.calculate_confidence(candidates)
+print(f"Confidence: {confidence.confidence_score:.3f} ({confidence.confidence_level.value})")
+
+# Decision based on confidence
+if confidence.should_auto_generate():
+    # High confidence (> 0.65): Auto-generate SQL
+    generate_sql(candidates)
+elif confidence.needs_clarification():
+    # Medium confidence (0.4-0.65): Ask for clarification
+    ask_user_for_clarification(candidates)
+else:
+    # Low confidence (< 0.4): Restrict joins or use fallback
+    use_fallback_strategy(candidates)
+
+# 7. Get top tables
 for candidate in candidates[:5]:
     print(f"{candidate.table_name}: {candidate.score:.1f} points")
     for reason in candidate.reasons[:3]:
@@ -505,7 +576,7 @@ candidates = scoring_service.filter_by_threshold(scores)
 query = "Show student grades and their courses"
 scores = scoring_service.score_all_tables(query)
 candidates = scoring_service.filter_by_threshold(scores)
-candidates = scoring_service.enhance_with_fk_relationships(candidates)
+candidates = scoring_service.enhance_with_fk_relationships(candidates, scores)
 
 # Result:
 # 1. grades (20.9 pts) - table name + FK relationship

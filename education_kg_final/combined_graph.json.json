@@ -11,6 +11,12 @@
       "column_count": 4,
       "size_bytes": 28000,
       "label": "Table: courses",
+      "degree_centrality": 3.0,
+      "incoming_fk_count": 3,
+      "outgoing_fk_count": 0,
+      "normalized_centrality": 0.6,
+      "is_hub_table": false,
+      "betweenness_centrality": 0.30952380952380953,
       "id": "courses:table_courses"
     },
     {
@@ -190,40 +196,40 @@
     {
       "table": "courses",
       "node_type": "category_value",
-      "value": "Basic Civil Eng.",
-      "label": "Sample: Basic Civil Eng.",
+      "value": "Water Resources",
+      "label": "Sample: Water Resources",
       "sample_index": 1,
       "id": "courses:sample_17"
     },
     {
       "table": "courses",
       "node_type": "category_value",
-      "value": "M1",
-      "label": "Sample: M1",
+      "value": "DBMS",
+      "label": "Sample: DBMS",
       "sample_index": 2,
       "id": "courses:sample_18"
     },
     {
       "table": "courses",
       "node_type": "category_value",
-      "value": "Highway Engineering",
-      "label": "Sample: Highway Engineering",
+      "value": "Data Mining",
+      "label": "Sample: Data Mining",
       "sample_index": 3,
       "id": "courses:sample_19"
     },
     {
       "table": "courses",
       "node_type": "category_value",
-      "value": "Seminar",
-      "label": "Sample: Seminar",
+      "value": "Power Systems Lab",
+      "label": "Sample: Power Systems Lab",
       "sample_index": 4,
       "id": "courses:sample_20"
     },
     {
       "table": "courses",
       "node_type": "category_value",
-      "value": "Project Lab",
-      "label": "Sample: Project Lab",
+      "value": "Energy Lab",
+      "label": "Sample: Energy Lab",
       "sample_index": 5,
       "id": "courses:sample_21"
     },
@@ -353,6 +359,12 @@
       "column_count": 6,
       "size_bytes": 20400,
       "label": "Table: faculty_info",
+      "degree_centrality": 0.5,
+      "incoming_fk_count": 0,
+      "outgoing_fk_count": 1,
+      "normalized_centrality": 0.1,
+      "is_hub_table": false,
+      "betweenness_centrality": 0.0,
       "id": "faculty_info:table_faculty_info"
     },
     {
@@ -597,8 +609,8 @@
     {
       "table": "faculty_info",
       "node_type": "category_value",
-      "value": "F5007",
-      "label": "Value: F5007",
+      "value": "F5015",
+      "label": "Value: F5015",
       "count": 14,
       "percentage": 6.862745098039216,
       "id": "faculty_info:catval_22"
@@ -606,8 +618,8 @@
     {
       "table": "faculty_info",
       "node_type": "category_value",
-      "value": "F5012",
-      "label": "Value: F5012",
+      "value": "F5007",
+      "label": "Value: F5007",
       "count": 14,
       "percentage": 6.862745098039216,
       "id": "faculty_info:catval_23"
@@ -615,8 +627,8 @@
     {
       "table": "faculty_info",
       "node_type": "category_value",
-      "value": "F5015",
-      "label": "Value: F5015",
+      "value": "F5012",
+      "label": "Value: F5012",
       "count": 14,
       "percentage": 6.862745098039216,
       "id": "faculty_info:catval_24"
@@ -652,20 +664,11 @@
     {
       "table": "faculty_info",
       "node_type": "category_value",
-      "value": "Dr. O. Patel",
-      "label": "Value: Dr. O. Patel",
-      "count": 14,
-      "percentage": 6.862745098039216,
-      "id": "faculty_info:catval_28"
-    },
-    {
-      "table": "faculty_info",
-      "node_type": "category_value",
       "value": "Dr. M. Choudhury",
       "label": "Value: Dr. M. Choudhury",
       "count": 14,
       "percentage": 6.862745098039216,
-      "id": "faculty_info:catval_29"
+      "id": "faculty_info:catval_28"
     },
     {
       "table": "faculty_info",
@@ -674,13 +677,22 @@
       "label": "Value: Prof. P. Gupta",
       "count": 14,
       "percentage": 6.862745098039216,
-      "id": "faculty_info:catval_30"
+      "id": "faculty_info:catval_29"
     },
     {
       "table": "faculty_info",
       "node_type": "category_value",
       "value": "Prof. F. Joshi",
       "label": "Value: Prof. F. Joshi",
+      "count": 14,
+      "percentage": 6.862745098039216,
+      "id": "faculty_info:catval_30"
+    },
+    {
+      "table": "faculty_info",
+      "node_type": "category_value",
+      "value": "Dr. O. Patel",
+      "label": "Value: Dr. O. Patel",
       "count": 14,
       "percentage": 6.862745098039216,
       "id": "faculty_info:catval_31"
@@ -762,8 +774,8 @@
     {
       "table": "faculty_info",
       "node_type": "category_value",
-      "value": "pf.@ssmcollege.co.in",
-      "label": "Value: pf.@ssmcollege.co.in",
+      "value": "pp.@ssmcollege.co.in",
+      "label": "Value: pp.@ssmcollege.co.in",
       "count": 14,
       "percentage": 6.862745098039216,
       "id": "faculty_info:catval_40"
@@ -771,8 +783,8 @@
     {
       "table": "faculty_info",
       "node_type": "category_value",
-      "value": "dm.@ssmcollege.co.in",
-      "label": "Value: dm.@ssmcollege.co.in",
+      "value": "pf.@ssmcollege.co.in",
+      "label": "Value: pf.@ssmcollege.co.in",
       "count": 14,
       "percentage": 6.862745098039216,
       "id": "faculty_info:catval_41"
@@ -780,8 +792,8 @@
     {
       "table": "faculty_info",
       "node_type": "category_value",
-      "value": "pp.@ssmcollege.co.in",
-      "label": "Value: pp.@ssmcollege.co.in",
+      "value": "dm.@ssmcollege.co.in",
+      "label": "Value: dm.@ssmcollege.co.in",
       "count": 14,
       "percentage": 6.862745098039216,
       "id": "faculty_info:catval_42"
@@ -838,40 +850,40 @@
     {
       "table": "faculty_info",
       "node_type": "category_value",
-      "value": "BEE101",
-      "label": "Sample: BEE101",
+      "value": "ENE102",
+      "label": "Sample: ENE102",
       "sample_index": 1,
       "id": "faculty_info:sample_49"
     },
     {
       "table": "faculty_info",
       "node_type": "category_value",
-      "value": "COM101",
-      "label": "Sample: COM101",
+      "value": "MAN101",
+      "label": "Sample: MAN101",
       "sample_index": 2,
       "id": "faculty_info:sample_50"
     },
     {
       "table": "faculty_info",
       "node_type": "category_value",
-      "value": "AUE101",
-      "label": "Sample: AUE101",
+      "value": "CYS101",
+      "label": "Sample: CYS101",
       "sample_index": 3,
       "id": "faculty_info:sample_51"
     },
     {
       "table": "faculty_info",
       "node_type": "category_value",
-      "value": "ELE111",
-      "label": "Sample: ELE111",
+      "value": "THE101",
+      "label": "Sample: THE101",
       "sample_index": 4,
       "id": "faculty_info:sample_52"
     },
     {
       "table": "faculty_info",
       "node_type": "category_value",
-      "value": "HYD101",
-      "label": "Sample: HYD101",
+      "value": "TOC101",
+      "label": "Sample: TOC101",
       "sample_index": 5,
       "id": "faculty_info:sample_53"
     },
@@ -926,6 +938,12 @@
       "column_count": 4,
       "size_bytes": 8000,
       "label": "Table: feedue",
+      "degree_centrality": 0.5,
+      "incoming_fk_count": 0,
+      "outgoing_fk_count": 1,
+      "normalized_centrality": 0.1,
+      "is_hub_table": false,
+      "betweenness_centrality": 0.0,
       "id": "feedue:table_feedue"
     },
     {
@@ -1088,32 +1106,32 @@
     {
       "table": "feedue",
       "node_type": "category_value",
-      "value": "TUEE1033",
-      "label": "Sample: TUEE1033",
+      "value": "TUME2030",
+      "label": "Sample: TUME2030",
       "sample_index": 2,
       "id": "feedue:sample_15"
     },
     {
       "table": "feedue",
       "node_type": "category_value",
-      "value": "TUCE1002",
-      "label": "Sample: TUCE1002",
+      "value": "TUEC1014",
+      "label": "Sample: TUEC1014",
       "sample_index": 3,
       "id": "feedue:sample_16"
     },
     {
       "table": "feedue",
       "node_type": "category_value",
-      "value": "TUME2030",
-      "label": "Sample: TUME2030",
+      "value": "TUCE1048",
+      "label": "Sample: TUCE1048",
       "sample_index": 4,
       "id": "feedue:sample_17"
     },
     {
       "table": "feedue",
       "node_type": "category_value",
-      "value": "TUEC1014",
-      "label": "Sample: TUEC1014",
+      "value": "TUCE1044",
+      "label": "Sample: TUCE1044",
       "sample_index": 5,
       "id": "feedue:sample_18"
     },
@@ -1222,16 +1240,16 @@
     {
       "table": "feedue",
       "node_type": "category_value",
-      "value": "2025-10-01 00:00:00",
-      "label": "Sample: 2025-10-01 00:00:00",
+      "value": "2025-11-01 00:00:00",
+      "label": "Sample: 2025-11-01 00:00:00",
       "sample_index": 1,
       "id": "feedue:sample_30"
     },
     {
       "table": "feedue",
       "node_type": "category_value",
-      "value": "2025-11-01 00:00:00",
-      "label": "Sample: 2025-11-01 00:00:00",
+      "value": "2025-10-01 00:00:00",
+      "label": "Sample: 2025-10-01 00:00:00",
       "sample_index": 2,
       "id": "feedue:sample_31"
     },
@@ -1286,6 +1304,12 @@
       "column_count": 5,
       "size_bytes": 5290600,
       "label": "Table: grades",
+      "degree_centrality": 1.0,
+      "incoming_fk_count": 0,
+      "outgoing_fk_count": 2,
+      "normalized_centrality": 0.2,
+      "is_hub_table": false,
+      "betweenness_centrality": 0.19047619047619047,
       "id": "grades:table_grades"
     },
     {
@@ -1542,8 +1566,8 @@
     {
       "table": "grades",
       "node_type": "category_value",
-      "value": "MAT102",
-      "label": "Value: MAT102",
+      "value": "MAT103",
+      "label": "Value: MAT103",
       "count": 1278,
       "percentage": 2.4156050353457075,
       "id": "grades:catval_24"
@@ -1551,8 +1575,8 @@
     {
       "table": "grades",
       "node_type": "category_value",
-      "value": "MAT101",
-      "label": "Value: MAT101",
+      "value": "MAT102",
+      "label": "Value: MAT102",
       "count": 1278,
       "percentage": 2.4156050353457075,
       "id": "grades:catval_25"
@@ -1569,8 +1593,8 @@
     {
       "table": "grades",
       "node_type": "category_value",
-      "value": "MAT103",
-      "label": "Value: MAT103",
+      "value": "MAT101",
+      "label": "Value: MAT101",
       "count": 1278,
       "percentage": 2.4156050353457075,
       "id": "grades:catval_27"
@@ -1725,8 +1749,8 @@
     {
       "table": "grades",
       "node_type": "category_value",
-      "value": "8.185714285714287",
-      "label": "Value: 8.185714285714287",
+      "value": "8.057142857142857",
+      "label": "Value: 8.057142857142857",
       "count": 763,
       "percentage": 1.4421804710240804,
       "id": "grades:catval_44"
@@ -1734,8 +1758,8 @@
     {
       "table": "grades",
       "node_type": "category_value",
-      "value": "8.057142857142857",
-      "label": "Value: 8.057142857142857",
+      "value": "8.185714285714287",
+      "label": "Value: 8.185714285714287",
       "count": 763,
       "percentage": 1.4421804710240804,
       "id": "grades:catval_45"
@@ -1826,6 +1850,12 @@
       "column_count": 4,
       "size_bytes": 65800,
       "label": "Table: hostel",
+      "degree_centrality": 0.5,
+      "incoming_fk_count": 0,
+      "outgoing_fk_count": 1,
+      "normalized_centrality": 0.1,
+      "is_hub_table": false,
+      "betweenness_centrality": 0.0,
       "id": "hostel:table_hostel"
     },
     {
@@ -1995,40 +2025,40 @@
     {
       "table": "hostel",
       "node_type": "category_value",
-      "value": "TUCE1025",
-      "label": "Sample: TUCE1025",
+      "value": "TUCE1012",
+      "label": "Sample: TUCE1012",
       "sample_index": 1,
       "id": "hostel:sample_16"
     },
     {
       "table": "hostel",
       "node_type": "category_value",
-      "value": "TUCIV1003",
-      "label": "Sample: TUCIV1003",
+      "value": "TUCE1034",
+      "label": "Sample: TUCE1034",
       "sample_index": 2,
       "id": "hostel:sample_17"
     },
     {
       "table": "hostel",
       "node_type": "category_value",
-      "value": "TUCIV1028",
-      "label": "Sample: TUCIV1028",
+      "value": "TUCIV1012",
+      "label": "Sample: TUCIV1012",
       "sample_index": 3,
       "id": "hostel:sample_18"
     },
     {
       "table": "hostel",
       "node_type": "category_value",
-      "value": "TUCIV1045",
-      "label": "Sample: TUCIV1045",
+      "value": "TUCIV1017",
+      "label": "Sample: TUCIV1017",
       "sample_index": 4,
       "id": "hostel:sample_19"
     },
     {
       "table": "hostel",
       "node_type": "category_value",
-      "value": "TUEE1012",
-      "label": "Sample: TUEE1012",
+      "value": "TUCIV1048",
+      "label": "Sample: TUCIV1048",
       "sample_index": 5,
       "id": "hostel:sample_20"
     },
@@ -2230,6 +2260,12 @@
       "column_count": 3,
       "size_bytes": 127800,
       "label": "Table: parent_info",
+      "degree_centrality": 0.5,
+      "incoming_fk_count": 0,
+      "outgoing_fk_count": 1,
+      "normalized_centrality": 0.1,
+      "is_hub_table": false,
+      "betweenness_centrality": 0.0,
       "id": "parent_info:table_parent_info"
     },
     {
@@ -2426,40 +2462,40 @@
     {
       "table": "parent_info",
       "node_type": "category_value",
-      "value": "Nitesh Dayalan Vavili",
-      "label": "Sample: Nitesh Dayalan Vavili",
+      "value": "Jyothi Nair",
+      "label": "Sample: Jyothi Nair",
       "sample_index": 1,
       "id": "parent_info:sample_21"
     },
     {
       "table": "parent_info",
       "node_type": "category_value",
-      "value": "Vijay Venkatesh",
-      "label": "Sample: Vijay Venkatesh",
+      "value": "Harish Sundaram",
+      "label": "Sample: Harish Sundaram",
       "sample_index": 2,
       "id": "parent_info:sample_22"
     },
     {
       "table": "parent_info",
       "node_type": "category_value",
-      "value": "Vijay Srinivas",
-      "label": "Sample: Vijay Srinivas",
+      "value": "Rakesh Menon",
+      "label": "Sample: Rakesh Menon",
       "sample_index": 3,
       "id": "parent_info:sample_23"
     },
     {
       "table": "parent_info",
       "node_type": "category_value",
-      "value": "Karthik Pillai",
-      "label": "Sample: Karthik Pillai",
+      "value": "Neha Das",
+      "label": "Sample: Neha Das",
       "sample_index": 4,
       "id": "parent_info:sample_24"
     },
     {
       "table": "parent_info",
       "node_type": "category_value",
-      "value": "Sruthi Lakshmi",
-      "label": "Sample: Sruthi Lakshmi",
+      "value": "Anu Sundaram",
+      "label": "Sample: Anu Sundaram",
       "sample_index": 5,
       "id": "parent_info:sample_25"
     },
@@ -2554,6 +2590,12 @@
       "column_count": 4,
       "size_bytes": 5290600,
       "label": "Table: registration",
+      "degree_centrality": 1.0,
+      "incoming_fk_count": 0,
+      "outgoing_fk_count": 2,
+      "normalized_centrality": 0.2,
+      "is_hub_table": false,
+      "betweenness_centrality": 0.19047619047619047,
       "id": "registration:table_registration"
     },
     {
@@ -2718,8 +2760,8 @@
     {
       "table": "registration",
       "node_type": "category_value",
-      "value": "TUCE4004",
-      "label": "Value: TUCE4004",
+      "value": "TUCE4008",
+      "label": "Value: TUCE4008",
       "count": 56,
       "percentage": 0.10584810796507012,
       "id": "registration:catval_15"
@@ -2727,8 +2769,8 @@
     {
       "table": "registration",
       "node_type": "category_value",
-      "value": "TUEE4006",
-      "label": "Value: TUEE4006",
+      "value": "TUCIV4047",
+      "label": "Value: TUCIV4047",
       "count": 56,
       "percentage": 0.10584810796507012,
       "id": "registration:catval_16"
@@ -2736,8 +2778,8 @@
     {
       "table": "registration",
       "node_type": "category_value",
-      "value": "TUCIV4024",
-      "label": "Value: TUCIV4024",
+      "value": "TUCIV4042",
+      "label": "Value: TUCIV4042",
       "count": 56,
       "percentage": 0.10584810796507012,
       "id": "registration:catval_17"
@@ -2745,8 +2787,8 @@
     {
       "table": "registration",
       "node_type": "category_value",
-      "value": "TUEE4011",
-      "label": "Value: TUEE4011",
+      "value": "TUEE4002",
+      "label": "Value: TUEE4002",
       "count": 56,
       "percentage": 0.10584810796507012,
       "id": "registration:catval_18"
@@ -2754,8 +2796,8 @@
     {
       "table": "registration",
       "node_type": "category_value",
-      "value": "TUEC4043",
-      "label": "Value: TUEC4043",
+      "value": "TUEC4050",
+      "label": "Value: TUEC4050",
       "count": 56,
       "percentage": 0.10584810796507012,
       "id": "registration:catval_19"
@@ -2773,8 +2815,8 @@
     {
       "table": "registration",
       "node_type": "category_value",
-      "value": "PHY101",
-      "label": "Value: PHY101",
+      "value": "MAT101",
+      "label": "Value: MAT101",
       "count": 1278,
       "percentage": 2.4156050353457075,
       "id": "registration:catval_21"
@@ -2791,8 +2833,8 @@
     {
       "table": "registration",
       "node_type": "category_value",
-      "value": "MAT101",
-      "label": "Value: MAT101",
+      "value": "MAT102",
+      "label": "Value: MAT102",
       "count": 1278,
       "percentage": 2.4156050353457075,
       "id": "registration:catval_23"
@@ -2800,8 +2842,8 @@
     {
       "table": "registration",
       "node_type": "category_value",
-      "value": "MAT102",
-      "label": "Value: MAT102",
+      "value": "MAT103",
+      "label": "Value: MAT103",
       "count": 1278,
       "percentage": 2.4156050353457075,
       "id": "registration:catval_24"
@@ -2809,8 +2851,8 @@
     {
       "table": "registration",
       "node_type": "category_value",
-      "value": "MAT103",
-      "label": "Value: MAT103",
+      "value": "PHY101",
+      "label": "Value: PHY101",
       "count": 1278,
       "percentage": 2.4156050353457075,
       "id": "registration:catval_25"
@@ -2984,6 +3026,12 @@
       "column_count": 6,
       "size_bytes": 127800,
       "label": "Table: students_info",
+      "degree_centrality": 5.0,
+      "incoming_fk_count": 5,
+      "outgoing_fk_count": 0,
+      "normalized_centrality": 1.0,
+      "is_hub_table": true,
+      "betweenness_centrality": 0.738095238095238,
       "id": "students_info:table_students_info"
     },
     {
@@ -3537,7 +3585,7 @@
       "id": "students_info:hint_filtering_candidate"
     }
   ],
-  "links": [
+  "edges": [
     {
       "edge_type": "has_column",
       "position": 1,

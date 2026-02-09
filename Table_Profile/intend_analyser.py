@@ -8,7 +8,7 @@ import requests
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, asdict
 from pathlib import Path
-
+import os
 
 @dataclass
 class FilterCondition:

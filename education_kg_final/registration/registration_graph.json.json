@@ -155,40 +155,40 @@
     },
     {
       "node_type": "category_value",
-      "value": "TUCE4004",
-      "label": "Value: TUCE4004",
+      "value": "TUCE4008",
+      "label": "Value: TUCE4008",
       "count": 56,
       "percentage": 0.10584810796507012,
       "id": "catval_15"
     },
     {
       "node_type": "category_value",
-      "value": "TUEE4006",
-      "label": "Value: TUEE4006",
+      "value": "TUCIV4047",
+      "label": "Value: TUCIV4047",
       "count": 56,
       "percentage": 0.10584810796507012,
       "id": "catval_16"
     },
     {
       "node_type": "category_value",
-      "value": "TUCIV4024",
-      "label": "Value: TUCIV4024",
+      "value": "TUCIV4042",
+      "label": "Value: TUCIV4042",
       "count": 56,
       "percentage": 0.10584810796507012,
       "id": "catval_17"
     },
     {
       "node_type": "category_value",
-      "value": "TUEE4011",
-      "label": "Value: TUEE4011",
+      "value": "TUEE4002",
+      "label": "Value: TUEE4002",
       "count": 56,
       "percentage": 0.10584810796507012,
       "id": "catval_18"
     },
     {
       "node_type": "category_value",
-      "value": "TUEC4043",
-      "label": "Value: TUEC4043",
+      "value": "TUEC4050",
+      "label": "Value: TUEC4050",
       "count": 56,
       "percentage": 0.10584810796507012,
       "id": "catval_19"
@@ -204,8 +204,8 @@
     },
     {
       "node_type": "category_value",
-      "value": "PHY101",
-      "label": "Value: PHY101",
+      "value": "MAT101",
+      "label": "Value: MAT101",
       "count": 1278,
       "percentage": 2.4156050353457075,
       "id": "catval_21"
@@ -220,24 +220,24 @@
     },
     {
       "node_type": "category_value",
-      "value": "MAT101",
-      "label": "Value: MAT101",
+      "value": "MAT102",
+      "label": "Value: MAT102",
       "count": 1278,
       "percentage": 2.4156050353457075,
       "id": "catval_23"
     },
     {
       "node_type": "category_value",
-      "value": "MAT102",
-      "label": "Value: MAT102",
+      "value": "MAT103",
+      "label": "Value: MAT103",
       "count": 1278,
       "percentage": 2.4156050353457075,
       "id": "catval_24"
     },
     {
       "node_type": "category_value",
-      "value": "MAT103",
-      "label": "Value: MAT103",
+      "value": "PHY101",
+      "label": "Value: PHY101",
       "count": 1278,
       "percentage": 2.4156050353457075,
       "id": "catval_25"
@@ -385,7 +385,7 @@
       "id": "hint_filtering_candidate"
     }
   ],
-  "links": [
+  "edges": [
     {
       "edge_type": "has_column",
       "position": 1,

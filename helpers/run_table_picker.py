@@ -19,21 +19,19 @@ By default, mode is 'judge' if LLMs are enabled, otherwise 'rule'.
 import argparse
 import sys
 from pathlib import Path
-from typing import Any, List
-
-import pandas as pd  # Only used for pretty printing sets if needed
+from typing import List
 
 # Add project root to path for imports
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from kg_enhanced_table_picker.repository.kg_repository import KGRepository
-from kg_enhanced_table_picker.services.kg_service import KGService
-from kg_enhanced_table_picker.services.scoring_service import ScoringService
-from kg_enhanced_table_picker.services.llm_table_selector import LLMTableSelector
-from kg_enhanced_table_picker.services.llm_table_judge import LLMTableJudge
-from kg_enhanced_table_picker.services.candidate_service import TableCandidateService
-from kg_enhanced_table_picker.services.identity_service import apply_identity_guardrail
+from kg_enhanced_table_picker.repository.kg_repository import KGRepository  # noqa: E402
+from kg_enhanced_table_picker.services.kg_service import KGService  # noqa: E402
+from kg_enhanced_table_picker.services.scoring_service import ScoringService  # noqa: E402
+from kg_enhanced_table_picker.services.llm_table_selector import LLMTableSelector  # noqa: E402
+from kg_enhanced_table_picker.services.llm_table_judge import LLMTableJudge  # noqa: E402
+from kg_enhanced_table_picker.services.candidate_service import TableCandidateService  # noqa: E402
+from kg_enhanced_table_picker.services.identity_service import apply_identity_guardrail  # noqa: E402
 
 
 def load_kg() -> KGService:
@@ -164,6 +162,69 @@ def run_with_judge(
     kept_sorted = sorted(kept, key=lambda x: x[1], reverse=True)
     final = apply_identity_guardrail(kept_sorted, query, role, union_names, top_n)
     return final
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Run table picker for a single query")
+    parser.add_argument(
+        "--mode",
+        type=str,
+        choices=["rule", "llm", "judge"],
+        default="judge",
+        help="Selection strategy: rule, llm, or judge.",
+    )
+    parser.add_argument("--query", type=str, required=True, help="Natural language query.")
+    parser.add_argument("--top-n", type=int, default=5, help="Maximum number of tables to return.")
+    parser.add_argument(
+        "--provider",
+        type=str,
+        default="groq",
+        help="LLM provider for selector/judge (used when mode != rule).",
+    )
+    parser.add_argument(
+        "--model",
+        type=str,
+        default=None,
+        help="LLM model name (optional; provider default is used if not set).",
+    )
+    parser.add_argument(
+        "--role",
+        type=str,
+        default=None,
+        help="Optional user role: student | faculty | parent.",
+    )
+
+    args = parser.parse_args()
+
+    kg_service = load_kg()
+    scoring_service = ScoringService(kg_service, None, enable_phase2=True)
+
+    if args.mode == "rule":
+        tables = run_rule_based(scoring_service=scoring_service, query=args.query, top_n=args.top_n)
+    elif args.mode == "llm":
+        tables = run_llm_only(
+            kg_service=kg_service,
+            scoring_service=scoring_service,
+            query=args.query,
+            top_n=args.top_n,
+            provider=args.provider,
+            model=args.model,
+        )
+    else:
+        tables = run_with_judge(
+            kg_service=kg_service,
+            scoring_service=scoring_service,
+            query=args.query,
+            top_n=args.top_n,
+            provider=args.provider,
+            model=args.model,
+            role=args.role,
+        )
+
+    print("\nSelected tables:")
+    for t in tables:
+        print(f"- {t}")
+    return 0
 
 
 if __name__ == "__main__":

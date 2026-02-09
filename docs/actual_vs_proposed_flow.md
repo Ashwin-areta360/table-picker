@@ -122,7 +122,7 @@ for each column:
 # Typical usage (from test_table_picker.py):
 scores = scoring_service.score_all_tables(query)
 candidates = scoring_service.filter_by_threshold(scores)
-candidates = scoring_service.enhance_with_fk_relationships(candidates)  # ← FK expansion here
+candidates = scoring_service.enhance_with_fk_relationships(candidates, scores)  # ← FK expansion here with global rescue
 ```
 
 **FK Expansion Logic**:
