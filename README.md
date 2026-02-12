@@ -1,8 +1,8 @@
-# Table Picker: Knowledge Graph-Based Intelligent Table Selection
+# Table Picker V2: Intelligent Table Selection for NL2SQL
 
-**An end-to-end system for building knowledge graphs from databases and using them for intelligent table selection in NL2SQL queries.**
+**A hybrid search system combining semantic embeddings, keyword matching, graph expansion, and LLM-based selection to automatically identify relevant database tables from natural language queries.**
 
-This project provides a complete pipeline from database profiling to semantic table selection, combining metadata collection, relationship detection, semantic embeddings, and intelligent scoring to automatically select relevant tables for natural language queries.
+This project provides a complete pipeline for intelligent table selection, using vector search (FAISS), keyword search (BM25), relationship graph expansion, and an LLM-based final selector to choose the optimal set of tables for answering natural language queries.
 
 ---
 
@@ -11,13 +11,12 @@ This project provides a complete pipeline from database profiling to semantic ta
 1. [Overview](#overview)
 2. [Architecture](#architecture)
 3. [Getting Started](#getting-started)
-4. [Building the Knowledge Graph](#building-the-knowledge-graph)
-5. [Building Embeddings](#building-embeddings)
-6. [Table Selection](#table-selection)
-7. [Integration with Table_Profile](#integration-with-table_profile)
-8. [Usage Examples](#usage-examples)
-9. [Project Structure](#project-structure)
-10. [Testing](#testing)
+4. [Quick Start](#quick-start)
+5. [Usage](#usage)
+6. [Project Structure](#project-structure)
+7. [How It Works](#how-it-works)
+8. [Configuration](#configuration)
+9. [Testing](#testing)
 
 ---
 
@@ -25,21 +24,20 @@ This project provides a complete pipeline from database profiling to semantic ta
 
 ### What This Project Does
 
-This system automatically:
-1. **Profiles databases** to extract rich metadata (column types, statistics, relationships)
-2. **Builds knowledge graphs** representing table relationships and metadata
-3. **Generates semantic embeddings** for tables and columns
-4. **Selects relevant tables** from natural language queries using hybrid scoring (exact matching + semantic similarity + relationships)
+Table Picker V2 automatically:
+1. **Indexes table metadata** using semantic embeddings (FAISS) and keyword indexing (BM25)
+2. **Searches for relevant tables** using hybrid semantic + keyword search
+3. **Expands candidates** using relationship graphs to find bridge tables
+4. **Selects final tables** using an LLM to choose the minimal optimal set
 
 ### Key Features
 
-- ✅ **Comprehensive Metadata Collection**: Uses Table_Profile to extract semantic types, statistics, and relationships
-- ✅ **Knowledge Graph Construction**: Builds graph representations of database schema and relationships
-- ✅ **Semantic Embeddings**: Pre-computes embeddings for fast semantic matching
-- ✅ **Hybrid Scoring**: Combines exact matching, synonyms, semantic similarity, and relationship detection
-- ✅ **Relationship Detection**: Automatically identifies foreign keys, primary keys, and table relationships
-- ✅ **Synonym Support**: Manual synonyms for domain-specific terminology
-- ✅ **87%+ Accuracy**: Tested on 31 diverse queries with high success rate
+- ✅ **Hybrid Search**: Combines semantic (vector) and keyword (BM25) search for robust matching
+- ✅ **Graph Expansion**: Automatically finds bridge tables needed for joins
+- ✅ **LLM-Based Selection**: Uses language models to intelligently choose the minimal table set
+- ✅ **Role-Based Filtering**: Supports user roles (parent, student, faculty) for context-aware selection
+- ✅ **Fast Indexing**: In-memory FAISS index for sub-second search
+- ✅ **Comprehensive Metadata**: Uses rich table metadata including descriptions, synonyms, sample values, and relationships
 
 ---
 
@@ -48,56 +46,63 @@ This system automatically:
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    Natural Language Query                    │
-│              "Show me learners in Computer Science"          │
+│              "What is Manoj Iyer's GPA?"                     │
 └───────────────────────┬─────────────────────────────────────┘
                         │
                         ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                   Scoring Service                           │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
-│  │ Exact Match  │  │  Synonyms    │  │  Semantic    │     │
-│  │ (10 points)  │  │  (7 points)  │  │  (8 points)  │     │
-│  └──────────────┘  └──────────────┘  └──────────────┘     │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
-│  │ FK Relations │  │ Column Match │  │  Type Match  │     │
-│  │ (4 points)   │  │  (5 points)  │  │  (3 points)  │     │
-│  └──────────────┘  └──────────────┘  └──────────────┘     │
+│                   Query Preprocessing                        │
+│  - Normalization, tokenization, lemmatization               │
 └───────────────────────┬─────────────────────────────────────┘
                         │
                         ▼
 ┌─────────────────────────────────────────────────────────────┐
-│              Knowledge Graph Repository                     │
-│  ┌──────────────────┐  ┌──────────────────┐              │
-│  │  Table Metadata  │  │  Relationships    │              │
-│  │  - Columns       │  │  - Foreign Keys   │              │
-│  │  - Types         │  │  - Primary Keys   │              │
-│  │  - Statistics    │  │  - Graph Edges    │              │
-│  └──────────────────┘  └──────────────────┘              │
-│  ┌──────────────────┐  ┌──────────────────┐              │
-│  │  Embeddings      │  │  Synonyms         │              │
-│  │  - Table vectors │  │  - CSV file       │              │
-│  │  - Column vectors│  │  - Column-level  │              │
-│  └──────────────────┘  └──────────────────┘              │
+│                    Hybrid Search (Stage A & B)                │
+│  ┌──────────────┐              ┌──────────────┐            │
+│  │ Vector Search│              │ Keyword      │            │
+│  │ (FAISS)      │              │ Search (BM25)│            │
+│  │ Semantic     │              │ Exact match  │            │
+│  │ similarity   │              │ + synonyms   │            │
+│  └──────────────┘              └──────────────┘            │
+│         │                              │                    │
+│         └──────────┬───────────────────┘                    │
+│                   ▼                                          │
+│            Seed Tables (top matches)                         │
 └───────────────────────┬─────────────────────────────────────┘
                         │
                         ▼
 ┌─────────────────────────────────────────────────────────────┐
-│              Table_Profile Integration                      │
-│  ┌──────────────────┐  ┌──────────────────┐              │
-│  │ MetadataCollector│  │ RelationshipDet. │              │
-│  │  - Profiling     │  │  - FK/PK detect  │              │
-│  │  - Statistics     │  │  - Inference     │              │
-│  └──────────────────┘  └──────────────────┘              │
+│              Graph Expansion (Stage C)                       │
+│  - Add referenced tables (FK relationships)                  │
+│  - Add bridge tables for join paths                         │
+│  - Avoid hub table explosion                                │
+└───────────────────────┬─────────────────────────────────────┘
+                        │
+                        ▼
+┌─────────────────────────────────────────────────────────────┐
+│            LLM-Based Selector (Stage D)                      │
+│  - Receives candidate tables (6-8 tables)                   │
+│  - Selects minimal optimal set (2-3 tables)                  │
+│  - Verifies join paths are valid                            │
+└───────────────────────┬─────────────────────────────────────┘
+                        │
+                        ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    Final Table Selection                    │
+│              ['students_info', 'grades']                    │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ### Component Overview
 
-1. **Table_Profile**: Database profiling library that extracts metadata
-2. **KG Repository**: Stores and manages knowledge graph data
-3. **Embedding Service**: Generates and manages semantic embeddings
-4. **Scoring Service**: Scores tables based on query relevance
-5. **KG Service**: High-level APIs for querying the knowledge graph
+1. **SchemaRepository**: Loads and parses table metadata from JSON
+2. **VectorDBService**: FAISS-based vector search for semantic matching
+3. **KeywordSearchService**: BM25-based keyword search for exact/synonym matching
+4. **GraphExpansionService**: Expands seed tables using relationship graphs
+5. **QueryPreprocessingService**: Normalizes and tokenizes queries
+6. **IndexingService**: Builds vector and keyword indices from metadata
+7. **SearchService**: Orchestrates the full search pipeline
+8. **SchemaSelectorService**: LLM-based final table selection
 
 ---
 
@@ -109,12 +114,18 @@ This system automatically:
 # Python 3.8+
 python --version
 
-# DuckDB
-pip install duckdb
-
-# Optional: For semantic embeddings
-pip install sentence-transformers
+# Install dependencies
+pip install -r requirements.txt
 ```
+
+### Required Dependencies
+
+- `sentence-transformers` - For semantic embeddings
+- `faiss-cpu` or `faiss` - For vector search
+- `rank-bm25` - For keyword search
+- `spacy` - For query preprocessing
+- `pydantic` - For data models
+- `aretai` - For LLM-based selection (included in project)
 
 ### Installation
 
@@ -125,419 +136,191 @@ cd table_picker
 # Install dependencies
 pip install -r requirements.txt
 
-# Optional: Install sentence-transformers for embeddings
-pip install sentence-transformers
-```
+# Download spaCy language model (required for query preprocessing)
+python -m spacy download en_core_web_sm
 
-### Quick Start
-
-```python
-from kg_enhanced_table_picker.repository.kg_repository import KGRepository
-from kg_enhanced_table_picker.services.kg_service import KGService
-from kg_enhanced_table_picker.services.scoring_service import ScoringService
-from kg_enhanced_table_picker.services.embedding_service import EmbeddingService
-
-# Load knowledge graph
-kg_repo = KGRepository()
-kg_repo.load_kg("education_kg_final", synonym_csv_path="helpers/column_synonyms.csv")
-
-# Initialize services
-kg_service = KGService(kg_repo)
-embedding_service = EmbeddingService(model_name='mini', device='cpu')
-scoring_service = ScoringService(kg_service, embedding_service)
-
-# Query
-query = "Show me learners in Computer Science"
-scores = scoring_service.score_all_tables(query)
-candidates = scoring_service.filter_by_threshold(scores)
-
-# Get top tables
-for candidate in candidates[:5]:
-    print(f"{candidate.table_name}: {candidate.score:.1f} points")
+# Set up environment variables (required for LLM-based table selection)
+cp .env.example .env
+# Edit .env and add your API keys (at least one LLM provider API key is required)
+# The default provider is Groq - get your API key from: https://console.groq.com/
 ```
 
 ---
 
-## 📊 Building the Knowledge Graph
+## ⚡ Quick Start
 
-The knowledge graph is built in multiple steps using Table_Profile for metadata collection.
+### Basic Usage
 
-### Step 1: Database Profiling
+```bash
+# Run from src/ directory
+cd src
+python main.py
+```
 
-**File**: `helpers/build_education_kg_final.py`
+This will:
+1. Load table metadata from `src/data/table_metadata_full.json`
+2. Build vector and keyword indices
+3. Run test queries and display results
 
-This script uses Table_Profile to profile each table in your database:
+### Example Output
+
+```
+Building index...
+✓ Index built
+
+Running test queries...
+
+Query: What is Manoj Iyer's GPA?
+ -> Found: students_info
+ -> Found: grades
+Query: Show me the fees for hostel
+ -> Found: feedue
+Query: Who teaches Engineering Graphics?
+ -> Found: courses
+ -> Found: faculty_info
+```
+
+### With Custom Options
+
+```bash
+# Use a specific role
+python main.py --role student
+
+# Use a different LLM provider
+python main.py --provider groq --model llama-3.1-70b
+
+# Use custom metadata path
+python main.py --metadata-path /path/to/metadata.json
+```
+
+---
+
+## 💡 Usage
+
+### Main Script (`main.py`)
+
+The main entry point for running table selection:
+
+```bash
+python src/main.py [OPTIONS]
+```
+
+**Options:**
+- `--role {parent,student,faculty}`: User role (adds identity table to results)
+- `--provider PROVIDER`: LLM provider (default: groq)
+- `--model MODEL`: LLM model name (uses provider default if not specified)
+- `--metadata-path PATH`: Path to table metadata JSON file (default: `src/data/table_metadata_full.json`)
+
+**Example:**
+```bash
+python src/main.py --role student --provider groq
+```
+
+### Batch Testing (`batch_run.py`)
+
+Run table selection on a batch of test queries from an Excel file:
+
+```bash
+python src/batch_run.py [OPTIONS]
+```
+
+**Options:**
+- `--input-file PATH`: Input Excel file with test queries (default: `helpers/test.xlsx`)
+- `--output-file PATH`: Output Excel file (default: `<input>_results_v2.xlsx`)
+- `--metadata-path PATH`: Path to table metadata JSON (default: `src/data/table_metadata_full.json`)
+- `--provider PROVIDER`: LLM provider (default: groq)
+- `--model MODEL`: LLM model name
+- `--limit N`: Process only first N rows
+- `--role {parent,student,faculty}`: Global role for all queries
+
+**Example:**
+```bash
+python src/batch_run.py --input-file helpers/test.xlsx --provider groq
+```
+
+**Excel File Format:**
+- Column 1: Query/question
+- Column 2: Expected tables (comma-separated)
+- Optional `role` column: Per-query role specification
+
+### Debug Script (`debug_query.py`)
+
+Detailed analysis of how a query is processed:
+
+```bash
+python src/debug_query.py [OPTIONS]
+```
+
+**Options:**
+- `--query QUERY`: Query to analyze (default: "What is Manoj Iyer's GPA?")
+- `--role {parent,student,faculty}`: User role
+- `--provider PROVIDER`: LLM provider (default: groq)
+- `--model MODEL`: LLM model name
+- `--metadata-path PATH`: Path to table metadata JSON
+
+**Example:**
+```bash
+python src/debug_query.py --query "Show me the fees for hostel"
+```
+
+**Output includes:**
+- Keyword search results with scores
+- Semantic search results with distances
+- Seed tables from hybrid search
+- Graph expansion details
+- Final selected tables
+
+### Programmatic Usage
 
 ```python
-import duckdb
-from pathlib import Path
 import sys
+from pathlib import Path
 
-# Add Table_Profile to path
-project_root = Path(__file__).parent.parent
-table_profile_path = project_root / "Table_Profile"
-if table_profile_path.exists():
-    sys.path.insert(0, str(table_profile_path))
+# Add src/ to path
+sys.path.insert(0, str(Path(__file__).parent / "src"))
 
-from table_profile_graph.profiler.metadata_collector import MetadataCollector
-from table_profile_graph.graph.builder import GraphBuilder
-from table_profile_graph.graph.serializer import GraphSerializer
+from repositories.schema_repository import SchemaRepository
+from services import (
+    VectorDBService,
+    IndexingService,
+    SearchService,
+    KeywordSearchService,
+    GraphExpansionService,
+    QueryPreprocessingService,
+    SchemaSelectorService,
+)
+from sentence_transformers import SentenceTransformer
 
-# Connect to database
-conn = duckdb.connect("education.duckdb")
+# 1. Setup
+model = SentenceTransformer('all-MiniLM-L6-v2')
+repo = SchemaRepository("src/data/table_metadata_full.json")
+vector_service = VectorDBService(embedding_dim=384)
+preprocessor = QueryPreprocessingService()
 
-# Get all tables
-tables = conn.execute("SHOW TABLES").fetchall()
-table_names = [t[0] for t in tables if not t[0].startswith('system_')]
+# 2. Build index
+indexer = IndexingService(repo, vector_service, model, preprocessor)
+indexer.build_index()
 
-# Profile each table
-for table_name in table_names:
-    # Collect metadata using Table_Profile
-    collector = MetadataCollector(conn, table_name)
-    metadata = collector.collect()
-    
-    # Build graph for this table
-    builder = GraphBuilder(metadata)
-    graph = builder.build()
-    
-    # Save individual table graph
-    serializer = GraphSerializer()
-    serializer.save(graph, f"education_kg_final/{table_name}/{table_name}_graph.json")
+# 3. Initialize services
+keyword_service = KeywordSearchService(repo, preprocessor)
+graph_service = GraphExpansionService(repo)
+selector_agent = SchemaSelectorService(provider="groq")
+searcher = SearchService(
+    vector_service,
+    keyword_service,
+    graph_service,
+    selector_agent,
+    preprocessor,
+    model,
+    repository=repo
+)
+
+# 4. Query
+query = "What is Manoj Iyer's GPA?"
+results = searcher.get_final_tables(query, role="student")
+print(f"Selected tables: {results}")
+# Output: ['students_info', 'grades']
 ```
-
-**What Table_Profile Collects**:
-
-- **Column Metadata**: Types, nullability, cardinality
-- **Semantic Types**: IDENTIFIER, NUMERICAL, CATEGORICAL, TEMPORAL, etc.
-- **Statistics**: Min/max, mean, unique counts, top values
-- **Primary Keys**: Detected from schema and data patterns
-- **Foreign Keys**: Detected from schema constraints and column patterns
-- **Relationships**: Inter-table relationships via foreign keys
-- **Optimization Hints**: Good for filtering, grouping, indexing
-
-### Step 2: Building Combined Graph
-
-After profiling individual tables, build a combined graph:
-
-```python
-import networkx as nx
-
-# Create combined graph
-combined_graph = nx.MultiDiGraph()
-
-# Add all individual table graphs
-for table_name, graph in all_graphs.items():
-    # Add nodes and edges from individual graph
-    combined_graph.add_nodes_from(graph.nodes(data=True))
-    combined_graph.add_edges_from(graph.edges(data=True))
-
-# Add inter-table relationships
-for table_name, metadata in all_metadata.items():
-    for fk_col, ref_tables in metadata.foreign_key_candidates.items():
-        for ref_table in ref_tables:
-            # Add edge: table_name -> ref_table via fk_col
-            combined_graph.add_edge(
-                f"{table_name}:column_{fk_col}",
-                f"{ref_table}:table_{ref_table}",
-                edge_type="REFERENCES",
-                from_column=fk_col,
-                to_table=ref_table
-            )
-
-# Save combined graph
-serializer.save_combined(combined_graph, "education_kg_final/combined_graph.json")
-```
-
-### Step 3: Running the Build Script
-
-```bash
-# Build knowledge graph for education.duckdb
-python helpers/build_education_kg_final.py
-```
-
-**Output Structure**:
-```
-education_kg_final/
-├── combined_graph.json          # Combined graph with all relationships
-├── combined_graph.gpickle        # NetworkX graph format
-├── combined_visualization.html   # Interactive visualization
-├── students_info/
-│   └── students_info_graph.json  # Individual table graph
-├── courses/
-│   └── courses_graph.json
-└── ... (one directory per table)
-```
-
----
-
-## 🧠 Building Embeddings
-
-Embeddings enable semantic matching (e.g., "learners" → "students").
-
-### Step 1: Install Dependencies
-
-```bash
-pip install sentence-transformers
-```
-
-### Step 2: Build Embeddings
-
-**File**: `helpers/build_embeddings.py`
-
-```python
-from kg_enhanced_table_picker.repository.kg_repository import KGRepository
-from kg_enhanced_table_picker.services.embedding_service import EmbeddingService
-
-# Load KG
-kg_repo = KGRepository()
-kg_repo.load_kg("education_kg_final")
-
-# Initialize embedding service
-embedding_service = EmbeddingService(model_name='mini', device='cpu')
-
-# Build embeddings for all tables and columns
-# (See build_embeddings.py for full implementation)
-```
-
-**What Gets Embedded**:
-
-1. **Table-level text**:
-   ```
-   "students_info - Contains students info. 
-    Also known as: learner, learners, pupil, pupils...
-    Contains columns: Student ID, Name.
-    Referenced by: feedue, grades, hostel"
-   ```
-
-2. **Column-level text**:
-   ```
-   "Student ID (IDENTIFIER type) - Unique identifier for students.
-    Also known as: learner, learners, pupil, pupils...
-    Used as primary key"
-   ```
-
-### Step 3: Run Build Script
-
-```bash
-python helpers/build_embeddings.py --kg-dir education_kg_final --model mini
-```
-
-**Options**:
-- `--kg-dir`: Knowledge graph directory (default: `education_kg_final`)
-- `--model`: Embedding model - `mini` (fast), `nomic` (best quality), `bge`, `gte` (default: `mini`)
-- `--device`: `cpu` or `cuda` (default: `cpu`)
-
-**Output**:
-```
-education_kg_final/embeddings.pkl  # Pre-computed embeddings (70KB)
-```
-
-**Models Available**:
-- `mini`: all-MiniLM-L6-v2 (90MB, fast, good quality) - **Recommended**
-- `nomic`: nomic-embed-text-v1.5 (548MB, best quality)
-- `bge`: BAAI/bge-small-en-v1.5 (133MB, balanced)
-- `gte`: thenlper/gte-small (fastest)
-
----
-
-## 🎯 Table Selection
-
-The table selection process uses a hybrid scoring system.
-
-### Scoring Components
-
-| Component | Weight | Description |
-|-----------|--------|-------------|
-| Table Name Match | 10 pts | Query term matches table name |
-| Synonym Match | 7 pts | Query term matches column synonym |
-| Semantic Similarity | 8 pts | Embedding similarity > threshold |
-| Column Name Match | 5 pts | Query term matches column name |
-| FK Relationship | 4 pts | Related table boost |
-| Semantic Type Match | 3 pts | Query operation matches column type |
-| Sample Value Match | 2 pts | Query value found in sample data |
-
-### How It Works
-
-```python
-from kg_enhanced_table_picker.repository.kg_repository import KGRepository
-from kg_enhanced_table_picker.services.kg_service import KGService
-from kg_enhanced_table_picker.services.scoring_service import ScoringService
-from kg_enhanced_table_picker.services.embedding_service import EmbeddingService
-
-# 1. Load knowledge graph
-kg_repo = KGRepository()
-kg_repo.load_kg("education_kg_final", synonym_csv_path="helpers/column_synonyms.csv")
-
-# 2. Initialize services
-kg_service = KGService(kg_repo)
-embedding_service = EmbeddingService(model_name='mini', device='cpu')
-scoring_service = ScoringService(kg_service, embedding_service)
-
-# 3. Score all tables for a query
-query = "Show me learners in Computer Science"
-scores = scoring_service.score_all_tables(query)
-
-# 4. Filter by threshold (adaptive filtering)
-candidates = scoring_service.filter_by_threshold(scores)
-
-# 5. Enhance with FK relationships
-candidates = scoring_service.enhance_with_fk_relationships(candidates)
-
-# 6. Get top tables
-for candidate in candidates[:5]:
-    print(f"{candidate.table_name}: {candidate.score:.1f} points")
-    for reason in candidate.reasons[:3]:
-        print(f"  • {reason}")
-```
-
-### Example: Query Processing
-
-**Query**: "Show me learners in Computer Science"
-
-**Step 1: Extract Terms**
-```python
-terms = ["learners", "computer", "science"]
-```
-
-**Step 2: Score Tables**
-
-- `students_info`:
-  - Synonym match: "learners" → "student" (+7 pts)
-  - Table name: "student" in "students_info" (+10 pts)
-  - **Total: 17.0 pts**
-
-- `courses`:
-  - Column match: "Computer Science" in sample values (+2 pts)
-  - **Total: 2.0 pts**
-
-**Step 3: Filter & Enhance**
-- Keep tables with score ≥ 5 (absolute threshold)
-- Boost related tables via FK relationships
-- `grades` gets +4 pts (FK to `students_info`)
-
-**Result**:
-```
-1. students_info (17.0 pts) ✓
-2. grades (4.0 pts) - related via FK
-3. courses (2.0 pts)
-```
-
----
-
-## 🔗 Integration with Table_Profile
-
-Table_Profile is a comprehensive database profiling library that this project uses for metadata collection.
-
-### What Table_Profile Provides
-
-1. **MetadataCollector**: Orchestrates profiling process
-2. **RelationshipDetector**: Detects PKs, FKs, correlations
-3. **StatsProfiler**: Type-specific statistics
-4. **GraphBuilder**: Builds graph representations
-
-### How It's Integrated
-
-**Location**: `Table_Profile/` directory in project root
-
-**Integration Points**:
-
-1. **KG Building** (`helpers/build_education_kg_final.py`):
-```python
-from table_profile_graph.profiler.metadata_collector import MetadataCollector
-from table_profile_graph.graph.builder import GraphBuilder
-
-collector = MetadataCollector(conn, table_name)
-metadata = collector.collect()  # Rich metadata with semantic types, stats, relationships
-```
-
-2. **KG Repository** (`kg_enhanced_table_picker/repository/kg_repository.py`):
-```python
-# Table_Profile models are converted to KG models
-from table_profile_graph.profiler.models import TableMetadata as TPTableMetadata
-
-# Convert Table_Profile metadata to KG metadata
-kg_metadata = convert_table_profile_to_kg(TPTableMetadata)
-```
-
-### Table_Profile Features Used
-
-- ✅ **Semantic Type Inference**: IDENTIFIER, NUMERICAL, CATEGORICAL, TEMPORAL
-- ✅ **Primary Key Detection**: From schema constraints and data patterns
-- ✅ **Foreign Key Detection**: From schema and column name patterns
-- ✅ **Statistics Collection**: Min/max, mean, unique counts, top values
-- ✅ **Graph Building**: Creates NetworkX graphs for visualization
-
-### Table_Profile Documentation
-
-See `Table_Profile/Docs/README.md` for detailed documentation on:
-- Configuration options
-- Semantic type classification
-- Relationship detection heuristics
-- Optimization hints
-
----
-
-## 💡 Usage Examples
-
-### Example 1: Simple Query
-
-```python
-query = "Show me all students"
-scores = scoring_service.score_all_tables(query)
-candidates = scoring_service.filter_by_threshold(scores)
-
-# Result: students_info (10.0 pts) - table name match
-```
-
-### Example 2: Synonym Matching
-
-```python
-query = "Show me learners"
-scores = scoring_service.score_all_tables(query)
-candidates = scoring_service.filter_by_threshold(scores)
-
-# Result: students_info (7.0 pts) - synonym match ("learners" → "student")
-```
-
-### Example 3: Multi-Table Query
-
-```python
-query = "Show student grades and their courses"
-scores = scoring_service.score_all_tables(query)
-candidates = scoring_service.filter_by_threshold(scores)
-candidates = scoring_service.enhance_with_fk_relationships(candidates)
-
-# Result:
-# 1. grades (20.9 pts) - table name + FK relationship
-# 2. students_info (15.0 pts) - table name + FK relationship
-# 3. courses (10.0 pts) - table name + FK relationship
-```
-
-### Example 4: Interactive Testing
-
-```bash
-python helpers/interactive_table_picker.py
-```
-
-This opens an interactive session where you can:
-- Enter queries and see detailed scoring
-- View top candidates with reasons
-- Test different query types
-
-### Example 5: Running Test Suite
-
-```bash
-# Run all tests
-python helpers/test_table_picker.py
-
-# Quiet mode (summary only)
-python helpers/test_table_picker.py --quiet
-
-# Without embeddings (manual synonyms only)
-python helpers/test_table_picker.py --no-embeddings
-```
-
-**Test Results**: 87.1% success rate (27/31 tests passed)
 
 ---
 
@@ -545,45 +328,188 @@ python helpers/test_table_picker.py --no-embeddings
 
 ```
 table_picker/
-├── Table_Profile/                    # Database profiling library
-│   ├── table_profile_graph/         # Core profiling modules
-│   │   ├── profiler/                # Metadata collection
-│   │   ├── graph/                   # Graph building
-│   │   └── analyzer/                # Analysis tools
-│   └── Docs/                        # Table_Profile documentation
+├── src/                              # Main source code
+│   ├── main.py                       # Main entry point script
+│   ├── batch_run.py                  # Batch testing script
+│   ├── debug_query.py                # Debug/analysis script
+│   ├── data/
+│   │   └── table_metadata_full.json  # Table metadata (required)
+│   ├── models/
+│   │   ├── __init__.py
+│   │   └── table_metadata.py         # Data models (TableMetadata, ColumnMetadata, etc.)
+│   ├── repositories/
+│   │   └── schema_repository.py      # Loads and parses metadata JSON
+│   └── services/
+│       ├── __init__.py
+│       ├── vector_db_service.py      # FAISS vector search
+│       ├── indexing_service.py        # Builds indices from metadata
+│       ├── keyword_search_service.py # BM25 keyword search
+│       ├── query_preprocessing_service.py # Query normalization
+│       ├── graph_expansion_service.py # Graph-based expansion
+│       ├── search_service.py         # Main orchestration service
+│       └── selector_agent_service.py # LLM-based final selection
 │
-├── kg_enhanced_table_picker/         # Main table picker package
-│   ├── models/                      # Data models
-│   │   ├── kg_metadata.py          # KG metadata models
-│   │   ├── table_score.py          # Scoring models
-│   │   └── table_selection.py      # Selection results
-│   ├── repository/                  # Data access
-│   │   ├── kg_repository.py        # KG loading and caching
-│   │   └── synonym_loader.py       # Synonym CSV loader
-│   └── services/                    # Business logic
-│       ├── kg_service.py           # High-level KG APIs
-│       ├── scoring_service.py      # Table scoring logic
-│       └── embedding_service.py    # Semantic embeddings
+├── aretai/                           # LLM client library
+│   └── ...                          # LLM adapters and utilities
 │
-├── helpers/                          # Helper scripts
-│   ├── build_education_kg_final.py  # Build KG from database
-│   ├── build_embeddings.py          # Build semantic embeddings
-│   ├── column_synonyms.csv          # Manual synonyms
-│   ├── test_table_picker.py         # Test suite
-│   └── interactive_table_picker.py  # Interactive testing
+├── data/                             # Project-level data
+│   └── table_metadata_full.json      # Alternative metadata location
 │
-├── education_kg_final/               # Generated KG output
-│   ├── combined_graph.json          # Combined graph
-│   ├── embeddings.pkl               # Pre-computed embeddings
-│   └── [table_name]/                # Per-table graphs
+├── helpers/                          # Helper scripts and utilities
+│   └── test.xlsx                     # Test queries for batch_run.py
 │
 ├── docs/                             # Documentation
-│   ├── PHASE1_SUMMARY.md           # Phase 1 overview
-│   ├── PHASE2_QUICKSTART.md        # Embeddings guide
-│   └── HOW_IT_WORKS.md             # Detailed explanation
+│   └── ...                          # Additional documentation files
 │
+├── requirements.txt                  # Python dependencies
+├── pyproject.toml                    # Project configuration
 └── README.md                         # This file
 ```
+
+---
+
+## 🔍 How It Works
+
+### Stage A: Vector Search (Semantic)
+
+Uses FAISS to find tables with high semantic similarity to the query:
+
+1. Query is normalized and encoded using SentenceTransformer
+2. Vector search finds top-k most similar table embeddings
+3. Returns tables with low L2 distance (high similarity)
+
+**Example:**
+- Query: "Show me learners"
+- Matches: `students_info` (semantic similarity to "learners")
+
+### Stage B: Keyword Search (Exact/Synonym)
+
+Uses BM25 to find tables with exact matches or synonyms:
+
+1. Query is tokenized and normalized
+2. BM25 scores tables based on:
+   - Table names
+   - Column names
+   - Synonyms
+   - Sample values
+3. Returns top-k highest scoring tables
+
+**Example:**
+- Query: "What is Manoj Iyer's GPA?"
+- Matches: `grades` (contains "GPA"), `students_info` (contains "Manoj Iyer" in sample values)
+
+### Stage C: Graph Expansion
+
+Expands seed tables using relationship graphs:
+
+1. Starts with seed tables from Stages A & B
+2. Adds referenced tables (outgoing foreign keys)
+3. Conditionally adds referencing tables (incoming foreign keys) if not a hub table
+4. Prevents hub table explosion (e.g., `students_info` won't pull in all child tables)
+
+**Example:**
+- Seeds: `grades`
+- Expansion: Adds `students_info` (grades references students_info)
+- Expansion: Adds `courses` (grades references courses)
+
+### Stage D: LLM-Based Selection
+
+Uses an LLM to select the minimal optimal set:
+
+1. Receives 6-8 candidate tables from expansion
+2. LLM analyzes:
+   - Query intent
+   - Table relationships
+   - Join paths
+   - Required bridge tables
+3. Returns minimal set (typically 2-3 tables) that can answer the query
+
+**Example:**
+- Candidates: `students_info`, `grades`, `courses`, `registration`
+- Query: "What is Manoj Iyer's GPA?"
+- LLM selects: `students_info`, `grades` (minimal set to answer query)
+
+### Role-Based Filtering
+
+If a role is specified, the system automatically adds the appropriate identity table:
+
+- `--role parent` → adds `parent_info`
+- `--role student` → adds `students_info`
+- `--role faculty` → adds `faculty_info`
+
+---
+
+## ⚙️ Configuration
+
+### Table Metadata Format
+
+The system requires a JSON file with table metadata in the following format:
+
+```json
+{
+  "table_name": {
+    "description": "Table description",
+    "metadata": {
+      "columns": {
+        "column_name": {
+          "description": "Column description",
+          "synonyms": ["synonym1", "synonym2"],
+          "hints": ["good_for_indexing"],
+          "sample_values": ["value1", "value2"],
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      }
+    },
+    "selector_extras": {
+      "is_hub_table": false,
+      "normalized_centrality": 0.5,
+      "references": ["other_table"],
+      "referenced_by": ["another_table"]
+    }
+  }
+}
+```
+
+### LLM Provider Configuration
+
+The system uses the `aretai` library for LLM access. Supported providers:
+
+- `groq` (default) - Fast inference
+- `openai` - OpenAI API
+- `anthropic` - Anthropic Claude API
+- `grok` - xAI Grok API
+
+**Setting up API Keys:**
+
+1. Copy the example environment file:
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Edit `.env` and add your API keys:
+   ```bash
+   # At minimum, add one API key for your preferred provider
+   GROQ_API_KEY=your_actual_api_key_here
+   # Or use OPENAI_API_KEY, ANTHROPIC_API_KEY, or XAI_API_KEY
+   ```
+
+3. The `aretai` library automatically loads these from `.env` files.
+
+**Configure via command-line:**
+```bash
+python src/main.py --provider groq --model llama-3.1-70b
+```
+
+**Or in code:**
+```python
+selector_agent = SchemaSelectorService(provider="groq", model="llama-3.1-70b")
+```
+
+**Note:** API keys are read in this order:
+1. Explicitly passed to `SchemaSelectorService`
+2. Environment variables from `.env` file
+3. System environment variables
 
 ---
 
@@ -592,98 +518,103 @@ table_picker/
 ### Running Tests
 
 ```bash
-# Full test suite with detailed output
-python helpers/test_table_picker.py
+# Run main script with test queries
+cd src
+python main.py
 
-# Summary only
-python helpers/test_table_picker.py --quiet
+# Run batch tests
+python batch_run.py --input-file ../helpers/test.xlsx
 
-# Without embeddings
-python helpers/test_table_picker.py --no-embeddings
+# Debug a specific query
+python debug_query.py --query "Your query here"
 ```
 
-### Test Categories
+### Test Queries
 
-1. **Simple Single-Table**: Direct table name matching (100% pass rate)
-2. **Synonym Matching**: Manual synonym matching (100% pass rate)
-3. **Multi-Table Queries**: Relationship detection (100% pass rate)
-4. **Aggregation Queries**: COUNT, AVG, etc. (100% pass rate)
-5. **Filtering Queries**: WHERE clause queries (75% pass rate)
-6. **Complex Queries**: Multi-table with relationships (75% pass rate)
-7. **Edge Cases**: Generic/broad queries (50% pass rate)
+The system includes built-in test queries:
+1. "What is Manoj Iyer's GPA?" - Tests sample values retrieval
+2. "Show me the fees for hostel" - Tests synonym/description retrieval
+3. "Who teaches Engineering Graphics?" - Tests column name/description retrieval
 
-### Test Results
+### Batch Testing
 
-**Overall**: 87.1% success rate (27/31 tests)
+Create an Excel file with columns:
+- **Column 1**: Query/question
+- **Column 2**: Expected tables (comma-separated)
+- **Optional `role` column**: Per-query role
 
-See `helpers/test_analysis.md` for detailed failure analysis and recommendations.
+Run:
+```bash
+python src/batch_run.py --input-file test_queries.xlsx
+```
+
+Output includes:
+- Predicted tables for each query
+- Match categories (exact, partial_acceptable, partial_serious, no_match)
+- Accuracy metrics
+- Detailed results saved to Excel
 
 ---
 
-## 🔧 Configuration
+## 🔧 Advanced Usage
 
-### Synonyms
+### Custom Embedding Model
 
-Edit `helpers/column_synonyms.csv`:
-
-```csv
-table_name,column_name,synonyms,description
-students_info,Student ID,"learner,learners,pupil,pupils,enrollee,enrollees",Unique identifier for students
-courses,Course Code,"class,classes,subject,subjects",Unique identifier for courses
-```
-
-### Scoring Weights
-
-Edit `kg_enhanced_table_picker/services/scoring_service.py`:
+The system uses `all-MiniLM-L6-v2` by default. To use a different model:
 
 ```python
-SCORE_TABLE_NAME_MATCH = 10      # Table name match
-SCORE_SEMANTIC_SIMILARITY = 8    # Semantic embeddings
-SCORE_SYNONYM_MATCH = 7          # Manual synonyms
-SCORE_COLUMN_NAME_MATCH = 5      # Column name match
-SCORE_FK_RELATIONSHIP = 4        # Foreign key boost
+from sentence_transformers import SentenceTransformer
+
+# Use a different model
+model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
+vector_service = VectorDBService(embedding_dim=768)  # Update dimension
 ```
 
-### Embedding Thresholds
+### Adjusting Search Parameters
 
-Edit `kg_enhanced_table_picker/services/scoring_service.py`:
+Modify search behavior in `SearchService`:
 
 ```python
-# In _add_semantic_score method
-if similarity > 0.7:  # Table-level threshold
-    # Add semantic score
+# In search_service.py, adjust top_k values:
+seeds = list(set(
+    [res[0] for res in self.vector_service.search(query_vector, top_k=5)] +  # Increase from 3
+    [res[0] for res in self.keyword_service.search(query, top_k=5)]  # Increase from 3
+))
+```
 
-if similarity > 0.6:  # Column-level threshold
-    # Add semantic score
+### Graph Expansion Depth
+
+Control expansion depth in `GraphExpansionService`:
+
+```python
+# In graph_expansion_service.py:
+expanded = graph_service.expand_candidates(seeds, max_hops=2)  # Increase from 1
 ```
 
 ---
 
 ## 📚 Additional Documentation
 
-- **`docs/HOW_IT_WORKS.md`**: Detailed explanation of scoring system
-- **`docs/PHASE1_SUMMARY.md`**: Knowledge graph building overview
-- **`docs/PHASE2_QUICKSTART.md`**: Embeddings quick start guide
-- **`docs/SYNONYMS_GUIDE.md`**: Synonym configuration guide
-- **`helpers/test_analysis.md`**: Test results and improvement recommendations
-- **`Table_Profile/Docs/README.md`**: Table_Profile library documentation
+- **`src/main.py`**: Main entry point with examples
+- **`src/batch_run.py`**: Batch testing implementation
+- **`src/debug_query.py`**: Debug/analysis tool
+- **`docs/`**: Additional documentation files
 
 ---
 
-## 🚧 Known Limitations & Future Work
+## 🚧 Known Limitations
 
-### Current Limitations
+1. **In-Memory Index**: Vector index is rebuilt on each run (no persistence)
+2. **LLM Dependency**: Requires LLM API access for final selection
+3. **Metadata Dependency**: Requires comprehensive table metadata JSON
 
-1. **Junction Tables**: Sometimes missed in complex queries (e.g., `registration` table)
-2. **Generic Queries**: Very broad queries ("educational information") score low
-3. **Semantic Thresholds**: Fixed thresholds may not work for all domains
+### Future Improvements
 
-### Planned Improvements
-
-1. **Adaptive Thresholds**: Adjust thresholds based on query specificity
-2. **Junction Table Detection**: Better inference when related tables are selected
-3. **Table Centrality**: Use graph centrality for generic queries
-4. **Query Expansion**: Expand queries with domain knowledge
+- [ ] Persist vector index to disk for faster startup
+- [ ] Support for multiple embedding models
+- [ ] Configurable scoring weights
+- [ ] Caching of LLM responses
+- [ ] Support for additional LLM providers
 
 ---
 
@@ -692,8 +623,8 @@ if similarity > 0.6:  # Column-level threshold
 This is a research/development project. For questions or improvements:
 
 1. Check existing documentation
-2. Review test suite for usage examples
-3. Examine `helpers/` scripts for implementation details
+2. Review source code in `src/`
+3. Test with `debug_query.py` for detailed analysis
 
 ---
 
@@ -705,19 +636,11 @@ MIT License
 
 ## 🙏 Acknowledgments
 
-- **Table_Profile**: Database profiling library for metadata collection
 - **sentence-transformers**: Semantic embedding models
-- **NetworkX**: Graph representation and analysis
-- **DuckDB**: In-process analytical database
-
----
-
-## 📞 Support
-
-For issues or questions:
-1. Check `docs/` for detailed guides
-2. Review `helpers/test_table_picker.py` for usage examples
-3. Examine `helpers/interactive_table_picker.py` for interactive testing
+- **FAISS**: Vector similarity search
+- **rank-bm25**: Keyword search implementation
+- **spaCy**: Natural language processing
+- **aretai**: LLM client library
 
 ---
 
