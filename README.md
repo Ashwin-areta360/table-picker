@@ -618,30 +618,8 @@ expanded = graph_service.expand_candidates(seeds, max_hops=2)  # Increase from 1
 
 ---
 
-## 🤝 Contributing
+## 👤 Author
 
-This is a research/development project. For questions or improvements:
+**ashwin-sreejith**
 
-1. Check existing documentation
-2. Review source code in `src/`
-3. Test with `debug_query.py` for detailed analysis
 
----
-
-## 📄 License
-
-MIT License
-
----
-
-## 🙏 Acknowledgments
-
-- **sentence-transformers**: Semantic embedding models
-- **FAISS**: Vector similarity search
-- **rank-bm25**: Keyword search implementation
-- **spaCy**: Natural language processing
-- **aretai**: LLM client library
-
----
-
-**Last Updated**: January 2025
