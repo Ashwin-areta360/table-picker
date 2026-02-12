@@ -152,8 +152,7 @@ cp .env.example .env
 ### Basic Usage
 
 ```bash
-# Run from src/ directory
-cd src
+# Run from project root
 python main.py
 ```
 
@@ -202,7 +201,7 @@ python main.py --metadata-path /path/to/metadata.json
 The main entry point for running table selection:
 
 ```bash
-python src/main.py [OPTIONS]
+python main.py [OPTIONS]
 ```
 
 **Options:**
@@ -213,7 +212,7 @@ python src/main.py [OPTIONS]
 
 **Example:**
 ```bash
-python src/main.py --role student --provider groq
+python main.py --role student --provider groq
 ```
 
 ### Batch Testing (`batch_run.py`)
@@ -223,6 +222,8 @@ Run table selection on a batch of test queries from an Excel file:
 ```bash
 python src/batch_run.py [OPTIONS]
 ```
+
+**Note:** `batch_run.py` and `debug_query.py` remain in `src/` directory.
 
 **Options:**
 - `--input-file PATH`: Input Excel file with test queries (default: `helpers/test.xlsx`)
@@ -328,8 +329,8 @@ print(f"Selected tables: {results}")
 
 ```
 table_picker/
+├── main.py                           # Main entry point script
 ├── src/                              # Main source code
-│   ├── main.py                       # Main entry point script
 │   ├── batch_run.py                  # Batch testing script
 │   ├── debug_query.py                # Debug/analysis script
 │   ├── data/
@@ -498,7 +499,7 @@ The system uses the `aretai` library for LLM access. Supported providers:
 
 **Configure via command-line:**
 ```bash
-python src/main.py --provider groq --model llama-3.1-70b
+python main.py --provider groq --model llama-3.1-70b
 ```
 
 **Or in code:**
@@ -519,14 +520,13 @@ selector_agent = SchemaSelectorService(provider="groq", model="llama-3.1-70b")
 
 ```bash
 # Run main script with test queries
-cd src
 python main.py
 
 # Run batch tests
-python batch_run.py --input-file ../helpers/test.xlsx
+python src/batch_run.py --input-file helpers/test.xlsx
 
 # Debug a specific query
-python debug_query.py --query "Your query here"
+python src/debug_query.py --query "Your query here"
 ```
 
 ### Test Queries
@@ -595,7 +595,7 @@ expanded = graph_service.expand_candidates(seeds, max_hops=2)  # Increase from 1
 
 ## 📚 Additional Documentation
 
-- **`src/main.py`**: Main entry point with examples
+- **`main.py`**: Main entry point with examples
 - **`src/batch_run.py`**: Batch testing implementation
 - **`src/debug_query.py`**: Debug/analysis tool
 - **`docs/`**: Additional documentation files

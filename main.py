@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
-# main.py - Standalone script to run table_picker_v2 from src/
+# main.py - Main entry point for table_picker_v2
 import argparse
 import sys
 from pathlib import Path
 
 from sentence_transformers import SentenceTransformer
 
-# Add parent directory to path for aretai import
-project_root = Path(__file__).parent.parent
+# Add project root to path for aretai import
+project_root = Path(__file__).parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
 # Add src/ to path so we can import from it
-src_dir = Path(__file__).parent
+src_dir = project_root / "src"
 if str(src_dir) not in sys.path:
     sys.path.insert(0, str(src_dir))
 
@@ -54,23 +54,23 @@ def main():
         "--metadata-path",
         type=str,
         default=None,
-        help="Path to table metadata JSON file (default: ../table_picker_v2/data/table_metadata_full.json)",
+        help="Path to table metadata JSON file (default: src/data/table_metadata_full.json)",
     )
     
     args = parser.parse_args()
 
     # Default metadata path - try multiple locations
     if args.metadata_path is None:
-        # Try in src/data/ first (for standalone src/)
-        metadata_path = Path(__file__).parent / "data" / "table_metadata_full.json"
+        # Try in src/data/ first
+        metadata_path = project_root / "src" / "data" / "table_metadata_full.json"
         if not metadata_path.exists():
-            # Try relative to project root
-            metadata_path = project_root / "table_picker_v2" / "data" / "table_metadata_full.json"
+            # Try in project root data/
+            metadata_path = project_root / "data" / "table_metadata_full.json"
         if not metadata_path.exists():
             print(f"Error: Could not find table_metadata_full.json")
-            print(f"Tried: {Path(__file__).parent / 'data' / 'table_metadata_full.json'}")
-            print(f"Tried: {project_root / 'table_picker_v2' / 'data' / 'table_metadata_full.json'}")
-            print(f"\nPlease copy table_metadata_full.json to src/data/ or specify --metadata-path")
+            print(f"Tried: {project_root / 'src' / 'data' / 'table_metadata_full.json'}")
+            print(f"Tried: {project_root / 'data' / 'table_metadata_full.json'}")
+            print(f"\nPlease ensure table_metadata_full.json exists in src/data/ or data/, or specify --metadata-path")
             return 1
     else:
         metadata_path = Path(args.metadata_path)
