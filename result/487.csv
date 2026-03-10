@@ -1,0 +1,281 @@
+Course Code,Course Title,Department
+ADV101,Advanced Concrete Tech.,Civil Engineering
+ADV102,Advanced Structural Design,Civil Engineering
+SUR103,Advanced Surveying,Civil Engineering
+BCE101,Basic Civil Eng.,Civil Engineering
+BRI101,Bridge Engineering,Civil Engineering
+BRI102,Bridge Lab,Civil Engineering
+BUI101,Building Materials,Civil Engineering
+BUI102,Building Materials Lab,Civil Engineering
+CHE101,Chemistry,Civil Engineering
+WSH101,Civil Workshop,Civil Engineering
+CON101,Concrete Lab,Civil Engineering
+CON104,Concrete Tech Lab,Civil Engineering
+COT101,Concrete Technology,Civil Engineering
+CON103,Construction Lab,Civil Engineering
+CON102,Construction Management,Civil Engineering
+DES102,Design Lab,Civil Engineering
+DES101,Design of Structures,Civil Engineering
+DEV101,Development Lab,Civil Engineering
+DIS101,Disaster Management,Civil Engineering
+EAR101,Earthquake Eng.,Civil Engineering
+ELE101,Elective 1,Civil Engineering
+ELE102,Elective 2,Civil Engineering
+EDR101,Engineering Drawing,Civil Engineering
+ENV102,Environmental Eng.,Civil Engineering
+ENV103,Environmental Impact,Civil Engineering
+ENV101,Environmental Science,Civil Engineering
+FLM101,Fluid Mechanics,Civil Engineering
+FLM102,Fluid Mechanics Lab,Civil Engineering
+GEO101,Geotechnical Eng.,Civil Engineering
+GEO102,Geotechnical Lab,Civil Engineering
+HIG101,Highway Engineering,Civil Engineering
+HIG102,Highway Lab,Civil Engineering
+HYD101,Hydraulics,Civil Engineering
+INT101,Internship,Civil Engineering
+INT102,Internship Lab,Civil Engineering
+MAT101,M1,Civil Engineering
+MAT102,M2,Civil Engineering
+MAT103,Mathematics II,Civil Engineering
+PHY101,Physics,Civil Engineering
+PHY102,Physics Lab,Civil Engineering
+PLA101,Planning & Development,Civil Engineering
+PRE101,Professional Ethics,Civil Engineering
+PRO101,Project,Civil Engineering
+PRO102,Project Lab,Civil Engineering
+PRM101,Project Management,Civil Engineering
+SEM101,Seminar,Civil Engineering
+SOI101,Soil Mechanics,Civil Engineering
+SOI102,Soil Testing Lab,Civil Engineering
+STR101,Structural Analysis,Civil Engineering
+STR102,Structural Dynamics,Civil Engineering
+SUR102,Survey Lab,Civil Engineering
+SUR101,Surveying,Civil Engineering
+SUE101,Sustainable Engineering,Civil Engineering
+TRA101,Transportation Eng.,Civil Engineering
+WAT102,Water Lab,Civil Engineering
+WAT101,Water Resources,Civil Engineering
+SUB107,AI,Computer Engineering
+AIL101,AI Lab,Computer Engineering
+ALG101,Algorithms,Computer Engineering
+AI101,Artificial Intelligence,Computer Engineering
+BEE101,BEE,Computer Engineering
+BIG101,Big Data,Computer Engineering
+BIG102,Big Data Lab,Computer Engineering
+SUB106,CC,Computer Engineering
+SUB101,CP,Computer Engineering
+CLC101,Cloud Computing,Computer Engineering
+CLO101,Cloud Lab,Computer Engineering
+COM102,Compiler Design,Computer Engineering
+CON105,Computer Networks,Computer Engineering
+COM101,Computer Organization,Computer Engineering
+CYS101,Cyber Security,Computer Engineering
+DAA101,DAA,Computer Engineering
+DBM101,DBMS,Computer Engineering
+DBM102,DBMS Lab,Computer Engineering
+SUB102,DS,Computer Engineering
+DAT102,Data Mining,Computer Engineering
+DAT103,Data Science,Computer Engineering
+DAT104,Data Science Lab,Computer Engineering
+DAT101,Data Structures,Computer Engineering
+DEE101,Deep Learning,Computer Engineering
+ELE105,Elective 1,Computer Engineering
+ELE106,Elective 2,Computer Engineering
+ELE103,Electrical Basics,Computer Engineering
+ELE104,Electrical Lab,Computer Engineering
+INT103,Internship,Computer Engineering
+INT104,Internship Lab,Computer Engineering
+MAT104,M1,Computer Engineering
+MAT105,M2,Computer Engineering
+SUB105,ML,Computer Engineering
+MLL101,ML Lab,Computer Engineering
+SUB108,MP,Computer Engineering
+ML101,Machine Learning,Computer Engineering
+MAT106,Mathematics II,Computer Engineering
+NET101,Networks Lab,Computer Engineering
+OOP101,OOP,Computer Engineering
+OOP102,OOP Lab,Computer Engineering
+SUB103,OS,Computer Engineering
+OSL101,OS Lab,Computer Engineering
+PPS101,PPS,Computer Engineering
+PHY103,Physics,Computer Engineering
+PHY104,Physics Lab,Computer Engineering
+PRE102,Professional Ethics,Computer Engineering
+PGL101,Programming Lab,Computer Engineering
+PRO103,Project,Computer Engineering
+PRO104,Project Lab,Computer Engineering
+SUB104,SE,Computer Engineering
+SEC101,Security Lab,Computer Engineering
+SOF101,Software Design,Computer Engineering
+TOC101,TOC,Computer Engineering
+THE101,Theory of Computation,Computer Engineering
+WSH102,Workshop,Computer Engineering
+WSH103,Workshop Lab,Computer Engineering
+ADV103,Advanced Controls,Electrical Engineering
+CHE102,Chemistry,Electrical Engineering
+CIR101,Circuit Analysis,Electrical Engineering
+COM103,Communication Systems,Electrical Engineering
+CON106,Control Systems,Electrical Engineering
+CON107,Controls Lab,Electrical Engineering
+DSP101,DSP Lab,Electrical Engineering
+DIG101,Digital Electronics,Electrical Engineering
+DIG102,Digital Electronics Lab,Electrical Engineering
+SIP102,Digital Signal Processing,Electrical Engineering
+DRI101,Drives Lab,Electrical Engineering
+ELE114,Elective 1,Electrical Engineering
+ELE115,Elective 2,Electrical Engineering
+ELE112,Electric Drives,Electrical Engineering
+ELE113,Electric Vehicle Technology,Electrical Engineering
+ELE111,Electrical Machines,Electrical Engineering
+ELE107,Electrical Materials,Electrical Engineering
+WSH104,Electrical Workshop,Electrical Engineering
+ELE110,Electromagnetic Fields,Electrical Engineering
+ELE108,Electronic Devices,Electrical Engineering
+ELE109,Electronics Lab,Electrical Engineering
+EMS101,Embedded Systems,Electrical Engineering
+EMS102,Embedded Systems Lab,Electrical Engineering
+ENE102,Energy Lab,Electrical Engineering
+ENE101,Energy Management,Electrical Engineering
+HIG103,High Voltage Eng.,Electrical Engineering
+INT105,Internship,Electrical Engineering
+INT106,Internship Lab,Electrical Engineering
+MAT107,M1,Electrical Engineering
+MAT109,M2,Electrical Engineering
+MAT108,Mathematics I,Electrical Engineering
+MAT110,Mathematics II,Electrical Engineering
+MIC101,Microprocessor Lab,Electrical Engineering
+MPR101,Microprocessors,Electrical Engineering
+NET103,Network Lab,Electrical Engineering
+NET102,Network Theory,Electrical Engineering
+PHY105,Physics,Electrical Engineering
+PHY106,Physics Lab,Electrical Engineering
+POW101,Power Electronics,Electrical Engineering
+POW102,Power Electronics Lab,Electrical Engineering
+POW103,Power Plant Eng.,Electrical Engineering
+POW104,Power System Protection,Electrical Engineering
+PWS101,Power Systems,Electrical Engineering
+PWS102,Power Systems Lab,Electrical Engineering
+PRE103,Professional Ethics,Electrical Engineering
+PRO106,Project,Electrical Engineering
+PRO107,Project Lab,Electrical Engineering
+PRO105,Project Work,Electrical Engineering
+REE101,Renewable Energy,Electrical Engineering
+REE102,Renewable Energy Lab,Electrical Engineering
+SEM102,Seminar,Electrical Engineering
+SIP101,Signal Processing,Electrical Engineering
+SMA101,Smart Grid,Electrical Engineering
+SWI101,Switchgear & Protection,Electrical Engineering
+VLS101,VLSI Design,Electrical Engineering
+WIR101,Wireless Communication,Electrical Engineering
+ADV104,Advanced Communication,Electronics Engineering
+VLS104,Advanced VLSI Design,Electronics Engineering
+ANA101,Analog Electronics,Electronics Engineering
+BIO101,Biomedical Electronics,Electronics Engineering
+BIO102,Biomedical Lab,Electronics Engineering
+CHE103,Chemistry,Electronics Engineering
+CIR102,Circuit Theory,Electronics Engineering
+COM105,Communication Lab,Electronics Engineering
+COM104,Communication Theory,Electronics Engineering
+CON108,Control Systems,Electronics Engineering
+CYS102,Cyber Security,Electronics Engineering
+DIG104,Digital Lab,Electronics Engineering
+DIG103,Digital Logic,Electronics Engineering
+SIP103,Digital Signal Processing,Electronics Engineering
+ELE118,Elective 1,Electronics Engineering
+ELE119,Elective 2,Electronics Engineering
+ELE116,Electronic Devices,Electronics Engineering
+ELE117,Electronics Lab,Electronics Engineering
+EMS103,Embedded Systems,Electronics Engineering
+EMS104,Embedded Systems Lab,Electronics Engineering
+IMP101,Image Processing,Electronics Engineering
+IMP102,Image Processing Lab,Electronics Engineering
+INT107,Internship,Electronics Engineering
+INT108,Internship Lab,Electronics Engineering
+IOT101,IoT,Electronics Engineering
+IOT102,IoT Lab,Electronics Engineering
+LOG101,Logic Lab,Electronics Engineering
+MAT111,M1,Electronics Engineering
+MAT113,M2,Electronics Engineering
+MLL102,ML Lab,Electronics Engineering
+ML102,Machine Learning,Electronics Engineering
+MAT112,Mathematics I,Electronics Engineering
+MAT114,Mathematics II,Electronics Engineering
+MIC102,Microprocessor Lab,Electronics Engineering
+MPR102,Microprocessors,Electronics Engineering
+NAN101,Nano Electronics,Electronics Engineering
+NAN102,Nano Lab,Electronics Engineering
+NAN103,Nanotechnology,Electronics Engineering
+OPT101,Optical Communication,Electronics Engineering
+PHY107,Physics,Electronics Engineering
+PHY108,Physics Lab,Electronics Engineering
+PRE104,Professional Ethics,Electronics Engineering
+PRO108,Project,Electronics Engineering
+PRO109,Project Lab,Electronics Engineering
+PRM102,Project Management,Electronics Engineering
+RFE101,RF Engineering,Electronics Engineering
+RES101,Research Project,Electronics Engineering
+SAT101,Satellite Communication,Electronics Engineering
+SEM103,Seminar,Electronics Engineering
+SIP104,Signal Processing Lab,Electronics Engineering
+SIG101,Signals & Systems,Electronics Engineering
+VLS102,VLSI Design,Electronics Engineering
+VLS105,VLSI Lab,Electronics Engineering
+VLS103,VLSI Testing,Electronics Engineering
+WIR102,Wireless Networks,Electronics Engineering
+WIR103,Wireless Sensor Networks,Electronics Engineering
+ADM101,Advanced Manufacturing,Mechanical Engineering
+AUT101,Automation,Mechanical Engineering
+AUT102,Automation Lab,Mechanical Engineering
+AUE101,Automobile Engineering,Mechanical Engineering
+AUT103,Automobile Lab,Mechanical Engineering
+CAD102,CAD Lab,Mechanical Engineering
+CAD101,CAD/CAM,Mechanical Engineering
+CHE104,Chemistry,Mechanical Engineering
+DOM101,Dynamics of Machines,Mechanical Engineering
+ELE120,Elective 1,Mechanical Engineering
+ELE121,Elective 2,Mechanical Engineering
+ENE103,Energy Lab,Mechanical Engineering
+ENG101,Engineering Graphics,Mechanical Engineering
+FEA101,Finite Element Analysis,Mechanical Engineering
+FLM103,Fluid Mechanics,Mechanical Engineering
+FLM104,Fluid Mechanics Lab,Mechanical Engineering
+HVA101,HVAC,Mechanical Engineering
+HTR101,Heat Transfer,Mechanical Engineering
+ICE101,IC Engines,Mechanical Engineering
+ICE102,IC Engines Lab,Mechanical Engineering
+INE101,Industrial Engineering,Mechanical Engineering
+INT109,Internship,Mechanical Engineering
+INT110,Internship Lab,Mechanical Engineering
+MAT115,M1,Mechanical Engineering
+MAT117,M2,Mechanical Engineering
+MCD101,Machine Design,Mechanical Engineering
+MCD102,Machine Design Lab,Mechanical Engineering
+MAN101,Manufacturing Processes,Mechanical Engineering
+MAT120,Material Science,Mechanical Engineering
+MAT119,Materials Lab,Mechanical Engineering
+MAT116,Mathematics I,Mechanical Engineering
+MAT118,Mathematics II,Mechanical Engineering
+WSH106,Mechanical Workshop,Mechanical Engineering
+MEC101,Mechatronics,Mechanical Engineering
+PHY109,Physics,Mechanical Engineering
+PHY110,Physics Lab,Mechanical Engineering
+PRO110,Production Planning,Mechanical Engineering
+PRE105,Professional Ethics,Mechanical Engineering
+PRO111,Project,Mechanical Engineering
+PRO112,Project Lab,Mechanical Engineering
+PRM103,Project Management,Mechanical Engineering
+RFR101,Refrigeration,Mechanical Engineering
+REE103,Renewable Energy,Mechanical Engineering
+RES102,Research Project,Mechanical Engineering
+ROB101,Robotics,Mechanical Engineering
+ROB102,Robotics Lab,Mechanical Engineering
+SEM104,Seminar,Mechanical Engineering
+STR103,Strength of Materials,Mechanical Engineering
+SUE102,Sustainable Engineering,Mechanical Engineering
+THE102,Thermal Engineering,Mechanical Engineering
+THE103,Thermal Lab,Mechanical Engineering
+THD101,Thermodynamics,Mechanical Engineering
+THD102,Thermodynamics Lab,Mechanical Engineering
+VIB101,Vibration Analysis,Mechanical Engineering
+VIB102,Vibration Lab,Mechanical Engineering
+WSH105,Workshop Technology,Mechanical Engineering

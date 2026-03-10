@@ -1,0 +1,57 @@
+Course Code,Course Title,Credits
+PPS101,PPS,4
+BEE101,BEE,4
+MAT104,M1,4
+PHY103,Physics,3
+WSH102,Workshop,4
+PHY104,Physics Lab,4
+WSH103,Workshop Lab,4
+SUB101,CP,4
+SUB102,DS,4
+MAT105,M2,4
+ELE103,Electrical Basics,4
+MAT106,Mathematics II,4
+ELE104,Electrical Lab,4
+PGL101,Programming Lab,3
+OOP101,OOP,3
+DBM101,DBMS,4
+SOF101,Software Design,4
+DAT101,Data Structures,4
+COM101,Computer Organization,4
+OOP102,OOP Lab,4
+DBM102,DBMS Lab,3
+SUB103,OS,3
+DAA101,DAA,3
+CON105,Computer Networks,3
+THE101,Theory of Computation,3
+ALG101,Algorithms,4
+OSL101,OS Lab,4
+NET101,Networks Lab,3
+TOC101,TOC,4
+SUB104,SE,3
+AI101,Artificial Intelligence,4
+ML101,Machine Learning,4
+DAT102,Data Mining,4
+AIL101,AI Lab,3
+MLL101,ML Lab,4
+SUB105,ML,3
+SUB106,CC,3
+COM102,Compiler Design,3
+CLC101,Cloud Computing,4
+CYS101,Cyber Security,3
+CLO101,Cloud Lab,4
+SEC101,Security Lab,3
+SUB107,AI,3
+SUB108,MP,4
+BIG101,Big Data,4
+DAT103,Data Science,3
+DEE101,Deep Learning,3
+BIG102,Big Data Lab,4
+DAT104,Data Science Lab,3
+PRO103,Project,4
+INT103,Internship,3
+ELE105,Elective 1,4
+ELE106,Elective 2,4
+PRE102,Professional Ethics,3
+PRO104,Project Lab,4
+INT104,Internship Lab,3

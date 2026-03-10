@@ -1,0 +1,57 @@
+Course Code,Course Title
+PPS101,PPS
+BEE101,BEE
+MAT104,M1
+PHY103,Physics
+WSH102,Workshop
+PHY104,Physics Lab
+WSH103,Workshop Lab
+SUB101,CP
+SUB102,DS
+MAT105,M2
+ELE103,Electrical Basics
+MAT106,Mathematics II
+ELE104,Electrical Lab
+PGL101,Programming Lab
+OOP101,OOP
+DBM101,DBMS
+SOF101,Software Design
+DAT101,Data Structures
+COM101,Computer Organization
+OOP102,OOP Lab
+DBM102,DBMS Lab
+SUB103,OS
+DAA101,DAA
+CON105,Computer Networks
+THE101,Theory of Computation
+ALG101,Algorithms
+OSL101,OS Lab
+NET101,Networks Lab
+TOC101,TOC
+SUB104,SE
+AI101,Artificial Intelligence
+ML101,Machine Learning
+DAT102,Data Mining
+AIL101,AI Lab
+MLL101,ML Lab
+SUB105,ML
+SUB106,CC
+COM102,Compiler Design
+CLC101,Cloud Computing
+CYS101,Cyber Security
+CLO101,Cloud Lab
+SEC101,Security Lab
+SUB107,AI
+SUB108,MP
+BIG101,Big Data
+DAT103,Data Science
+DEE101,Deep Learning
+BIG102,Big Data Lab
+DAT104,Data Science Lab
+PRO103,Project
+INT103,Internship
+ELE105,Elective 1
+ELE106,Elective 2
+PRE102,Professional Ethics
+PRO104,Project Lab
+INT104,Internship Lab

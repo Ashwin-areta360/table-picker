@@ -1,0 +1,121 @@
+Course Code,Course Title,course_dept,faculty_dept
+FLM102,Fluid Mechanics Lab,Civil Engineering,Computer Engineering
+STR103,Strength of Materials,Mechanical Engineering,Computer Engineering
+THD102,Thermodynamics Lab,Mechanical Engineering,Computer Engineering
+EAR101,Earthquake Eng.,Civil Engineering,Computer Engineering
+SUE101,Sustainable Engineering,Civil Engineering,Mechanical Engineering
+ML101,Machine Learning,Computer Engineering,Civil Engineering
+PWS101,Power Systems,Electrical Engineering,Civil Engineering
+MPR101,Microprocessors,Electrical Engineering,Computer Engineering
+COM104,Communication Theory,Electronics Engineering,Civil Engineering
+MCD101,Machine Design,Mechanical Engineering,Computer Engineering
+VIB101,Vibration Analysis,Mechanical Engineering,Electronics Engineering
+PLA101,Planning & Development,Civil Engineering,Computer Engineering
+AIL101,AI Lab,Computer Engineering,Civil Engineering
+SUB105,ML,Computer Engineering,Civil Engineering
+SEC101,Security Lab,Computer Engineering,Electrical Engineering
+POW103,Power Plant Eng.,Electrical Engineering,Electronics Engineering
+NAN102,Nano Lab,Electronics Engineering,Computer Engineering
+ROB101,Robotics,Mechanical Engineering,Civil Engineering
+ENE102,Energy Lab,Electrical Engineering,Computer Engineering
+SIP104,Signal Processing Lab,Electronics Engineering,Mechanical Engineering
+VLS105,VLSI Lab,Electronics Engineering,Mechanical Engineering
+HTR101,Heat Transfer,Mechanical Engineering,Electronics Engineering
+MAT120,Material Science,Mechanical Engineering,Computer Engineering
+AUT103,Automobile Lab,Mechanical Engineering,Electronics Engineering
+PRO110,Production Planning,Mechanical Engineering,Electrical Engineering
+WSH102,Workshop,Computer Engineering,Mechanical Engineering
+DIG104,Digital Lab,Electronics Engineering,Civil Engineering
+OPT101,Optical Communication,Electronics Engineering,Electrical Engineering
+IOT102,IoT Lab,Electronics Engineering,Computer Engineering
+INE101,Industrial Engineering,Mechanical Engineering,Electrical Engineering
+AUT101,Automation,Mechanical Engineering,Computer Engineering
+ADM101,Advanced Manufacturing,Mechanical Engineering,Civil Engineering
+ELE102,Elective 2,Civil Engineering,Electrical Engineering
+SUB106,CC,Computer Engineering,Electronics Engineering
+ENE101,Energy Management,Electrical Engineering,Electronics Engineering
+SIG101,Signals & Systems,Electronics Engineering,Civil Engineering
+IMP102,Image Processing Lab,Electronics Engineering,Civil Engineering
+ADV104,Advanced Communication,Electronics Engineering,Computer Engineering
+ENG101,Engineering Graphics,Mechanical Engineering,Computer Engineering
+WSH105,Workshop Technology,Mechanical Engineering,Civil Engineering
+MEC101,Mechatronics,Mechanical Engineering,Civil Engineering
+EDR101,Engineering Drawing,Civil Engineering,Computer Engineering
+PHY102,Physics Lab,Civil Engineering,Computer Engineering
+WAT101,Water Resources,Civil Engineering,Computer Engineering
+WAT102,Water Lab,Civil Engineering,Electronics Engineering
+HYD101,Hydraulics,Civil Engineering,Computer Engineering
+BEE101,BEE,Computer Engineering,Electronics Engineering
+ELE104,Electrical Lab,Computer Engineering,Electrical Engineering
+DBM102,DBMS Lab,Computer Engineering,Electronics Engineering
+ELE108,Electronic Devices,Electrical Engineering,Mechanical Engineering
+POW101,Power Electronics,Electrical Engineering,Computer Engineering
+SIP101,Signal Processing,Electrical Engineering,Computer Engineering
+CON107,Controls Lab,Electrical Engineering,Computer Engineering
+DIG103,Digital Logic,Electronics Engineering,Civil Engineering
+IMP101,Image Processing,Electronics Engineering,Civil Engineering
+MCD102,Machine Design Lab,Mechanical Engineering,Civil Engineering
+CHE101,Chemistry,Civil Engineering,Mechanical Engineering
+MAT103,Mathematics II,Civil Engineering,Electrical Engineering
+PRO101,Project,Civil Engineering,Electrical Engineering
+SUB107,AI,Computer Engineering,Electronics Engineering
+POW102,Power Electronics Lab,Electrical Engineering,Civil Engineering
+ELE112,Electric Drives,Electrical Engineering,Civil Engineering
+RFE101,RF Engineering,Electronics Engineering,Civil Engineering
+WIR103,Wireless Sensor Networks,Electronics Engineering,Civil Engineering
+FEA101,Finite Element Analysis,Mechanical Engineering,Electrical Engineering
+HVA101,HVAC,Mechanical Engineering,Electronics Engineering
+THE103,Thermal Lab,Mechanical Engineering,Computer Engineering
+STR102,Structural Dynamics,Civil Engineering,Mechanical Engineering
+DEV101,Development Lab,Civil Engineering,Computer Engineering
+OOP102,OOP Lab,Computer Engineering,Civil Engineering
+OSL101,OS Lab,Computer Engineering,Mechanical Engineering
+ELE109,Electronics Lab,Electrical Engineering,Civil Engineering
+ELE111,Electrical Machines,Electrical Engineering,Computer Engineering
+PWS102,Power Systems Lab,Electrical Engineering,Mechanical Engineering
+REE101,Renewable Energy,Electrical Engineering,Computer Engineering
+DRI101,Drives Lab,Electrical Engineering,Mechanical Engineering
+BIO102,Biomedical Lab,Electronics Engineering,Electrical Engineering
+ENV101,Environmental Science,Civil Engineering,Electrical Engineering
+DSP101,DSP Lab,Electrical Engineering,Electronics Engineering
+VLS104,Advanced VLSI Design,Electronics Engineering,Electrical Engineering
+THD101,Thermodynamics,Mechanical Engineering,Computer Engineering
+SOI101,Soil Mechanics,Civil Engineering,Electrical Engineering
+DBM101,DBMS,Computer Engineering,Mechanical Engineering
+SUB103,OS,Computer Engineering,Civil Engineering
+NET101,Networks Lab,Computer Engineering,Civil Engineering
+COM102,Compiler Design,Computer Engineering,Mechanical Engineering
+EMS102,Embedded Systems Lab,Electrical Engineering,Civil Engineering
+SUR102,Survey Lab,Civil Engineering,Computer Engineering
+DES101,Design of Structures,Civil Engineering,Electronics Engineering
+BRI102,Bridge Lab,Civil Engineering,Computer Engineering
+DES102,Design Lab,Civil Engineering,Electrical Engineering
+COM101,Computer Organization,Computer Engineering,Electronics Engineering
+CON105,Computer Networks,Computer Engineering,Civil Engineering
+ELE110,Electromagnetic Fields,Electrical Engineering,Mechanical Engineering
+HIG103,High Voltage Eng.,Electrical Engineering,Civil Engineering
+FLM101,Fluid Mechanics,Civil Engineering,Electrical Engineering
+ELE103,Electrical Basics,Computer Engineering,Civil Engineering
+NET103,Network Lab,Electrical Engineering,Mechanical Engineering
+MIC101,Microprocessor Lab,Electrical Engineering,Computer Engineering
+SWI101,Switchgear & Protection,Electrical Engineering,Computer Engineering
+EMS101,Embedded Systems,Electrical Engineering,Computer Engineering
+ADV103,Advanced Controls,Electrical Engineering,Civil Engineering
+COM105,Communication Lab,Electronics Engineering,Computer Engineering
+PGL101,Programming Lab,Computer Engineering,Electronics Engineering
+MAT119,Materials Lab,Mechanical Engineering,Electronics Engineering
+INT102,Internship Lab,Civil Engineering,Computer Engineering
+DAT103,Data Science,Computer Engineering,Mechanical Engineering
+SMA101,Smart Grid,Electrical Engineering,Computer Engineering
+NAN103,Nanotechnology,Electronics Engineering,Computer Engineering
+ROB102,Robotics Lab,Mechanical Engineering,Civil Engineering
+WSH101,Civil Workshop,Civil Engineering,Computer Engineering
+HIG101,Highway Engineering,Civil Engineering,Mechanical Engineering
+ELE101,Elective 1,Civil Engineering,Electrical Engineering
+SUB101,CP,Computer Engineering,Electrical Engineering
+DAT104,Data Science Lab,Computer Engineering,Civil Engineering
+CON106,Control Systems,Electrical Engineering,Computer Engineering
+COM103,Communication Systems,Electrical Engineering,Civil Engineering
+RES101,Research Project,Electronics Engineering,Mechanical Engineering
+ICE101,IC Engines,Mechanical Engineering,Electrical Engineering
+CAD102,CAD Lab,Mechanical Engineering,Computer Engineering

@@ -1,0 +1,79 @@
+Course Code,Course Title,Department
+PHY102,Physics Lab,Civil Engineering
+SUR102,Survey Lab,Civil Engineering
+BUI102,Building Materials Lab,Civil Engineering
+FLM102,Fluid Mechanics Lab,Civil Engineering
+CON101,Concrete Lab,Civil Engineering
+WAT102,Water Lab,Civil Engineering
+GEO102,Geotechnical Lab,Civil Engineering
+CON103,Construction Lab,Civil Engineering
+HIG102,Highway Lab,Civil Engineering
+SOI102,Soil Testing Lab,Civil Engineering
+BRI102,Bridge Lab,Civil Engineering
+DEV101,Development Lab,Civil Engineering
+CON104,Concrete Tech Lab,Civil Engineering
+DES102,Design Lab,Civil Engineering
+PRO102,Project Lab,Civil Engineering
+INT102,Internship Lab,Civil Engineering
+PHY104,Physics Lab,Computer Engineering
+WSH103,Workshop Lab,Computer Engineering
+ELE104,Electrical Lab,Computer Engineering
+PGL101,Programming Lab,Computer Engineering
+OOP102,OOP Lab,Computer Engineering
+DBM102,DBMS Lab,Computer Engineering
+OSL101,OS Lab,Computer Engineering
+NET101,Networks Lab,Computer Engineering
+AIL101,AI Lab,Computer Engineering
+MLL101,ML Lab,Computer Engineering
+CLO101,Cloud Lab,Computer Engineering
+SEC101,Security Lab,Computer Engineering
+BIG102,Big Data Lab,Computer Engineering
+DAT104,Data Science Lab,Computer Engineering
+PRO104,Project Lab,Computer Engineering
+INT104,Internship Lab,Computer Engineering
+PHY106,Physics Lab,Electrical Engineering
+ELE109,Electronics Lab,Electrical Engineering
+NET103,Network Lab,Electrical Engineering
+DIG102,Digital Electronics Lab,Electrical Engineering
+PWS102,Power Systems Lab,Electrical Engineering
+POW102,Power Electronics Lab,Electrical Engineering
+MIC101,Microprocessor Lab,Electrical Engineering
+DRI101,Drives Lab,Electrical Engineering
+REE102,Renewable Energy Lab,Electrical Engineering
+EMS102,Embedded Systems Lab,Electrical Engineering
+DSP101,DSP Lab,Electrical Engineering
+CON107,Controls Lab,Electrical Engineering
+ENE102,Energy Lab,Electrical Engineering
+PRO107,Project Lab,Electrical Engineering
+INT106,Internship Lab,Electrical Engineering
+PHY108,Physics Lab,Electronics Engineering
+ELE117,Electronics Lab,Electronics Engineering
+LOG101,Logic Lab,Electronics Engineering
+DIG104,Digital Lab,Electronics Engineering
+MIC102,Microprocessor Lab,Electronics Engineering
+COM105,Communication Lab,Electronics Engineering
+EMS104,Embedded Systems Lab,Electronics Engineering
+SIP104,Signal Processing Lab,Electronics Engineering
+IMP102,Image Processing Lab,Electronics Engineering
+NAN102,Nano Lab,Electronics Engineering
+IOT102,IoT Lab,Electronics Engineering
+MLL102,ML Lab,Electronics Engineering
+VLS105,VLSI Lab,Electronics Engineering
+BIO102,Biomedical Lab,Electronics Engineering
+PRO109,Project Lab,Electronics Engineering
+INT108,Internship Lab,Electronics Engineering
+PHY110,Physics Lab,Mechanical Engineering
+THD102,Thermodynamics Lab,Mechanical Engineering
+MAT119,Materials Lab,Mechanical Engineering
+FLM104,Fluid Mechanics Lab,Mechanical Engineering
+MCD102,Machine Design Lab,Mechanical Engineering
+ICE102,IC Engines Lab,Mechanical Engineering
+AUT102,Automation Lab,Mechanical Engineering
+CAD102,CAD Lab,Mechanical Engineering
+ROB102,Robotics Lab,Mechanical Engineering
+AUT103,Automobile Lab,Mechanical Engineering
+ENE103,Energy Lab,Mechanical Engineering
+THE103,Thermal Lab,Mechanical Engineering
+VIB102,Vibration Lab,Mechanical Engineering
+PRO112,Project Lab,Mechanical Engineering
+INT110,Internship Lab,Mechanical Engineering

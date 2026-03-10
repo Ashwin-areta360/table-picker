@@ -1,0 +1,219 @@
+Course Code,Course Title
+EDR101,Engineering Drawing
+BCE101,Basic Civil Eng.
+PHY102,Physics Lab
+WSH101,Civil Workshop
+BUI101,Building Materials
+MAT103,Mathematics II
+ENV101,Environmental Science
+SUR102,Survey Lab
+BUI102,Building Materials Lab
+FLM101,Fluid Mechanics
+STR101,Structural Analysis
+COT101,Concrete Technology
+SOI101,Soil Mechanics
+TRA101,Transportation Eng.
+FLM102,Fluid Mechanics Lab
+CON101,Concrete Lab
+WAT101,Water Resources
+GEO101,Geotechnical Eng.
+ENV102,Environmental Eng.
+DES101,Design of Structures
+PRM101,Project Management
+WAT102,Water Lab
+GEO102,Geotechnical Lab
+SUR103,Advanced Surveying
+CON102,Construction Management
+EAR101,Earthquake Eng.
+HIG101,Highway Engineering
+CON103,Construction Lab
+HIG102,Highway Lab
+STR102,Structural Dynamics
+BRI101,Bridge Engineering
+PLA101,Planning & Development
+SUE101,Sustainable Engineering
+SOI102,Soil Testing Lab
+BRI102,Bridge Lab
+DEV101,Development Lab
+ADV101,Advanced Concrete Tech.
+ENV103,Environmental Impact
+ADV102,Advanced Structural Design
+DIS101,Disaster Management
+PRE101,Professional Ethics
+CON104,Concrete Tech Lab
+DES102,Design Lab
+ELE101,Elective 1
+ELE102,Elective 2
+PRO102,Project Lab
+INT102,Internship Lab
+PHY104,Physics Lab
+WSH103,Workshop Lab
+ELE103,Electrical Basics
+MAT106,Mathematics II
+ELE104,Electrical Lab
+PGL101,Programming Lab
+SOF101,Software Design
+DAT101,Data Structures
+COM101,Computer Organization
+OOP102,OOP Lab
+DBM102,DBMS Lab
+CON105,Computer Networks
+THE101,Theory of Computation
+OSL101,OS Lab
+NET101,Networks Lab
+AI101,Artificial Intelligence
+ML101,Machine Learning
+DAT102,Data Mining
+AIL101,AI Lab
+MLL101,ML Lab
+COM102,Compiler Design
+CLC101,Cloud Computing
+CYS101,Cyber Security
+CLO101,Cloud Lab
+SEC101,Security Lab
+BIG101,Big Data
+DAT103,Data Science
+DEE101,Deep Learning
+BIG102,Big Data Lab
+DAT104,Data Science Lab
+ELE105,Elective 1
+ELE106,Elective 2
+PRE102,Professional Ethics
+PRO104,Project Lab
+INT104,Internship Lab
+CIR101,Circuit Analysis
+ELE107,Electrical Materials
+MAT108,Mathematics I
+PHY106,Physics Lab
+WSH104,Electrical Workshop
+NET102,Network Theory
+ELE108,Electronic Devices
+MAT110,Mathematics II
+ELE109,Electronics Lab
+NET103,Network Lab
+DIG101,Digital Electronics
+ELE110,Electromagnetic Fields
+CON106,Control Systems
+ELE111,Electrical Machines
+PWS101,Power Systems
+DIG102,Digital Electronics Lab
+PWS102,Power Systems Lab
+POW101,Power Electronics
+COM103,Communication Systems
+VLS101,VLSI Design
+SIP101,Signal Processing
+POW102,Power Electronics Lab
+MIC101,Microprocessor Lab
+ELE112,Electric Drives
+REE101,Renewable Energy
+SWI101,Switchgear & Protection
+HIG103,High Voltage Eng.
+POW103,Power Plant Eng.
+DRI101,Drives Lab
+REE102,Renewable Energy Lab
+SMA101,Smart Grid
+EMS101,Embedded Systems
+WIR101,Wireless Communication
+SIP102,Digital Signal Processing
+PRO105,Project Work
+EMS102,Embedded Systems Lab
+DSP101,DSP Lab
+ADV103,Advanced Controls
+POW104,Power System Protection
+ELE113,Electric Vehicle Technology
+ENE101,Energy Management
+PRE103,Professional Ethics
+CON107,Controls Lab
+ENE102,Energy Lab
+ELE114,Elective 1
+ELE115,Elective 2
+PRO107,Project Lab
+INT106,Internship Lab
+ELE116,Electronic Devices
+CIR102,Circuit Theory
+MAT112,Mathematics I
+PHY108,Physics Lab
+ELE117,Electronics Lab
+ANA101,Analog Electronics
+DIG103,Digital Logic
+MAT114,Mathematics II
+LOG101,Logic Lab
+DIG104,Digital Lab
+COM104,Communication Theory
+SIG101,Signals & Systems
+CON108,Control Systems
+VLS102,VLSI Design
+MIC102,Microprocessor Lab
+COM105,Communication Lab
+EMS103,Embedded Systems
+RFE101,RF Engineering
+SIP103,Digital Signal Processing
+SAT101,Satellite Communication
+OPT101,Optical Communication
+EMS104,Embedded Systems Lab
+SIP104,Signal Processing Lab
+IMP101,Image Processing
+WIR102,Wireless Networks
+VLS103,VLSI Testing
+NAN101,Nano Electronics
+PRM102,Project Management
+IMP102,Image Processing Lab
+NAN102,Nano Lab
+ADV104,Advanced Communication
+ML102,Machine Learning
+CYS102,Cyber Security
+RES101,Research Project
+IOT102,IoT Lab
+MLL102,ML Lab
+VLS104,Advanced VLSI Design
+BIO101,Biomedical Electronics
+WIR103,Wireless Sensor Networks
+PRE104,Professional Ethics
+VLS105,VLSI Lab
+BIO102,Biomedical Lab
+ELE118,Elective 1
+ELE119,Elective 2
+PRO109,Project Lab
+INT108,Internship Lab
+ENG101,Engineering Graphics
+WSH105,Workshop Technology
+MAT116,Mathematics I
+PHY110,Physics Lab
+WSH106,Mechanical Workshop
+STR103,Strength of Materials
+MAT118,Mathematics II
+THD102,Thermodynamics Lab
+MAT119,Materials Lab
+FLM103,Fluid Mechanics
+MCD101,Machine Design
+MAN101,Manufacturing Processes
+HTR101,Heat Transfer
+DOM101,Dynamics of Machines
+FLM104,Fluid Mechanics Lab
+MCD102,Machine Design Lab
+ICE101,IC Engines
+INE101,Industrial Engineering
+FEA101,Finite Element Analysis
+ICE102,IC Engines Lab
+AUT102,Automation Lab
+MAT120,Material Science
+PRM103,Project Management
+CAD102,CAD Lab
+ROB102,Robotics Lab
+ADM101,Advanced Manufacturing
+AUE101,Automobile Engineering
+REE103,Renewable Energy
+RES102,Research Project
+AUT103,Automobile Lab
+ENE103,Energy Lab
+THE102,Thermal Engineering
+VIB101,Vibration Analysis
+PRO110,Production Planning
+SUE102,Sustainable Engineering
+PRE105,Professional Ethics
+THE103,Thermal Lab
+VIB102,Vibration Lab
+ELE120,Elective 1
+ELE121,Elective 2
+PRO112,Project Lab
+INT110,Internship Lab

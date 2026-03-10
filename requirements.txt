@@ -17,6 +17,11 @@ rank-bm25>=0.2.0
 pandas>=2.0.0
 openpyxl>=3.0.0  # Required for pandas Excel I/O
 
+# Testing dependencies
+groq>=0.4.0  # For AI-powered result comparison
+python-dotenv>=1.0.0  # For environment variable management
+requests>=2.31.0  # For API calls
+
 # Optional RAG dependencies (install with: pip install -r requirements.txt -r requirements-rag.txt)
 # chromadb>=0.4.0
 

@@ -1,0 +1,57 @@
+Course Code,Course Title,Credits
+ADV104,Advanced Communication,4
+ANA101,Analog Electronics,3
+BIO101,Biomedical Electronics,3
+BIO102,Biomedical Lab,3
+CHE103,Chemistry,3
+CIR102,Circuit Theory,3
+COM104,Communication Theory,4
+COM105,Communication Lab,3
+CON108,Control Systems,4
+CYS102,Cyber Security,3
+DIG103,Digital Logic,3
+DIG104,Digital Lab,4
+ELE116,Electronic Devices,4
+ELE117,Electronics Lab,4
+ELE118,Elective 1,4
+ELE119,Elective 2,3
+EMS103,Embedded Systems,4
+EMS104,Embedded Systems Lab,4
+IMP101,Image Processing,4
+IMP102,Image Processing Lab,3
+INT107,Internship,4
+INT108,Internship Lab,3
+IOT101,IoT,3
+IOT102,IoT Lab,3
+LOG101,Logic Lab,3
+MAT111,M1,4
+MAT112,Mathematics I,4
+MAT113,M2,3
+MAT114,Mathematics II,3
+MIC102,Microprocessor Lab,3
+ML102,Machine Learning,4
+MLL102,ML Lab,3
+MPR102,Microprocessors,3
+NAN101,Nano Electronics,4
+NAN102,Nano Lab,3
+NAN103,Nanotechnology,4
+OPT101,Optical Communication,4
+PHY107,Physics,4
+PHY108,Physics Lab,4
+PRE104,Professional Ethics,3
+PRM102,Project Management,4
+PRO108,Project,4
+PRO109,Project Lab,4
+RES101,Research Project,3
+RFE101,RF Engineering,3
+SAT101,Satellite Communication,4
+SEM103,Seminar,4
+SIG101,Signals & Systems,3
+SIP103,Digital Signal Processing,4
+SIP104,Signal Processing Lab,3
+VLS102,VLSI Design,4
+VLS103,VLSI Testing,3
+VLS104,Advanced VLSI Design,3
+VLS105,VLSI Lab,3
+WIR102,Wireless Networks,4
+WIR103,Wireless Sensor Networks,4

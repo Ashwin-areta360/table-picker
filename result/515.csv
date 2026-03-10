@@ -1,0 +1,15 @@
+Course Code,Course Title,Status,Semester
+PPS101,PPS,Completed,1
+BEE101,BEE,Completed,1
+MAT101,M1,Completed,1
+PHY101,Physics,Completed,1
+WSH102,Workshop,Completed,1
+PHY102,Physics Lab,Completed,1
+WSH103,Workshop Lab,Completed,1
+SUB101,CP,Enrolled,2
+SUB102,DS,Enrolled,2
+MAT102,M2,Enrolled,2
+ELE103,Electrical Basics,Enrolled,2
+MAT103,Mathematics II,Enrolled,2
+ELE104,Electrical Lab,Enrolled,2
+PGL101,Programming Lab,Enrolled,2

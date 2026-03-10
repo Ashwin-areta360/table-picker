@@ -1,0 +1,15 @@
+Student ID,Name,Program/Degree,Batch,Semester,Course Code,Course Title,Credits,Department,Marks,GPA,Status
+TUCE1001,Nithya Rangaswamy,Computer Engineering,2024,1,BEE101,BEE,4,Computer Engineering,86,7.871428571428571,Completed
+TUCE1001,Nithya Rangaswamy,Computer Engineering,2024,1,MAT101,M1,4,Civil Engineering,78,7.871428571428571,Completed
+TUCE1001,Nithya Rangaswamy,Computer Engineering,2024,1,PPS101,PPS,4,Computer Engineering,65,7.871428571428571,Completed
+TUCE1001,Nithya Rangaswamy,Computer Engineering,2024,1,PHY101,Physics,4,Civil Engineering,95,7.871428571428571,Completed
+TUCE1001,Nithya Rangaswamy,Computer Engineering,2024,1,PHY102,Physics Lab,4,Civil Engineering,76,7.871428571428571,Completed
+TUCE1001,Nithya Rangaswamy,Computer Engineering,2024,1,WSH102,Workshop,4,Computer Engineering,80,7.871428571428571,Completed
+TUCE1001,Nithya Rangaswamy,Computer Engineering,2024,1,WSH103,Workshop Lab,4,Computer Engineering,71,7.871428571428571,Completed
+TUCE1001,Nithya Rangaswamy,Computer Engineering,2024,2,SUB101,CP,4,Computer Engineering,88,8.742857142857144,Enrolled
+TUCE1001,Nithya Rangaswamy,Computer Engineering,2024,2,SUB102,DS,4,Computer Engineering,89,8.742857142857144,Enrolled
+TUCE1001,Nithya Rangaswamy,Computer Engineering,2024,2,ELE103,Electrical Basics,4,Computer Engineering,86,8.742857142857144,Enrolled
+TUCE1001,Nithya Rangaswamy,Computer Engineering,2024,2,ELE104,Electrical Lab,4,Computer Engineering,90,8.742857142857144,Enrolled
+TUCE1001,Nithya Rangaswamy,Computer Engineering,2024,2,MAT102,M2,3,Civil Engineering,71,8.742857142857144,Enrolled
+TUCE1001,Nithya Rangaswamy,Computer Engineering,2024,2,MAT103,Mathematics II,4,Civil Engineering,89,8.742857142857144,Enrolled
+TUCE1001,Nithya Rangaswamy,Computer Engineering,2024,2,PGL101,Programming Lab,3,Computer Engineering,99,8.742857142857144,Enrolled
