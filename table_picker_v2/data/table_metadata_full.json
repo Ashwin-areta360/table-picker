@@ -1,0 +1,1523 @@
+{
+  "courses": {
+    "metadata": {
+      "name": "courses",
+      "row_count": 280,
+      "column_count": 4,
+      "columns": {
+        "Course Code": {
+          "name": "Course Code",
+          "type": " (TEXT)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "STR101",
+            "COT101",
+            "GEO102",
+            "DBM102",
+            "THE101"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "A unique alphanumeric code assigned to an academic course to identify it within the institution.",
+          "synonyms": [
+            "class",
+            "classes",
+            "subject",
+            "subjects",
+            "class_id",
+            "subject_id",
+            "educational"
+          ]
+        },
+        "Course Title": {
+          "name": "Course Title",
+          "type": " (TEXT)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "72.9% unique",
+          "sample_values": [
+            "Mathematics II",
+            "Earthquake Eng.",
+            "Development Lab",
+            "DAA",
+            "ML Lab"
+          ],
+          "hints": [
+            "good_for_filtering"
+          ],
+          "description": "The official name of an academic course as listed in the curriculum.",
+          "synonyms": [
+            "mathematics",
+            "math",
+            "science",
+            "engineering",
+            "class_name",
+            "subject_name",
+            "course_name",
+            "educational"
+          ]
+        },
+        "Credits": {
+          "name": "Credits",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "0.7% unique",
+          "sample_values": [
+            "3",
+            "4"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The number of academic credits assigned to a course, indicating its relative weight or workload.",
+          "synonyms": [
+            "credit_hours",
+            "units",
+            "educational"
+          ]
+        },
+        "Department": {
+          "name": "Department",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "1.8% unique",
+          "sample_values": [
+            "Civil Engineering",
+            "Computer Engineering",
+            "Electrical Engineering",
+            "Electronics Engineering",
+            "Mechanical Engineering"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The academic department or school that offers and manages the course.",
+          "synonyms": [
+            "dept",
+            "department_name",
+            "educational"
+          ]
+        }
+      },
+      "foreign_keys": {},
+      "referenced_by": [
+        "faculty_info",
+        "grades",
+        "registration"
+      ]
+    },
+    "selector_extras": {
+      "is_hub_table": false,
+      "degree_centrality": 3.0,
+      "normalized_centrality": 0.6,
+      "incoming_fk_count": 3,
+      "outgoing_fk_count": 0,
+      "betweenness_centrality": 0.30952380952380953,
+      "referenced_by": [
+        "faculty_info",
+        "grades",
+        "registration"
+      ],
+      "references": []
+    },
+    "description": "Academic courses offered by the institution, representing the subjects that students can study as part of their degree programs. This table defines the curriculum structure across departments.",
+    "columns": {
+      "Course Code": {
+        "description": "A unique alphanumeric code assigned to an academic course to identify it within the institution."
+      },
+      "Course Title": {
+        "description": "The official name of an academic course as listed in the curriculum."
+      },
+      "Credits": {
+        "description": "The number of academic credits assigned to a course, indicating its relative weight or workload."
+      },
+      "Department": {
+        "description": "The academic department or school that offers and manages the course."
+      }
+    }
+  },
+  "faculty_info": {
+    "metadata": {
+      "name": "faculty_info",
+      "row_count": 0,
+      "column_count": 0,
+      "columns": {
+        "Faculty ID": {
+          "name": "Faculty ID",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "9.8% unique",
+          "sample_values": [
+            "F5002",
+            "F5003",
+            "F5007",
+            "F5012",
+            "F5015"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "A unique identifier assigned to a faculty member by the institution.",
+          "synonyms": [
+            "teacher",
+            "teacher_id",
+            "professor_id",
+            "instructor_id",
+            "educator",
+            "educators",
+            "educational",
+            "my students",
+            "i teach"
+          ]
+        },
+        "Name": {
+          "name": "Name",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "9.8% unique",
+          "sample_values": [
+            "Dr. M. Choudhury",
+            "Dr. O. Patel",
+            "Prof. F. Joshi",
+            "Prof. J. Patil",
+            "Prof. P. Gupta"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The name of a faculty member.",
+          "synonyms": [
+            "teacher",
+            "instructor",
+            "professor",
+            "faculty",
+            "faculty_name",
+            "instructor_name",
+            "teacher_name",
+            "educational"
+          ]
+        },
+        "Department": {
+          "name": "Department",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "2.5% unique",
+          "sample_values": [
+            "Civil Engineering",
+            "Computer Engineering",
+            "Electrical Engineering",
+            "Electronics Engineering",
+            "Mechanical Engineering"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The academic department to which a faculty member belongs.",
+          "synonyms": [
+            "dept",
+            "department_name",
+            "educational"
+          ]
+        },
+        "Contact Info": {
+          "name": "Contact Info",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "9.8% unique",
+          "sample_values": [
+            "dm.@ssmcollege.co.in",
+            "do.@ssmcollege.co.in",
+            "pf.@ssmcollege.co.in",
+            "pj.@ssmcollege.co.in",
+            "pp.@ssmcollege.co.in"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Contact details used to communicate with a faculty member.",
+          "synonyms": [
+            "email",
+            "phone",
+            "contact",
+            "information",
+            "educational"
+          ]
+        },
+        "Courses Taught": {
+          "name": "Courses Taught",
+          "type": " (TEXT)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "Electronic Devices",
+            "Strength of Materials",
+            "Big Data Lab",
+            "Bridge Lab",
+            "CC"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "The name or title of an academic course taught by a faculty member.",
+          "synonyms": [
+            "course",
+            "class",
+            "subject",
+            "teaching",
+            "teaches",
+            "educational"
+          ]
+        },
+        "Course Code": {
+          "name": "Course Code",
+          "type": " (TEXT)",
+          "is_primary_key": true,
+          "is_foreign_key": true,
+          "foreign_key_references": [
+            "courses"
+          ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "courses",
+              "ref_col": "Course Code"
+            }
+          ],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "ENE102",
+            "MAN101",
+            "CYS101",
+            "THE101",
+            "TOC101"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "The code of an academic course taught by a faculty member.",
+          "synonyms": [
+            "handles",
+            "teaches",
+            "teaching",
+            "my class",
+            "my subject",
+            "my students",
+            "students i teach",
+            "i teach",
+            "class_id",
+            "subject_id",
+            "educational"
+          ]
+        }
+      },
+      "foreign_keys": {
+        "Course Code": [
+          "courses"
+        ]
+      }
+    },
+    "selector_extras": {
+      "is_hub_table": false,
+      "degree_centrality": 0.5,
+      "normalized_centrality": 0.1,
+      "incoming_fk_count": 0,
+      "outgoing_fk_count": 1,
+      "betweenness_centrality": 0.0,
+      "referenced_by": [],
+      "references": [
+        "courses"
+      ]
+    },
+    "description": "Records representing faculty members of the institution, including their identity, departmental association, contact details, and the courses they teach.",
+    "columns": {
+      "Faculty ID": {
+        "description": "A unique identifier assigned to a faculty member by the institution."
+      },
+      "Name": {
+        "description": "The name of a faculty member."
+      },
+      "Department": {
+        "description": "The academic department to which a faculty member belongs."
+      },
+      "Contact Info": {
+        "description": "Contact details used to communicate with a faculty member."
+      },
+      "Courses Taught": {
+        "description": "The name or title of an academic course taught by a faculty member."
+      },
+      "Course Code": {
+        "description": "The code of an academic course taught by a faculty member."
+      }
+    }
+  },
+  "feedue": {
+    "metadata": {
+      "name": "feedue",
+      "row_count": 0,
+      "column_count": 0,
+      "columns": {
+        "Student ID": {
+          "name": "Student ID",
+          "type": " (TEXT)",
+          "is_primary_key": true,
+          "is_foreign_key": true,
+          "foreign_key_references": [
+            "students_info"
+          ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "students_info",
+              "ref_col": "Student ID"
+            }
+          ],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "TUEE1012",
+            "TUME2030",
+            "TUEC1014",
+            "TUCE1048",
+            "TUCE1044"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "An identifier used to distinguish the student to whom a fee record applies.",
+          "synonyms": [
+            "learner_id",
+            "pupil_id"
+          ]
+        },
+        "Fee Type": {
+          "name": "Fee Type",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "3.8% unique",
+          "sample_values": [
+            "Hostel",
+            "Transport",
+            "Tuition"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The category of fee charged to a student.",
+          "synonyms": [
+            "fees",
+            "fee",
+            "my fees",
+            "tuition",
+            "hostel fee",
+            "payment",
+            "payments"
+          ]
+        },
+        "Amount Due": {
+          "name": "Amount Due",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "5.0% unique",
+          "sample_values": [
+            "15000",
+            "35000",
+            "70000",
+            "90000"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The amount of money that a student is required to pay for a specific fee.",
+          "synonyms": [
+            "fees",
+            "fee",
+            "my fees",
+            "my due",
+            "due",
+            "amount",
+            "payment",
+            "clear",
+            "outstanding",
+            "balance",
+            "owe",
+            "owes"
+          ]
+        },
+        "Due Date": {
+          "name": "Due Date",
+          "type": " (TEMPORAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "2.5% unique",
+          "sample_values": [
+            "2025-11-01 00:00:00",
+            "2025-10-01 00:00:00"
+          ],
+          "hints": [
+            "good_for_partitioning"
+          ],
+          "description": "The date by which the fee amount is expected to be paid.",
+          "synonyms": [
+            "deadline",
+            "payment date",
+            "due"
+          ]
+        }
+      },
+      "foreign_keys": {
+        "Student ID": [
+          "students_info"
+        ]
+      }
+    },
+    "selector_extras": {
+      "is_hub_table": false,
+      "degree_centrality": 0.5,
+      "normalized_centrality": 0.1,
+      "incoming_fk_count": 0,
+      "outgoing_fk_count": 1,
+      "betweenness_centrality": 0.0,
+      "referenced_by": [],
+      "references": [
+        "students_info"
+      ]
+    },
+    "description": "Records representing fees assigned to students, including the type of fee, the amount to be paid, and the date by which payment is due.",
+    "columns": {
+      "Student ID": {
+        "description": "An identifier used to distinguish the student to whom a fee record applies."
+      },
+      "Fee Type": {
+        "description": "The category of fee charged to a student."
+      },
+      "Amount Due": {
+        "description": "The amount of money that a student is required to pay for a specific fee."
+      },
+      "Due Date": {
+        "description": "The date by which the fee amount is expected to be paid."
+      }
+    }
+  },
+  "grades": {
+    "metadata": {
+      "name": "grades",
+      "row_count": 0,
+      "column_count": 0,
+      "columns": {
+        "Student ID": {
+          "name": "Student ID",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": true,
+          "is_foreign_key": true,
+          "foreign_key_references": [
+            "students_info"
+          ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "students_info",
+              "ref_col": "Student ID"
+            }
+          ],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "2.4% unique",
+          "sample_values": [
+            "TUCE4008",
+            "TUCIV4042",
+            "TUCIV4047",
+            "TUEC4050",
+            "TUEE4002"
+          ],
+          "hints": [],
+          "description": "An identifier used to distinguish the student whose academic performance is recorded.",
+          "synonyms": [
+            "learner_id",
+            "pupil_id",
+            "academic_records",
+            "academic",
+            "educational"
+          ]
+        },
+        "Course Code": {
+          "name": "Course Code",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": true,
+          "is_foreign_key": true,
+          "foreign_key_references": [
+            "courses"
+          ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "courses",
+              "ref_col": "Course Code"
+            }
+          ],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "0.4% unique",
+          "sample_values": [
+            "MAT101",
+            "MAT102",
+            "MAT103",
+            "PHY101",
+            "PHY102"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The code of the academic course for which a student’s performance is recorded.",
+          "synonyms": [
+            "class_id",
+            "subject_id",
+            "classes",
+            "educational"
+          ]
+        },
+        "Semester": {
+          "name": "Semester",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "0.0% unique",
+          "sample_values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "A numeric value representing the academic term in which the course was taken.",
+          "synonyms": [
+            "term",
+            "academic term",
+            "period",
+            "educational"
+          ]
+        },
+        "Marks": {
+          "name": "Marks",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "0.2% unique",
+          "sample_values": [
+            "82",
+            "83",
+            "87",
+            "88",
+            "89"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The numeric score obtained by a student in a course assessment.",
+          "synonyms": [
+            "score",
+            "grade",
+            "result",
+            "performance",
+            "performed",
+            "academic",
+            "records",
+            "educational",
+            "my marks",
+            "my grade",
+            "my performance",
+            "my academic",
+            "my records",
+            "my educational",
+            "my scores",
+            "passed",
+            "failed",
+            "pass",
+            "fail",
+            "pass mark",
+            "fail mark",
+            "pass percentage",
+            "fail percentage",
+            "pass rate",
+            "fail rate"
+          ]
+        },
+        "GPA": {
+          "name": "GPA",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "0.4% unique",
+          "sample_values": [
+            "8.057142857142857",
+            "8.157142857142857",
+            "8.185714285714287",
+            "8.2",
+            "8.242857142857144"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The grade point average reflecting a student’s academic performance for the semester.",
+          "synonyms": [
+            "grade_point_average",
+            "average",
+            "performance",
+            "academic",
+            "records",
+            "educational",
+            "my gpa",
+            "my cgpa"
+          ]
+        }
+      },
+      "foreign_keys": {
+        "Student ID": [
+          "students_info"
+        ],
+        "Course Code": [
+          "courses"
+        ]
+      }
+    },
+    "selector_extras": {
+      "is_hub_table": false,
+      "degree_centrality": 1.0,
+      "normalized_centrality": 0.2,
+      "incoming_fk_count": 0,
+      "outgoing_fk_count": 2,
+      "betweenness_centrality": 0.19047619047619047,
+      "referenced_by": [],
+      "references": [
+        "students_info",
+        "courses"
+      ]
+    },
+    "description": "Records representing students’ academic performance in individual courses for specific academic semesters, including evaluation scores and grade point averages.",
+    "columns": {
+      "Student ID": {
+        "description": "An identifier used to distinguish the student whose academic performance is recorded."
+      },
+      "Course Code": {
+        "description": "The code of the academic course for which a student’s performance is recorded."
+      },
+      "Semester": {
+        "description": "A numeric value representing the academic term in which the course was taken."
+      },
+      "Marks": {
+        "description": "The numeric score obtained by a student in a course assessment."
+      },
+      "GPA": {
+        "description": "The grade point average reflecting a student’s academic performance for the semester."
+      }
+    }
+  },
+  "hostel": {
+    "metadata": {
+      "name": "hostel",
+      "row_count": 0,
+      "column_count": 0,
+      "columns": {
+        "Student ID": {
+          "name": "Student ID",
+          "type": " (TEXT)",
+          "is_primary_key": true,
+          "is_foreign_key": true,
+          "foreign_key_references": [
+            "students_info"
+          ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "students_info",
+              "ref_col": "Student ID"
+            }
+          ],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "TUCE1025",
+            "TUCIV1003",
+            "TUCIV1028",
+            "TUCIV1045",
+            "TUEE1012"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "An identifier used to distinguish the student assigned to hostel accommodation.",
+          "synonyms": [
+            "learner_id",
+            "pupil_id",
+            "housing"
+          ]
+        },
+        "Room Number": {
+          "name": "Room Number",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "69.3% unique",
+          "sample_values": [
+            "460",
+            "114",
+            "179",
+            "913",
+            "243"
+          ],
+          "hints": [
+            "good_for_filtering",
+            "good_for_aggregation"
+          ],
+          "description": "The room number assigned to a student within a hostel.",
+          "synonyms": [
+            "room",
+            "housing_assignment",
+            "my room"
+          ]
+        },
+        "Hostel Name": {
+          "name": "Hostel Name",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "0.5% unique",
+          "sample_values": [
+            "Boys Hostel",
+            "General",
+            "Girls Hostel"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The name of the hostel in which a student is accommodated.",
+          "synonyms": [
+            "hostel",
+            "residence",
+            "dormitory",
+            "housing",
+            "accommodation",
+            "housing_assignments",
+            "my hostel"
+          ]
+        },
+        "Date of Allotment": {
+          "name": "Date of Allotment",
+          "type": " (TEXT)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "2024-08-15",
+            "2024-08-20",
+            "2024-08-26",
+            "2024-08-28",
+            "2024-10-02"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "The date on which hostel accommodation was allotted to a student.",
+          "synonyms": [
+            "allotment date",
+            "allocation date",
+            "assignment date",
+            "date assigned"
+          ]
+        }
+      },
+      "foreign_keys": {
+        "Student ID": [
+          "students_info"
+        ]
+      }
+    },
+    "selector_extras": {
+      "is_hub_table": false,
+      "degree_centrality": 0.5,
+      "normalized_centrality": 0.1,
+      "incoming_fk_count": 0,
+      "outgoing_fk_count": 1,
+      "betweenness_centrality": 0.0,
+      "referenced_by": [],
+      "references": [
+        "students_info"
+      ]
+    },
+    "description": "Records representing hostel accommodation details assigned to students, including room assignments, hostel names, and allotment dates.",
+    "columns": {
+      "Student ID": {
+        "description": "An identifier used to distinguish the student assigned to hostel accommodation."
+      },
+      "Room Number": {
+        "description": "The room number assigned to a student within a hostel."
+      },
+      "Hostel Name": {
+        "description": "The name of the hostel in which a student is accommodated."
+      },
+      "Date of Allotment": {
+        "description": "The date on which hostel accommodation was allotted to a student."
+      }
+    }
+  },
+  "parent_info": {
+    "metadata": {
+      "name": "parent_info",
+      "row_count": 0,
+      "column_count": 0,
+      "columns": {
+        "Parent ID": {
+          "name": "Parent ID",
+          "type": " (TEXT)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "PACE1001",
+            "PACE1017",
+            "PACIV1030",
+            "PACIV1035",
+            "PAEE1013"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "A unique identifier assigned to a parent.",
+          "synonyms": [
+            "my account",
+            "me",
+            "parent",
+            "my child",
+            "child",
+            "children",
+            "my son",
+            "son",
+            "my daughter",
+            "daughter",
+            "my ward",
+            "ward",
+            "my kid",
+            "kid",
+            "kids"
+          ]
+        },
+        " Parent Name": {
+          "name": " Parent Name",
+          "type": " (TEXT)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "Bhavya Sinha",
+            "Pravalika N",
+            "Kiran Teja",
+            "Goutham Ch",
+            "Karthiga R"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "The name of the parent associated with a student.",
+          "synonyms": [
+            "my name",
+            "parent name",
+            "my child",
+            "child",
+            "children",
+            "my son",
+            "son",
+            "my daughter",
+            "daughter",
+            "my ward",
+            "ward"
+          ]
+        },
+        "Student ID": {
+          "name": "Student ID",
+          "type": " (TEXT)",
+          "is_primary_key": true,
+          "is_foreign_key": true,
+          "foreign_key_references": [
+            "students_info"
+          ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "students_info",
+              "ref_col": "Student ID"
+            }
+          ],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "TUCE1001",
+            "TUCE1015",
+            "TUCE1025",
+            "TUCIV1003",
+            "TUCIV1009"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "An identifier used to distinguish the student associated with a parent.",
+          "synonyms": [
+            "my child",
+            "child",
+            "children",
+            "my son",
+            "son",
+            "my daughter",
+            "daughter",
+            "my ward",
+            "ward",
+            "my kid",
+            "kid",
+            "kids",
+            "learner_id",
+            "pupil_id",
+            "his",
+            "her",
+            "their"
+          ]
+        }
+      },
+      "foreign_keys": {
+        "Student ID": [
+          "students_info"
+        ]
+      }
+    },
+    "selector_extras": {
+      "is_hub_table": false,
+      "degree_centrality": 0.5,
+      "normalized_centrality": 0.1,
+      "incoming_fk_count": 0,
+      "outgoing_fk_count": 1,
+      "betweenness_centrality": 0.0,
+      "referenced_by": [],
+      "references": [
+        "students_info"
+      ]
+    },
+    "description": "Records representing parents associated with students, including parent identifiers and names linked to individual students.",
+    "columns": {
+      "Parent ID": {
+        "description": "A unique identifier assigned to a parent."
+      },
+      " Parent Name": {
+        "description": "The name of the parent associated with a student."
+      },
+      "Student ID": {
+        "description": "An identifier used to distinguish the student associated with a parent."
+      }
+    }
+  },
+  "registration": {
+    "metadata": {
+      "name": "registration",
+      "row_count": 0,
+      "column_count": 0,
+      "columns": {
+        "Student ID": {
+          "name": "Student ID",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": true,
+          "is_foreign_key": true,
+          "foreign_key_references": [
+            "students_info"
+          ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "students_info",
+              "ref_col": "Student ID"
+            }
+          ],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "2.4% unique",
+          "sample_values": [
+            "TUCE4008",
+            "TUCIV4042",
+            "TUCIV4047",
+            "TUEC4050",
+            "TUEE4002"
+          ],
+          "hints": [],
+          "description": "An identifier used to distinguish the student associated with a course registration.",
+          "synonyms": [
+            "learner_id",
+            "pupil_id",
+            "enrolled"
+          ]
+        },
+        "Course Code": {
+          "name": "Course Code",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": true,
+          "is_foreign_key": true,
+          "foreign_key_references": [
+            "courses"
+          ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "courses",
+              "ref_col": "Course Code"
+            }
+          ],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "0.4% unique",
+          "sample_values": [
+            "MAT101",
+            "MAT102",
+            "MAT103",
+            "PHY101",
+            "PHY102"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The code of the academic course in which a student is registered.",
+          "synonyms": [
+            "class_id",
+            "subject_id",
+            "classes",
+            "my courses",
+            "my subjects",
+            "associated courses",
+            "associated subjects",
+            "associated classes"
+          ]
+        },
+        "Semester": {
+          "name": "Semester",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "0.0% unique",
+          "sample_values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "A numeric value representing the academic term for which a course registration applies.",
+          "synonyms": [
+            "term",
+            "academic term",
+            "period",
+            "educational"
+          ]
+        },
+        "Status": {
+          "name": "Status",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "0.0% unique",
+          "sample_values": [
+            "Completed",
+            "Enrolled"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The current state of a student’s registration for a course.",
+          "synonyms": [
+            "enrollment_status",
+            "enroll_status",
+            "enrolled",
+            "enrollment",
+            "active",
+            "registrations",
+            "my status",
+            "completed",
+            "status"
+          ]
+        }
+      },
+      "foreign_keys": {
+        "Student ID": [
+          "students_info"
+        ],
+        "Course Code": [
+          "courses"
+        ]
+      }
+    },
+    "selector_extras": {
+      "is_hub_table": false,
+      "degree_centrality": 1.0,
+      "normalized_centrality": 0.2,
+      "incoming_fk_count": 0,
+      "outgoing_fk_count": 2,
+      "betweenness_centrality": 0.19047619047619047,
+      "referenced_by": [],
+      "references": [
+        "students_info",
+        "courses"
+      ]
+    },
+    "description": "Records representing student enrollment in academic courses for specific semesters, including enrollment status for each course.",
+    "columns": {
+      "Student ID": {
+        "description": "An identifier used to distinguish the student associated with a course registration."
+      },
+      "Course Code": {
+        "description": "The code of the academic course in which a student is registered."
+      },
+      "Semester": {
+        "description": "A numeric value representing the academic term for which a course registration applies."
+      },
+      "Status": {
+        "description": "The current state of a student’s registration for a course."
+      }
+    }
+  },
+  "students_info": {
+    "metadata": {
+      "name": "students_info",
+      "row_count": 1278,
+      "column_count": 6,
+      "columns": {
+        "Student ID": {
+          "name": "Student ID",
+          "type": " (TEXT)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "TUCE1001",
+            "TUCE1015",
+            "TUCE1025",
+            "TUCIV1003",
+            "TUCIV1009"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "A unique identifier assigned to a student.",
+          "synonyms": [
+            "learner",
+            "learners",
+            "pupil",
+            "pupils",
+            "enrollee",
+            "enrollees",
+            "learner_id",
+            "pupil_id",
+            "academic_records",
+            "academic",
+            "records",
+            "educational",
+            "my child",
+            "child",
+            "son",
+            "daughter"
+          ]
+        },
+        "Name": {
+          "name": "Name",
+          "type": " (TEXT)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "Manoj Iyer",
+            "Jyothi Nagesh",
+            "Anil Rangaswamy",
+            "Ajay Gowda",
+            "Deepak Bhattacharya"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "The full name of a student.",
+          "synonyms": [
+            "student_name",
+            "full_name",
+            "educational",
+            "my name",
+            "my child name",
+            "child name"
+          ]
+        },
+        "Date of Birth": {
+          "name": "Date of Birth",
+          "type": " (TEXT)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "75.3% unique",
+          "sample_values": [
+            "2005-08-15",
+            "2004-08-19",
+            "2005-05-21",
+            "2004-02-24",
+            "2003-01-04"
+          ],
+          "hints": [
+            "good_for_filtering"
+          ],
+          "description": "The date on which a student was born.",
+          "synonyms": [
+            "dob",
+            "birthdate",
+            "birth_date"
+          ]
+        },
+        "Contact Info": {
+          "name": "Contact Info",
+          "type": " (TEXT)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "Shilpa_Sharma@ssmcollege.co.in",
+            "Lakshya_Iyer@ssmcollege.co.in",
+            "Pooja_Bhattacharya@ssmcollege.co.in",
+            "Vasanth_Rao@ssmcollege.co.in",
+            "Anu_Sundaram@ssmcollege.co.in"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "Contact details provided for a student.",
+          "synonyms": [
+            "email",
+            "phone",
+            "contact",
+            "information",
+            "educational"
+          ]
+        },
+        "Batch": {
+          "name": "Batch",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "0.5% unique",
+          "sample_values": [
+            "2017",
+            "2018",
+            "2019",
+            "2020",
+            "2021"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The academic year or batch to which a student belongs.",
+          "synonyms": [
+            "year",
+            "cohort",
+            "class_year",
+            "educational"
+          ]
+        },
+        "Program/Degree": {
+          "name": "Program/Degree",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "0.4% unique",
+          "sample_values": [
+            "Civil Engineering",
+            "Computer Engineering",
+            "Electrical Engineering",
+            "Electronics Engineering",
+            "Mechanical Engineering"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The academic program or degree in which a student is enrolled.",
+          "synonyms": [
+            "program",
+            "degree",
+            "major",
+            "course",
+            "branch",
+            "stream",
+            "field",
+            "specialization",
+            "educational"
+          ]
+        }
+      },
+      "foreign_keys": {},
+      "referenced_by": [
+        "feedue",
+        "grades",
+        "hostel",
+        "parent_info",
+        "registration"
+      ]
+    },
+    "selector_extras": {
+      "is_hub_table": true,
+      "degree_centrality": 5.0,
+      "normalized_centrality": 1.0,
+      "incoming_fk_count": 5,
+      "outgoing_fk_count": 0,
+      "betweenness_centrality": 0.738095238095238,
+      "referenced_by": [
+        "feedue",
+        "grades",
+        "hostel",
+        "parent_info",
+        "registration"
+      ],
+      "references": []
+    },
+    "description": "Records representing core student identity and profile information, including personal details, academic batch, and enrolled program or degree.",
+    "columns": {
+      "Student ID": {
+        "description": "A unique identifier assigned to a student."
+      },
+      "Name": {
+        "description": "The full name of a student."
+      },
+      "Date of Birth": {
+        "description": "The date on which a student was born."
+      },
+      "Contact Info": {
+        "description": "Contact details provided for a student."
+      },
+      "Batch": {
+        "description": "The academic year or batch to which a student belongs."
+      },
+      "Program/Degree": {
+        "description": "The academic program or degree in which a student is enrolled."
+      }
+    }
+  }
+}
