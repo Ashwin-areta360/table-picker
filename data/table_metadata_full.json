@@ -11,15 +11,16 @@
           "is_primary_key": true,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": false,
           "null_percentage": "0.0%",
           "cardinality": "100.0% unique",
           "sample_values": [
-            "STR101",
-            "COT101",
-            "GEO102",
-            "DBM102",
-            "THE101"
+            "BUI101",
+            "WAT101",
+            "CON102",
+            "SUE101",
+            "INT101"
           ],
           "hints": [
             "good_for_indexing"
@@ -41,15 +42,16 @@
           "is_primary_key": false,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": false,
           "null_percentage": "0.0%",
           "cardinality": "72.9% unique",
           "sample_values": [
-            "Water Resources",
-            "DBMS",
-            "Data Mining",
-            "Power Systems Lab",
-            "Energy Lab"
+            "Transportation Eng.",
+            "Circuit Analysis",
+            "Electromagnetic Fields",
+            "Switchgear & Protection",
+            "Drives Lab"
           ],
           "hints": [
             "good_for_filtering"
@@ -72,6 +74,7 @@
           "is_primary_key": false,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "0.7% unique",
@@ -95,6 +98,7 @@
           "is_primary_key": false,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "1.8% unique",
@@ -165,6 +169,7 @@
           "is_primary_key": true,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": false,
           "null_percentage": "0.0%",
           "cardinality": "9.8% unique",
@@ -197,6 +202,7 @@
           "is_primary_key": false,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "9.8% unique",
@@ -228,6 +234,7 @@
           "is_primary_key": false,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "2.5% unique",
@@ -254,6 +261,7 @@
           "is_primary_key": false,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "9.8% unique",
@@ -267,7 +275,14 @@
           "hints": [
             "good_for_grouping"
           ],
-          "description": "Contact details used to communicate with a faculty member."
+          "description": "Contact details used to communicate with a faculty member.",
+          "synonyms": [
+            "email",
+            "phone",
+            "contact",
+            "information",
+            "educational"
+          ]
         },
         "Courses Taught": {
           "name": "Courses Taught",
@@ -275,6 +290,7 @@
           "is_primary_key": true,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "100.0% unique",
@@ -288,7 +304,15 @@
           "hints": [
             "good_for_indexing"
           ],
-          "description": "The name or title of an academic course taught by a faculty member."
+          "description": "The name or title of an academic course taught by a faculty member.",
+          "synonyms": [
+            "course",
+            "class",
+            "subject",
+            "teaching",
+            "teaches",
+            "educational"
+          ]
         },
         "Course Code": {
           "name": "Course Code",
@@ -297,6 +321,12 @@
           "is_foreign_key": true,
           "foreign_key_references": [
             "courses"
+          ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "courses",
+              "ref_col": "Course Code"
+            }
           ],
           "nullable": false,
           "null_percentage": "0.0%",
@@ -381,15 +411,21 @@
           "foreign_key_references": [
             "students_info"
           ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "students_info",
+              "ref_col": "Student ID"
+            }
+          ],
           "nullable": false,
           "null_percentage": "0.0%",
           "cardinality": "100.0% unique",
           "sample_values": [
             "TUEE1012",
-            "TUME2030",
-            "TUEC1014",
-            "TUCE1048",
-            "TUCE1044"
+            "TUEE1033",
+            "TUCE1002",
+            "TUCE2011",
+            "TUEE1022"
           ],
           "hints": [
             "good_for_indexing"
@@ -406,6 +442,7 @@
           "is_primary_key": true,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": false,
           "null_percentage": "0.0%",
           "cardinality": "3.8% unique",
@@ -434,6 +471,7 @@
           "is_primary_key": false,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "5.0% unique",
@@ -468,6 +506,7 @@
           "is_primary_key": false,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "2.5% unique",
@@ -534,6 +573,12 @@
           "foreign_key_references": [
             "students_info"
           ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "students_info",
+              "ref_col": "Student ID"
+            }
+          ],
           "nullable": false,
           "null_percentage": "0.0%",
           "cardinality": "2.4% unique",
@@ -562,6 +607,12 @@
           "foreign_key_references": [
             "courses"
           ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "courses",
+              "ref_col": "Course Code"
+            }
+          ],
           "nullable": false,
           "null_percentage": "0.0%",
           "cardinality": "0.4% unique",
@@ -589,6 +640,7 @@
           "is_primary_key": true,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": false,
           "null_percentage": "0.0%",
           "cardinality": "0.0% unique",
@@ -602,7 +654,13 @@
           "hints": [
             "good_for_grouping"
           ],
-          "description": "A numeric value representing the academic term in which the course was taken."
+          "description": "A numeric value representing the academic term in which the course was taken.",
+          "synonyms": [
+            "term",
+            "academic term",
+            "period",
+            "educational"
+          ]
         },
         "Marks": {
           "name": "Marks",
@@ -610,6 +668,7 @@
           "is_primary_key": false,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "0.2% unique",
@@ -658,6 +717,7 @@
           "is_primary_key": false,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "0.4% unique",
@@ -739,15 +799,21 @@
           "foreign_key_references": [
             "students_info"
           ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "students_info",
+              "ref_col": "Student ID"
+            }
+          ],
           "nullable": false,
           "null_percentage": "0.0%",
           "cardinality": "100.0% unique",
           "sample_values": [
-            "TUCE1012",
-            "TUCE1034",
-            "TUCIV1012",
-            "TUCIV1017",
-            "TUCIV1048"
+            "TUCE1025",
+            "TUCIV1003",
+            "TUCIV1028",
+            "TUCIV1045",
+            "TUEE1012"
           ],
           "hints": [
             "good_for_indexing"
@@ -765,6 +831,7 @@
           "is_primary_key": false,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "69.3% unique",
@@ -792,6 +859,7 @@
           "is_primary_key": false,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "0.5% unique",
@@ -820,6 +888,7 @@
           "is_primary_key": true,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "100.0% unique",
@@ -833,7 +902,13 @@
           "hints": [
             "good_for_indexing"
           ],
-          "description": "The date on which hostel accommodation was allotted to a student."
+          "description": "The date on which hostel accommodation was allotted to a student.",
+          "synonyms": [
+            "allotment date",
+            "allocation date",
+            "assignment date",
+            "date assigned"
+          ]
         }
       },
       "foreign_keys": {
@@ -882,6 +957,7 @@
           "is_primary_key": true,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": false,
           "null_percentage": "0.0%",
           "cardinality": "100.0% unique",
@@ -920,6 +996,7 @@
           "is_primary_key": true,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "100.0% unique",
@@ -933,7 +1010,20 @@
           "hints": [
             "good_for_indexing"
           ],
-          "description": "The name of the parent associated with a student."
+          "description": "The name of the parent associated with a student.",
+          "synonyms": [
+            "my name",
+            "parent name",
+            "my child",
+            "child",
+            "children",
+            "my son",
+            "son",
+            "my daughter",
+            "daughter",
+            "my ward",
+            "ward"
+          ]
         },
         "Student ID": {
           "name": "Student ID",
@@ -942,6 +1032,12 @@
           "is_foreign_key": true,
           "foreign_key_references": [
             "students_info"
+          ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "students_info",
+              "ref_col": "Student ID"
+            }
           ],
           "nullable": false,
           "null_percentage": "0.0%",
@@ -1023,21 +1119,28 @@
           "foreign_key_references": [
             "students_info"
           ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "students_info",
+              "ref_col": "Student ID"
+            }
+          ],
           "nullable": false,
           "null_percentage": "0.0%",
           "cardinality": "2.4% unique",
           "sample_values": [
-            "TUCE4008",
-            "TUCIV4042",
-            "TUCIV4047",
-            "TUEC4050",
-            "TUEE4002"
+            "TUCE4004",
+            "TUCIV4024",
+            "TUEC4043",
+            "TUEE4006",
+            "TUEE4011"
           ],
           "hints": [],
           "description": "An identifier used to distinguish the student associated with a course registration.",
           "synonyms": [
             "learner_id",
-            "pupil_id"           
+            "pupil_id",
+            "enrolled"
           ]
         },
         "Course Code": {
@@ -1047,6 +1150,12 @@
           "is_foreign_key": true,
           "foreign_key_references": [
             "courses"
+          ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "courses",
+              "ref_col": "Course Code"
+            }
           ],
           "nullable": false,
           "null_percentage": "0.0%",
@@ -1079,6 +1188,7 @@
           "is_primary_key": true,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": false,
           "null_percentage": "0.0%",
           "cardinality": "0.0% unique",
@@ -1092,7 +1202,13 @@
           "hints": [
             "good_for_grouping"
           ],
-          "description": "A numeric value representing the academic term for which a course registration applies."
+          "description": "A numeric value representing the academic term for which a course registration applies.",
+          "synonyms": [
+            "term",
+            "academic term",
+            "period",
+            "educational"
+          ]
         },
         "Status": {
           "name": "Status",
@@ -1100,6 +1216,7 @@
           "is_primary_key": false,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "0.0% unique",
@@ -1120,8 +1237,7 @@
             "registrations",
             "my status",
             "completed",
-            "status",
-            "finished"
+            "status"
           ]
         }
       },
@@ -1175,6 +1291,7 @@
           "is_primary_key": true,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": false,
           "null_percentage": "0.0%",
           "cardinality": "100.0% unique",
@@ -1214,6 +1331,7 @@
           "is_primary_key": true,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": false,
           "null_percentage": "0.0%",
           "cardinality": "100.0% unique",
@@ -1243,6 +1361,7 @@
           "is_primary_key": false,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "75.3% unique",
@@ -1269,15 +1388,16 @@
           "is_primary_key": true,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "100.0% unique",
           "sample_values": [
-            "Shankar_Joshi@ssmcollege.co.in",
-            "Shankar_Iyer@ssmcollege.co.in",
-            "Kumar_Joshi@ssmcollege.co.in",
-            "Vijay_Chowdary@ssmcollege.co.in",
-            "Hema_Reddy@ssmcollege.co.in"
+            "Sneha_Nair@ssmcollege.co.in",
+            "Anu_Joshi@ssmcollege.co.in",
+            "Madhavi_Shetty@ssmcollege.co.in",
+            "Sathish_Naidu@ssmcollege.co.in",
+            "Sanjay_Chowdary@ssmcollege.co.in"
           ],
           "hints": [
             "good_for_indexing"
@@ -1297,6 +1417,7 @@
           "is_primary_key": false,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": false,
           "null_percentage": "0.0%",
           "cardinality": "0.5% unique",
@@ -1324,6 +1445,7 @@
           "is_primary_key": false,
           "is_foreign_key": false,
           "foreign_key_references": [],
+          "foreign_key_references_detail": [],
           "nullable": true,
           "null_percentage": "0.0%",
           "cardinality": "0.4% unique",
@@ -1337,7 +1459,18 @@
           "hints": [
             "good_for_grouping"
           ],
-          "description": "The academic program or degree in which a student is enrolled."
+          "description": "The academic program or degree in which a student is enrolled.",
+          "synonyms": [
+            "program",
+            "degree",
+            "major",
+            "course",
+            "branch",
+            "stream",
+            "field",
+            "specialization",
+            "educational"
+          ]
         }
       },
       "foreign_keys": {},

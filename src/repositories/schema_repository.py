@@ -23,6 +23,7 @@ class SchemaRepository:
             cols = {}
             raw_cols = data["metadata"]["columns"]
             for c_name, c_info in raw_cols.items():
+                fk_detail = c_info.get("foreign_key_references_detail", [])
                 cols[c_name] = ColumnMetadata(
                     name=c_name,
                     description=c_info.get("description", ""),
@@ -31,6 +32,8 @@ class SchemaRepository:
                     sample_values=c_info.get("sample_values", []),
                     is_primary_key=c_info.get("is_primary_key", False),
                     is_foreign_key=c_info.get("is_foreign_key", False),
+                    ref_table=fk_detail[0]["ref_table"] if fk_detail else None,
+                    ref_col=fk_detail[0]["ref_col"] if fk_detail else None,
                 )
 
             parsed[table_name] = TableMetadata(
