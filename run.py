@@ -12,6 +12,13 @@ import argparse
 import sys
 from pathlib import Path
 
+# Load .env from project root if present
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).parent / ".env")
+except ImportError:
+    pass
+
 # Add project root to path for aretai import
 project_root = Path(__file__).parent
 if str(project_root) not in sys.path:
