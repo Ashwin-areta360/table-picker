@@ -103,6 +103,11 @@ def main():
         "Show me the fees for hostel",        # Tests synonym/description retrieval
         "Who teaches Engineering Graphics?"   # Tests column name/description retrieval
     ]
+    # test_queries = [
+    #     "How many employees do we have?",          # Tests sample_values retrieval
+    #     "What did customer Aaron Alexander buy?",        # Tests synonym/description retrieval
+    #     "Which salesperson sold the most units of a single product?"   # Tests column name/description retrieval
+    # ]
 
     role_display = f" [role: {args.role}]" if args.role else ""
     print(f"\nRunning test queries{role_display}...\n")
