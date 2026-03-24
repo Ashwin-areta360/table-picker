@@ -241,11 +241,12 @@ def main() -> int:
     print("RUNNING PREDICTIONS")
     print("=" * 80)
     predictions: List[str] = []
+    join_paths_list: List[str] = []
     used_roles: List[str] = []
 
     for ni, (idx, row) in enumerate(to_process.iterrows(), 1):
         query = str(row[question_col])
-        
+
         # Get role for this query: from row if available, otherwise from args
         query_role = None
         if role_col and role_col in row:
@@ -255,34 +256,38 @@ def main() -> int:
                 query_role = str(row_role_value).strip().lower()
                 # Validate role
                 if query_role not in ["parent", "student", "faculty"]:
-                    print(f"  ⚠ Warning: Invalid role '{query_role}' in row {ni}, using fallback")
+                    print(f"  Warning: Invalid role '{query_role}' in row {ni}, using fallback")
                     query_role = args.role
         else:
             query_role = args.role
-        
+
         role_display = f" [role: {query_role}]" if query_role else ""
         print(f"\n[{ni}/{len(to_process)}] Processing: {query[:60]}...{role_display}")
-        
+
         # Track the role used for this query
         used_roles.append(query_role if query_role else "")
 
         try:
             # Run through table_picker_v2 pipeline
-            result_tables = searcher.get_final_tables(query, role=query_role)
-            predicted = ", ".join(result_tables) if result_tables else ""
+            result = searcher.get_selection_result(query, role=query_role)
+            predicted = ", ".join(result.selected_tables) if result.selected_tables else ""
+            join_text = searcher.graph_service.format_join_result(result.join_result)
             predictions.append(predicted)
-            print(f"  → {predicted}")
+            join_paths_list.append(join_text)
+            print(f"  -> {predicted}")
 
         except Exception as e:
-            print(f"  ❌ Error: {e}")
+            print(f"  Error: {e}")
             import traceback
             traceback.print_exc()
             predictions.append("")
+            join_paths_list.append("")
 
     # Add predictions to dataframe
     to_process = to_process.copy()
     to_process["query"] = to_process[question_col]
     to_process["predicted_tables"] = predictions
+    to_process["join_paths"] = join_paths_list
     to_process["used_role"] = used_roles
 
     # Calculate metrics if expected column exists

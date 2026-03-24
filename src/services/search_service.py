@@ -1,8 +1,8 @@
-# services/search_service.py (moved into src/table_picker_v2/services)
+# services/search_service.py
 
 from typing import List, Optional
 
-from models import TableMetadata
+from models import TableMetadata, TableSelectionResult
 
 # Role to identity table mapping
 ROLE_IDENTITY_TABLE = {
@@ -20,44 +20,23 @@ class SearchService:
         self.selector_agent = selector_agent
         self.preprocessor = preprocessor
         self.model = model
-        self.repo = repository or graph_service.repo  # Use graph_service's repo if repository not provided
+        self.repo = repository or graph_service.repo
 
-    def get_final_tables(self, query: str, role: Optional[str] = None) -> List[str]:
-        """
-        Returns list of table names (strings) - backward compatible method.
-
-        Args:
-            query: Natural language query
-            role: Optional role (parent, student, faculty) - adds identity table if provided
-        """
-        metadata_list = self.get_final_schema_context(query, role=role)
-        return [table.name for table in metadata_list]
-
-    def get_final_schema_context(self, query: str, role: Optional[str] = None) -> List[TableMetadata]:
-        """
-        Get final table metadata with optional role-based table inclusion.
-
-        Args:
-            query: Natural language query
-            role: Optional role (parent, student, faculty) - adds identity table if provided
-        """
+    def _get_selection_result(self, query: str, role: Optional[str] = None) -> TableSelectionResult:
+        """Core pipeline returning selected tables and their join paths."""
         # 1. HYBRID SEARCH (Stages A & B)
-        # Returns tables with high semantic/keyword similarity
         vector_query = self.preprocessor.normalize_for_vector(query)
         query_vector = self.model.encode([vector_query])
 
-        seeds = list(
-            set(
-                [res[0] for res in self.vector_service.search(query_vector, top_k=3)]
-                + [res[0] for res in self.keyword_service.search(query, top_k=3)]
-            )
-        )
+        seeds = list(set(
+            [res[0] for res in self.vector_service.search(query_vector, top_k=3)]
+            + [res[0] for res in self.keyword_service.search(query, top_k=3)]
+        ))
 
         # 2. GRAPH EXPANSION (Stage C)
-        # Adds bridge tables while avoiding hub-explosion
         candidate_names = self.graph_service.expand_candidates(seeds)
 
-        # 3. Add role-based identity table if role is provided
+        # 3. Add role-based identity table to candidates if role is provided
         if role and role.lower() in ROLE_IDENTITY_TABLE:
             identity_table = ROLE_IDENTITY_TABLE[role.lower()]
             if identity_table not in candidate_names:
@@ -65,16 +44,43 @@ class SearchService:
 
         candidate_metas = [self.repo.get_table(name) for name in candidate_names if self.repo.get_table(name)]
 
-        # 4. SCHEMA SELECTOR (Stage D)
-        # The 'Surgical' pick. LLM chooses the final 2-3 tables from the 6-8 candidates
-        final_table_names = self.selector_agent.select_final_tables(query, candidate_metas)
+        # 4. Compute join connectivity across all candidates for the LLM
+        candidate_join_paths = self.graph_service.compute_join_paths(
+            selected_tables=candidate_names,
+            candidate_tables=candidate_names,
+        )
+        connectivity_text = self.graph_service.format_join_connectivity_text(candidate_join_paths)
 
-        # 5. Ensure role-based identity table is in final set if role is provided
+        # 5. SCHEMA SELECTOR (Stage D) - LLM picks final 2-3 tables with join context
+        selection_result = self.selector_agent.select_final_tables(
+            query, candidate_metas, join_connectivity_text=connectivity_text
+        )
+        final_table_names = selection_result.selected_tables
+
+        # 6. Ensure role-based identity table is in final set if role is provided
         if role and role.lower() in ROLE_IDENTITY_TABLE:
             identity_table = ROLE_IDENTITY_TABLE[role.lower()]
             if identity_table not in final_table_names:
                 final_table_names.append(identity_table)
 
-        # Return the metadata objects for the chosen tables
-        return [self.repo.get_table(name) for name in final_table_names if self.repo.get_table(name)]
+        # 7. Compute minimum join result for the final selected tables
+        join_result = self.graph_service.compute_join_result(
+            selected_tables=final_table_names,
+            candidate_tables=candidate_names,
+        )
+
+        return TableSelectionResult(selected_tables=final_table_names, join_result=join_result)
+
+    def get_selection_result(self, query: str, role: Optional[str] = None) -> TableSelectionResult:
+        """Returns selected tables and their join paths."""
+        return self._get_selection_result(query, role=role)
+
+    def get_final_tables(self, query: str, role: Optional[str] = None) -> List[str]:
+        """Returns list of table names - backward compatible method."""
+        return self._get_selection_result(query, role=role).selected_tables
+
+    def get_final_schema_context(self, query: str, role: Optional[str] = None) -> List[TableMetadata]:
+        """Returns metadata for the final selected tables - backward compatible method."""
+        result = self._get_selection_result(query, role=role)
+        return [self.repo.get_table(name) for name in result.selected_tables if self.repo.get_table(name)]
 

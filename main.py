@@ -109,9 +109,11 @@ def main():
 
     for query in test_queries:
         print(f"Query: {query}")
-        results = searcher.get_final_tables(query, role=args.role)
-        for table_name in results:
+        result = searcher.get_selection_result(query, role=args.role)
+        for table_name in result.selected_tables:
             print(f" -> Found: {table_name}")
+        join_text = graph_service.format_join_result(result.join_result)
+        print(f" Join result:\n   {join_text.replace(chr(10), chr(10) + '   ')}")
 
 if __name__ == "__main__":
     main()
