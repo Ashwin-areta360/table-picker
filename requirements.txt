@@ -19,4 +19,6 @@ openpyxl>=3.0.0  # Required for pandas Excel I/O
 
 # Optional RAG dependencies (install with: pip install -r requirements.txt -r requirements-rag.txt)
 # chromadb>=0.4.0
+fastapi
+uvicorn
 
