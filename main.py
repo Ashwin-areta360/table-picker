@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # main.py - Main entry point for table_picker_v2
 import argparse
+import os
 import sys
 from pathlib import Path
 
@@ -16,6 +17,14 @@ src_dir = project_root / "src"
 if str(src_dir) not in sys.path:
     sys.path.insert(0, str(src_dir))
 
+# Load .env from the table-picker project root (so cwd doesn't matter)
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv(project_root / ".env")
+except ImportError:
+    pass
+
 # Import from src/ package
 from repositories.schema_repository import SchemaRepository
 from services import (
@@ -30,6 +39,8 @@ from services import (
 
 
 def main():
+    env_model = os.getenv("MODEL") or None
+
     parser = argparse.ArgumentParser(description="Table Picker V2 - Query table selection")
     parser.add_argument(
         "--role",
@@ -47,8 +58,8 @@ def main():
     parser.add_argument(
         "--model",
         type=str,
-        default=None,
-        help="LLM model name (uses provider default if not specified)",
+        default=env_model,
+        help="LLM model name (default: MODEL env var; uses provider default if not specified)",
     )
     parser.add_argument(
         "--metadata-path",

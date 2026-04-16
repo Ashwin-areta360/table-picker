@@ -8,6 +8,7 @@ table names.
 """
 
 from pathlib import Path
+import os
 import sys
 from typing import List, Optional
 
@@ -24,6 +25,14 @@ src_dir = project_root / "src"
 if str(src_dir) not in sys.path:
     sys.path.insert(0, str(src_dir))
 
+# Load .env from the table-picker project root (so uvicorn cwd doesn't matter)
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv(project_root / ".env")
+except ImportError:
+    pass
+
 from repositories.schema_repository import SchemaRepository
 from services import (
     VectorDBService,
@@ -37,8 +46,9 @@ from services import (
 
 
 # Default selector configuration (mirrors main.py defaults)
+# Provider remains a code default; only MODEL comes from .env (if set).
 DEFAULT_PROVIDER = "groq"
-DEFAULT_MODEL_NAME: Optional[str] = None
+DEFAULT_MODEL_NAME: Optional[str] = os.getenv("MODEL") or None
 
 
 class QueryRequest(BaseModel):
