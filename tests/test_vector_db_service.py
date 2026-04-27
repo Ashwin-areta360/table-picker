@@ -67,3 +67,20 @@ def test_load_search_returns_correct_table():
         query = np.array([[1, 0, 0, 0]], dtype="float32")
         results = loaded.search(query, top_k=1)
         assert results[0][0] == "TableA"
+
+
+def test_load_raises_when_meta_file_missing():
+    svc = _make_populated_service()
+    with tempfile.TemporaryDirectory() as tmpdir:
+        faiss_path = os.path.join(tmpdir, "test.faiss")
+        # Write only the .faiss file, no .meta
+        faiss.write_index(svc.index, faiss_path)
+
+        loader = VectorDBService(embedding_dim=4)
+        original_id_to_table = dict(loader.id_to_table)
+
+        with pytest.raises((FileNotFoundError, OSError)):
+            loader.load(faiss_path)
+
+        # State must not be mutated
+        assert loader.id_to_table == original_id_to_table
