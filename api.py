@@ -7,7 +7,6 @@ produced by the profiler alongside the metadata JSON. No index building
 at request time.
 """
 
-import json
 from pathlib import Path
 import os
 import sys
@@ -44,6 +43,7 @@ from services import (
 DEFAULT_PROVIDER = "groq"
 DEFAULT_MODEL_NAME: Optional[str] = os.getenv("MODEL") or None
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+EMBEDDING_DIM = 384
 
 # Stateless and expensive to load — shared across all requests.
 _embedding_model = SentenceTransformer(EMBEDDING_MODEL)
@@ -67,7 +67,6 @@ app = FastAPI(title="Table Picker API", version="1.0.0")
 def _build_search_service(metadata_path: str) -> SearchService:
     json_path = Path(metadata_path)
     faiss_path = json_path.with_suffix(".faiss")
-    meta_path = Path(str(faiss_path) + ".meta")
 
     if not json_path.exists():
         raise HTTPException(status_code=400, detail=f"Metadata file not found: {json_path}")
@@ -76,21 +75,18 @@ def _build_search_service(metadata_path: str) -> SearchService:
             status_code=400,
             detail=f"FAISS index not found: {faiss_path}. Run the profiler to generate it.",
         )
-    if not meta_path.exists():
-        raise HTTPException(status_code=400, detail=f"FAISS meta file not found: {meta_path}")
-
-    with open(meta_path) as f:
-        meta = json.load(f)
-
-    if meta["model"] != EMBEDDING_MODEL:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Model mismatch: index built with '{meta['model']}', API expects '{EMBEDDING_MODEL}'",
-        )
 
     repo = SchemaRepository(str(json_path))
-    vector_service = VectorDBService(embedding_dim=meta["embedding_dim"])
-    vector_service.load(str(faiss_path))
+    vector_service = VectorDBService(embedding_dim=EMBEDDING_DIM)
+    try:
+        loaded_model = vector_service.load(str(faiss_path))
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
+    if loaded_model != EMBEDDING_MODEL:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Model mismatch: index built with '{loaded_model}', API expects '{EMBEDDING_MODEL}'",
+        )
 
     keyword_service = KeywordSearchService(repo, _preprocessor)
     graph_service = GraphExpansionService(repo)

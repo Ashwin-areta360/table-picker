@@ -117,3 +117,38 @@ def test_query_returns_400_for_model_mismatch():
         })
         assert response.status_code == 400
         assert "model mismatch" in response.json()["detail"].lower()
+
+
+def test_query_returns_500_for_missing_meta_file():
+    with tempfile.TemporaryDirectory() as tmpdir:
+        # Write .json and .faiss but no .faiss.meta
+        metadata = {"Sales": {
+            "metadata": {"columns": {}, "foreign_keys": {}},
+            "selector_extras": {
+                "is_hub_table": False, "degree_centrality": 0,
+                "normalized_centrality": 0, "incoming_fk_count": 0,
+                "outgoing_fk_count": 0, "betweenness_centrality": 0,
+                "referenced_by": [], "references": [],
+            },
+            "description": "Sales table.",
+            "columns": {},
+        }}
+        json_path = os.path.join(tmpdir, "metadata.json")
+        faiss_path = os.path.join(tmpdir, "metadata.faiss")
+
+        with open(json_path, "w") as f:
+            json.dump(metadata, f)
+
+        index = faiss.IndexFlatL2(384)
+        vec = np.random.rand(1, 384).astype("float32")
+        index.add(vec)
+        faiss.write_index(index, faiss_path)
+        # No .faiss.meta written
+
+        import api
+        client = TestClient(api.app)
+        response = client.post("/query", json={
+            "query": "show me data",
+            "metadata_path": json_path,
+        })
+        assert response.status_code == 500
