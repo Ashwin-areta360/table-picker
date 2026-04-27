@@ -52,3 +52,24 @@ class VectorDBService:
 
         return float("inf")
 
+    def save(self, faiss_path: str, model_name: str) -> None:
+        """Serialize index and id_to_table mapping to disk."""
+        import json as _json
+        faiss.write_index(self.index, faiss_path)
+        meta = {
+            "model": model_name,
+            "embedding_dim": self.index.d,
+            "id_to_table": {str(k): v for k, v in self.id_to_table.items()},
+        }
+        with open(faiss_path + ".meta", "w") as f:
+            _json.dump(meta, f, indent=2)
+
+    def load(self, faiss_path: str) -> str:
+        """Load index and id_to_table from disk. Returns the model name stored in meta."""
+        import json as _json
+        self.index = faiss.read_index(faiss_path)
+        with open(faiss_path + ".meta") as f:
+            meta = _json.load(f)
+        self.id_to_table = {int(k): v for k, v in meta["id_to_table"].items()}
+        return meta["model"]
+
