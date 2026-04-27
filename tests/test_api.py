@@ -152,3 +152,4 @@ def test_query_returns_500_for_missing_meta_file():
             "metadata_path": json_path,
         })
         assert response.status_code == 500
+        assert ".meta" in response.json()["detail"]
