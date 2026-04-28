@@ -153,3 +153,117 @@ def test_query_returns_500_for_missing_meta_file():
         })
         assert response.status_code == 500
         assert ".meta" in response.json()["detail"]
+
+
+def test_query_returns_200_with_selected_tables():
+    """Happy path: valid artefacts + mocked SearchService returns tables."""
+    from unittest.mock import patch, MagicMock
+    import api
+    from models import TableSelectionResult
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        json_path = _write_test_artefacts(tmpdir)
+
+        mock_result = TableSelectionResult(selected_tables=["Sales"], join_result=None)
+        with patch("api.SearchService") as MockSearchService:
+            instance = MagicMock()
+            instance.get_selection_result.return_value = mock_result
+            MockSearchService.return_value = instance
+
+            client = TestClient(api.app)
+            response = client.post("/query", json={
+                "query": "show me sales data",
+                "metadata_path": json_path,
+            })
+
+        assert response.status_code == 200
+        body = response.json()
+        assert body["tables"] == ["Sales"]
+        assert body["join_conditions"] == []
+
+
+def test_query_returns_200_with_join_conditions():
+    """Happy path: join conditions from the result are passed through."""
+    from unittest.mock import patch, MagicMock
+    import api
+    from models import TableSelectionResult, JoinResult
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        json_path = _write_test_artefacts(tmpdir)
+
+        join_result = JoinResult(
+            spanning_path=["Sales", "Orders"],
+            tree_edges=[],
+            direct_links=[],
+            is_linear=True,
+            join_conditions=['Sales."OrderID" = Orders."OrderID"'],
+        )
+        mock_result = TableSelectionResult(
+            selected_tables=["Sales", "Orders"],
+            join_result=join_result,
+        )
+        with patch("api.SearchService") as MockSearchService:
+            instance = MagicMock()
+            instance.get_selection_result.return_value = mock_result
+            MockSearchService.return_value = instance
+
+            client = TestClient(api.app)
+            response = client.post("/query", json={
+                "query": "show me sales with orders",
+                "metadata_path": json_path,
+            })
+
+        assert response.status_code == 200
+        body = response.json()
+        assert "Sales" in body["tables"]
+        assert "Orders" in body["tables"]
+        assert body["join_conditions"] == ['Sales."OrderID" = Orders."OrderID"']
+
+
+def test_query_returns_404_when_no_tables_selected():
+    """Selector returns empty list -> 404."""
+    from unittest.mock import patch, MagicMock
+    import api
+    from models import TableSelectionResult
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        json_path = _write_test_artefacts(tmpdir)
+
+        mock_result = TableSelectionResult(selected_tables=[], join_result=None)
+        with patch("api.SearchService") as MockSearchService:
+            instance = MagicMock()
+            instance.get_selection_result.return_value = mock_result
+            MockSearchService.return_value = instance
+
+            client = TestClient(api.app)
+            response = client.post("/query", json={
+                "query": "something that matches nothing",
+                "metadata_path": json_path,
+            })
+
+        assert response.status_code == 404
+
+
+def test_query_passes_role_to_search_service():
+    """role field in request is forwarded to get_selection_result."""
+    from unittest.mock import patch, MagicMock
+    import api
+    from models import TableSelectionResult
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        json_path = _write_test_artefacts(tmpdir)
+
+        mock_result = TableSelectionResult(selected_tables=["Sales"], join_result=None)
+        with patch("api.SearchService") as MockSearchService:
+            instance = MagicMock()
+            instance.get_selection_result.return_value = mock_result
+            MockSearchService.return_value = instance
+
+            client = TestClient(api.app)
+            client.post("/query", json={
+                "query": "show me data",
+                "metadata_path": json_path,
+                "role": "parent",
+            })
+
+            instance.get_selection_result.assert_called_once_with("show me data", role="parent")
