@@ -1,5 +1,6 @@
 # services/vector_db_service.py (moved into src/table_picker_v2/services)
 
+import json
 import faiss
 import numpy as np
 from typing import List, Tuple
@@ -51,4 +52,23 @@ class VectorDBService:
                 return float(dist)
 
         return float("inf")
+
+    def save(self, faiss_path: str, model_name: str) -> None:
+        """Serialize index and id_to_table mapping to disk."""
+        faiss.write_index(self.index, faiss_path)
+        meta = {
+            "model": model_name,
+            "embedding_dim": self.index.d,
+            "id_to_table": {str(k): v for k, v in self.id_to_table.items()},
+        }
+        with open(faiss_path + ".meta", "w") as f:
+            json.dump(meta, f, indent=2)
+
+    def load(self, faiss_path: str) -> str:
+        """Load index and id_to_table from disk. Returns the model name stored in meta."""
+        with open(faiss_path + ".meta") as f:
+            meta = json.load(f)
+        self.index = faiss.read_index(faiss_path)
+        self.id_to_table = {int(k): v for k, v in meta["id_to_table"].items()}
+        return meta["model"]
 
