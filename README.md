@@ -1,460 +1,409 @@
-# Table Picker V2: Intelligent Table Selection for NL2SQL
+# Table Picker: Intelligent Table Selection for NL2SQL
 
-**A hybrid search system combining semantic embeddings, keyword matching, graph expansion, and LLM-based selection to automatically identify relevant database tables from natural language queries.**
-
-This project provides a complete pipeline for intelligent table selection, using vector search (FAISS), keyword search (BM25), relationship graph expansion, and an LLM-based final selector to choose the optimal set of tables for answering natural language queries.
+A hybrid search system that combines semantic embeddings, keyword matching, graph expansion, and LLM-based selection to automatically identify relevant database tables from natural language queries.
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 1. [Overview](#overview)
 2. [Architecture](#architecture)
 3. [Getting Started](#getting-started)
-4. [Quick Start](#quick-start)
-5. [Usage](#usage)
-6. [Project Structure](#project-structure)
-7. [How It Works](#how-it-works)
-8. [Configuration](#configuration)
-9. [Testing](#testing)
+4. [Generating the FAISS Index](#generating-the-faiss-index)
+5. [Running the API](#running-the-api)
+6. [Local Testing](#local-testing)
+7. [Batch Testing and Debugging](#batch-testing-and-debugging)
+8. [Project Structure](#project-structure)
+9. [Metadata Format](#metadata-format)
+10. [Configuration](#configuration)
+11. [Testing](#testing)
+12. [Known Limitations](#known-limitations)
 
 ---
 
-## 🎯 Overview
+## Overview
 
-### What This Project Does
+Table Picker takes a natural language query and returns the minimal set of database tables needed to answer it, along with join conditions.
 
-Table Picker V2 automatically:
-1. **Indexes table metadata** using semantic embeddings (FAISS) and keyword indexing (BM25)
-2. **Searches for relevant tables** using hybrid semantic + keyword search
-3. **Expands candidates** using relationship graphs to find bridge tables
-4. **Selects final tables** using an LLM to choose the minimal optimal set
+The pipeline has four stages:
 
-### Key Features
+1. **Hybrid search** — finds candidate tables using semantic (FAISS) and keyword (BM25) search
+2. **Graph expansion** — adds bridge tables required for valid join paths
+3. **LLM selection** — picks the minimal optimal set from the candidates
+4. **Join resolution** — returns the join conditions needed to connect the selected tables
 
-- ✅ **Hybrid Search**: Combines semantic (vector) and keyword (BM25) search for robust matching
-- ✅ **Graph Expansion**: Automatically finds bridge tables needed for joins
-- ✅ **LLM-Based Selection**: Uses language models to intelligently choose the minimal table set
-- ✅ **Role-Based Filtering**: Supports user roles (parent, student, faculty) for context-aware selection
-- ✅ **Fast Indexing**: In-memory FAISS index for sub-second search
-- ✅ **Comprehensive Metadata**: Uses rich table metadata including descriptions, synonyms, sample values, and relationships
+The FAISS vector index is **not built at runtime**. It is pre-built and stored on disk alongside the metadata JSON file. The API loads it on each request. This means startup is fast and no embedding computation happens during serving.
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    Natural Language Query                    │
-│              "What is Manoj Iyer's GPA?"                     │
-└───────────────────────┬─────────────────────────────────────┘
-                        │
-                        ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   Query Preprocessing                        │
-│  - Normalization, tokenization, lemmatization               │
-└───────────────────────┬─────────────────────────────────────┘
-                        │
-                        ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    Hybrid Search (Stage A & B)                │
-│  ┌──────────────┐              ┌──────────────┐            │
-│  │ Vector Search│              │ Keyword      │            │
-│  │ (FAISS)      │              │ Search (BM25)│            │
-│  │ Semantic     │              │ Exact match  │            │
-│  │ similarity   │              │ + synonyms   │            │
-│  └──────────────┘              └──────────────┘            │
-│         │                              │                    │
-│         └──────────┬───────────────────┘                    │
-│                   ▼                                          │
-│            Seed Tables (top matches)                         │
-└───────────────────────┬─────────────────────────────────────┘
-                        │
-                        ▼
-┌─────────────────────────────────────────────────────────────┐
-│              Graph Expansion (Stage C)                       │
-│  - Add referenced tables (FK relationships)                  │
-│  - Add bridge tables for join paths                         │
-│  - Avoid hub table explosion                                │
-└───────────────────────┬─────────────────────────────────────┘
-                        │
-                        ▼
-┌─────────────────────────────────────────────────────────────┐
-│            LLM-Based Selector (Stage D)                      │
-│  - Receives candidate tables (6-8 tables)                   │
-│  - Selects minimal optimal set (2-3 tables)                  │
-│  - Verifies join paths are valid                            │
-└───────────────────────┬─────────────────────────────────────┘
-                        │
-                        ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    Final Table Selection                    │
-│              ['students_info', 'grades']                    │
-└─────────────────────────────────────────────────────────────┘
+Natural Language Query
+        |
+        v
+Query Preprocessing
+(normalization, tokenization, lemmatization)
+        |
+        v
+Hybrid Search
+  |                    |
+  v                    v
+Vector Search       Keyword Search
+(FAISS)             (BM25)
+Semantic            Exact match + synonyms
+similarity
+  |                    |
+  +--------+----------+
+           |
+           v
+     Seed Tables
+           |
+           v
+Graph Expansion
+- Add FK-referenced tables
+- Add bridge tables for join paths
+- Avoid hub table explosion
+           |
+           v
+LLM-Based Selection
+- Receives 6-8 candidate tables
+- Selects minimal set (typically 2-3)
+- Verifies join paths are valid
+           |
+           v
+Final Result: selected tables + join conditions
 ```
 
-### Component Overview
+### Components
 
-1. **SchemaRepository**: Loads and parses table metadata from JSON
-2. **VectorDBService**: FAISS-based vector search for semantic matching
-3. **KeywordSearchService**: BM25-based keyword search for exact/synonym matching
-4. **GraphExpansionService**: Expands seed tables using relationship graphs
-5. **QueryPreprocessingService**: Normalizes and tokenizes queries
-6. **IndexingService**: Builds vector and keyword indices from metadata
-7. **SearchService**: Orchestrates the full search pipeline
-8. **SchemaSelectorService**: LLM-based final table selection
+| Component | File | Purpose |
+|---|---|---|
+| `SchemaRepository` | `src/repositories/schema_repository.py` | Loads and parses table metadata JSON |
+| `VectorDBService` | `src/services/vector_db_service.py` | FAISS vector search; supports save/load from disk |
+| `KeywordSearchService` | `src/services/keyword_search_service.py` | BM25 keyword search with synonym expansion |
+| `GraphExpansionService` | `src/services/graph_expansion_service.py` | FK-based graph traversal for bridge tables |
+| `QueryPreprocessingService` | `src/services/query_preprocessing_service.py` | Query normalization and tokenization |
+| `IndexingService` | `src/services/indexing_service.py` | Builds vector and keyword indices from metadata |
+| `SearchService` | `src/services/search_service.py` | Orchestrates the full pipeline |
+| `SchemaSelectorService` | `src/services/selector_agent_service.py` | LLM-based final table selection |
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-```bash
-# Python 3.8+
-python --version
+- Python 3.8 or later
+- At least one LLM provider API key (Groq is the default)
 
-# Install dependencies
+### Install dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-### Required Dependencies
-
-- `sentence-transformers` - For semantic embeddings
-- `faiss-cpu` or `faiss` - For vector search
-- `rank-bm25` - For keyword search
-- `spacy` - For query preprocessing
-- `pydantic` - For data models
-- `aretai` - For LLM-based selection (included in project)
-
-### Installation
+### Download the spaCy language model
 
 ```bash
-# Clone or navigate to project directory
-cd table_picker
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Download spaCy language model (required for query preprocessing)
 python -m spacy download en_core_web_sm
+```
 
-# Set up environment variables (required for LLM-based table selection)
+### Set up environment variables
+
+```bash
 cp .env.example .env
-# Edit .env and add your API keys (at least one LLM provider API key is required)
-# The default provider is Groq - get your API key from: https://console.groq.com/
+```
+
+Open `.env` and add your API key. The default provider is Groq:
+
+```
+GROQ_API_KEY=your_actual_groq_api_key_here
+```
+
+At minimum you need one key. Supported providers:
+
+| Provider | Environment variable |
+|---|---|
+| Groq (default) | `GROQ_API_KEY` |
+| OpenAI | `OPENAI_API_KEY` |
+| Anthropic | `ANTHROPIC_API_KEY` |
+| xAI (Grok) | `XAI_API_KEY` |
+
+To override the model, set `MODEL` in `.env`:
+
+```
+MODEL=openai/gpt-oss-120b
 ```
 
 ---
 
-## ⚡ Quick Start
+## Generating the FAISS Index
 
-### Basic Usage
+The API requires a pre-built FAISS index. The index consists of two files that must sit alongside your metadata JSON:
+
+- `<metadata_name>.faiss` — the FAISS index binary
+- `<metadata_name>.faiss.meta` — a JSON file storing the embedding model name and the table ID mapping
+
+For example, if your metadata is at `data/metadata/table_metadata_sales.json`, the index files must be at:
+
+```
+data/metadata/table_metadata_sales.faiss
+data/metadata/table_metadata_sales.faiss.meta
+```
+
+### How to generate the index
+
+Run this script from the project root, substituting your metadata path:
 
 ```bash
-# Run from project root
+python - <<'EOF'
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(".") / "src"))
+
+from sentence_transformers import SentenceTransformer
+from repositories.schema_repository import SchemaRepository
+from services import VectorDBService, IndexingService, QueryPreprocessingService
+
+METADATA_PATH = "data/metadata/table_metadata_sales.json"  # change this
+EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+
+model = SentenceTransformer(EMBEDDING_MODEL)
+repo = SchemaRepository(METADATA_PATH)
+vector_service = VectorDBService(embedding_dim=384)
+preprocessor = QueryPreprocessingService()
+
+IndexingService(repo, vector_service, model, preprocessor).build_index()
+
+faiss_path = str(Path(METADATA_PATH).with_suffix(".faiss"))
+vector_service.save(faiss_path, EMBEDDING_MODEL)
+print(f"Saved: {faiss_path}")
+print(f"Saved: {faiss_path}.meta")
+EOF
+```
+
+Run this once per metadata file. Re-run whenever the metadata changes.
+
+---
+
+## Running the API
+
+The API is a FastAPI application. It accepts a query and a path to the metadata JSON, loads the corresponding pre-built FAISS index from disk, and returns the selected tables with join conditions.
+
+### Start the server
+
+```bash
+python api.py
+```
+
+This starts the server on `http://0.0.0.0:9019`.
+
+Alternatively, use uvicorn directly:
+
+```bash
+uvicorn api:app --host 0.0.0.0 --port 9019 --reload
+```
+
+### Query the API
+
+```bash
+curl -X POST http://localhost:9019/query \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "What is Manoj Iyers GPA?",
+    "metadata_path": "data/metadata/table_metadata_full_education.json",
+    "role": "student"
+  }'
+```
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `query` | string | yes | Natural language question |
+| `metadata_path` | string | yes | Path to the metadata JSON file. The `.faiss` and `.faiss.meta` files must exist at the same path. |
+| `role` | string | no | `parent`, `student`, or `faculty`. Adds the corresponding identity table to the results. |
+
+**Response:**
+
+```json
+{
+  "tables": ["students_info", "grades"],
+  "join_conditions": ["students_info.student_id = grades.student_id"]
+}
+```
+
+**Error responses:**
+
+| Status | Meaning |
+|---|---|
+| 400 | Metadata file not found, FAISS index not found, or embedding model mismatch |
+| 404 | No tables selected for the query |
+| 500 | Internal error during table selection |
+
+---
+
+## Local Testing
+
+Two scripts let you run queries locally without the API. Both build the FAISS index at startup from the metadata, so no pre-built index file is required.
+
+### Single query — `run.py`
+
+```bash
+python run.py "your question here"
+```
+
+**Options:**
+
+```
+python run.py "your question" [--role {parent,student,faculty}] [--provider PROVIDER] [--model MODEL] [--metadata-path PATH]
+```
+
+**Examples:**
+
+```bash
+python run.py "What is Manoj Iyer's GPA?"
+
+python run.py "Show me the fees for hostel" --role parent
+
+python run.py "Who teaches Engineering Graphics?" \
+  --metadata-path data/metadata/table_metadata_full_education.json \
+  --provider groq
+```
+
+**Output:**
+
+```
+Query: What is Manoj Iyer's GPA?
+Role:  student
+
+Selected tables:
+  - students_info
+  - grades
+
+Join result:
+  students_info.student_id = grades.student_id
+```
+
+### Built-in test queries — `main.py`
+
+```bash
 python main.py
 ```
 
-This will:
-1. Load table metadata from `src/data/table_metadata_full.json`
-2. Build vector and keyword indices
-3. Run test queries and display results
-
-### Example Output
-
-```
-Building index...
-✓ Index built
-
-Running test queries...
-
-Query: What is Manoj Iyer's GPA?
- -> Found: students_info
- -> Found: grades
-Query: Show me the fees for hostel
- -> Found: feedue
-Query: Who teaches Engineering Graphics?
- -> Found: courses
- -> Found: faculty_info
-```
-
-### With Custom Options
+Runs three built-in queries and prints results. Accepts the same options as `run.py`.
 
 ```bash
-# Use a specific role
-python main.py --role student
-
-# Use a different LLM provider
-python main.py --provider groq --model llama-3.1-70b
-
-# Use custom metadata path
-python main.py --metadata-path /path/to/metadata.json
+python main.py --role student --provider groq --metadata-path data/metadata/table_metadata_full_education.json
 ```
 
 ---
 
-## 💡 Usage
+## Batch Testing and Debugging
 
-### Main Script (`main.py`)
+### Batch run — `src/batch_run.py`
 
-The main entry point for running table selection:
+Runs table selection over many queries from an Excel file and writes results with accuracy metrics.
 
 ```bash
-python main.py [OPTIONS]
+python src/batch_run.py --input-file test_queries.xlsx
 ```
 
 **Options:**
-- `--role {parent,student,faculty}`: User role (adds identity table to results)
-- `--provider PROVIDER`: LLM provider (default: groq)
-- `--model MODEL`: LLM model name (uses provider default if not specified)
-- `--metadata-path PATH`: Path to table metadata JSON file (default: `src/data/table_metadata_full.json`)
 
-**Example:**
-```bash
-python main.py --role student --provider groq
+```
+--input-file PATH       Excel file with queries (required)
+--output-file PATH      Output Excel file (default: <input>_results.xlsx)
+--metadata-path PATH    Path to metadata JSON
+--provider PROVIDER     LLM provider (default: groq)
+--model MODEL           LLM model name
+--limit N               Process only first N rows
+--role {parent,student,faculty}
 ```
 
-### Batch Testing (`batch_run.py`)
+**Excel file format:**
 
-Run table selection on a batch of test queries from an Excel file:
-
-```bash
-python src/batch_run.py [OPTIONS]
-```
-
-**Note:** `batch_run.py` and `debug_query.py` remain in `src/` directory.
-
-**Options:**
-- `--input-file PATH`: Input Excel file with test queries (default: `helpers/test.xlsx`)
-- `--output-file PATH`: Output Excel file (default: `<input>_results_v2.xlsx`)
-- `--metadata-path PATH`: Path to table metadata JSON (default: `src/data/table_metadata_full.json`)
-- `--provider PROVIDER`: LLM provider (default: groq)
-- `--model MODEL`: LLM model name
-- `--limit N`: Process only first N rows
-- `--role {parent,student,faculty}`: Global role for all queries
-
-**Example:**
-```bash
-python src/batch_run.py --input-file helpers/test.xlsx --provider groq
-```
-
-**Excel File Format:**
-- Column 1: Query/question
+- Column 1: Natural language query
 - Column 2: Expected tables (comma-separated)
-- Optional `role` column: Per-query role specification
+- Optional `role` column: Per-row role override
 
-### Debug Script (`debug_query.py`)
+### Debug a single query — `src/debug_query.py`
 
-Detailed analysis of how a query is processed:
+Shows step-by-step details of how a query is processed: keyword scores, semantic distances, seed tables, graph expansion, and final selection.
 
-```bash
-python src/debug_query.py [OPTIONS]
-```
-
-**Options:**
-- `--query QUERY`: Query to analyze (default: "What is Manoj Iyer's GPA?")
-- `--role {parent,student,faculty}`: User role
-- `--provider PROVIDER`: LLM provider (default: groq)
-- `--model MODEL`: LLM model name
-- `--metadata-path PATH`: Path to table metadata JSON
-
-**Example:**
 ```bash
 python src/debug_query.py --query "Show me the fees for hostel"
 ```
 
-**Output includes:**
-- Keyword search results with scores
-- Semantic search results with distances
-- Seed tables from hybrid search
-- Graph expansion details
-- Final selected tables
+**Options:**
 
-### Programmatic Usage
-
-```python
-import sys
-from pathlib import Path
-
-# Add src/ to path
-sys.path.insert(0, str(Path(__file__).parent / "src"))
-
-from repositories.schema_repository import SchemaRepository
-from services import (
-    VectorDBService,
-    IndexingService,
-    SearchService,
-    KeywordSearchService,
-    GraphExpansionService,
-    QueryPreprocessingService,
-    SchemaSelectorService,
-)
-from sentence_transformers import SentenceTransformer
-
-# 1. Setup
-model = SentenceTransformer('all-MiniLM-L6-v2')
-repo = SchemaRepository("src/data/table_metadata_full.json")
-vector_service = VectorDBService(embedding_dim=384)
-preprocessor = QueryPreprocessingService()
-
-# 2. Build index
-indexer = IndexingService(repo, vector_service, model, preprocessor)
-indexer.build_index()
-
-# 3. Initialize services
-keyword_service = KeywordSearchService(repo, preprocessor)
-graph_service = GraphExpansionService(repo)
-selector_agent = SchemaSelectorService(provider="groq")
-searcher = SearchService(
-    vector_service,
-    keyword_service,
-    graph_service,
-    selector_agent,
-    preprocessor,
-    model,
-    repository=repo
-)
-
-# 4. Query
-query = "What is Manoj Iyer's GPA?"
-results = searcher.get_final_tables(query, role="student")
-print(f"Selected tables: {results}")
-# Output: ['students_info', 'grades']
+```
+--query QUERY           Query to analyze
+--role {parent,student,faculty}
+--provider PROVIDER
+--model MODEL
+--metadata-path PATH
 ```
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
-table_picker/
-├── main.py                           # Main entry point script
-├── src/                              # Main source code
-│   ├── batch_run.py                  # Batch testing script
-│   ├── debug_query.py                # Debug/analysis script
-│   ├── data/
-│   │   └── table_metadata_full.json  # Table metadata (required)
+table-picker/
+├── api.py                          # FastAPI application (production entrypoint)
+├── main.py                         # Runs built-in test queries locally
+├── run.py                          # Single-query local entrypoint
+├── requirements.txt
+├── .env.example                    # Environment variable template
+│
+├── src/                            # Core library
 │   ├── models/
-│   │   ├── __init__.py
-│   │   └── table_metadata.py         # Data models (TableMetadata, ColumnMetadata, etc.)
+│   │   └── table_metadata.py       # Pydantic models (TableMetadata, ColumnMetadata)
 │   ├── repositories/
-│   │   └── schema_repository.py      # Loads and parses metadata JSON
-│   └── services/
-│       ├── __init__.py
-│       ├── vector_db_service.py      # FAISS vector search
-│       ├── indexing_service.py        # Builds indices from metadata
-│       ├── keyword_search_service.py # BM25 keyword search
-│       ├── query_preprocessing_service.py # Query normalization
-│       ├── graph_expansion_service.py # Graph-based expansion
-│       ├── search_service.py         # Main orchestration service
-│       └── selector_agent_service.py # LLM-based final selection
+│   │   └── schema_repository.py    # Loads and parses metadata JSON
+│   ├── services/
+│   │   ├── vector_db_service.py    # FAISS vector search (save/load support)
+│   │   ├── indexing_service.py     # Builds FAISS + BM25 indices from metadata
+│   │   ├── keyword_search_service.py
+│   │   ├── query_preprocessing_service.py
+│   │   ├── graph_expansion_service.py
+│   │   ├── search_service.py       # Orchestrates the full pipeline
+│   │   └── selector_agent_service.py  # LLM-based final selection
+│   ├── batch_run.py                # Batch testing over Excel input
+│   └── debug_query.py              # Detailed single-query debug output
 │
-├── aretai/                           # LLM client library
-│   └── ...                          # LLM adapters and utilities
+├── data/
+│   ├── table_metadata_full.json    # Default metadata file
+│   └── metadata/                   # Domain-specific metadata files
+│       ├── table_metadata_full_education.json
+│       ├── table_metadata_full_thrombosis_prediction.json
+│       └── table_metadata_sales.json
 │
-├── data/                             # Project-level data
-│   └── table_metadata_full.json      # Alternative metadata location
-│
-├── helpers/                          # Helper scripts and utilities
-│   └── test.xlsx                     # Test queries for batch_run.py
-│
-├── docs/                             # Documentation
-│   └── ...                          # Additional documentation files
-│
-├── requirements.txt                  # Python dependencies
-├── pyproject.toml                    # Project configuration
-└── README.md                         # This file
+├── aretai/                         # LLM client library (bundled)
+├── tests/                          # pytest test suite
+│   ├── test_api.py
+│   └── test_vector_db_service.py
+└── docs/                           # Additional documentation
 ```
 
 ---
 
-## 🔍 How It Works
+## Metadata Format
 
-### Stage A: Vector Search (Semantic)
-
-Uses FAISS to find tables with high semantic similarity to the query:
-
-1. Query is normalized and encoded using SentenceTransformer
-2. Vector search finds top-k most similar table embeddings
-3. Returns tables with low L2 distance (high similarity)
-
-**Example:**
-- Query: "Show me learners"
-- Matches: `students_info` (semantic similarity to "learners")
-
-### Stage B: Keyword Search (Exact/Synonym)
-
-Uses BM25 to find tables with exact matches or synonyms:
-
-1. Query is tokenized and normalized
-2. BM25 scores tables based on:
-   - Table names
-   - Column names
-   - Synonyms
-   - Sample values
-3. Returns top-k highest scoring tables
-
-**Example:**
-- Query: "What is Manoj Iyer's GPA?"
-- Matches: `grades` (contains "GPA"), `students_info` (contains "Manoj Iyer" in sample values)
-
-### Stage C: Graph Expansion
-
-Expands seed tables using relationship graphs:
-
-1. Starts with seed tables from Stages A & B
-2. Adds referenced tables (outgoing foreign keys)
-3. Conditionally adds referencing tables (incoming foreign keys) if not a hub table
-4. Prevents hub table explosion (e.g., `students_info` won't pull in all child tables)
-
-**Example:**
-- Seeds: `grades`
-- Expansion: Adds `students_info` (grades references students_info)
-- Expansion: Adds `courses` (grades references courses)
-
-### Stage D: LLM-Based Selection
-
-Uses an LLM to select the minimal optimal set:
-
-1. Receives 6-8 candidate tables from expansion
-2. LLM analyzes:
-   - Query intent
-   - Table relationships
-   - Join paths
-   - Required bridge tables
-3. Returns minimal set (typically 2-3 tables) that can answer the query
-
-**Example:**
-- Candidates: `students_info`, `grades`, `courses`, `registration`
-- Query: "What is Manoj Iyer's GPA?"
-- LLM selects: `students_info`, `grades` (minimal set to answer query)
-
-### Role-Based Filtering
-
-If a role is specified, the system automatically adds the appropriate identity table:
-
-- `--role parent` → adds `parent_info`
-- `--role student` → adds `students_info`
-- `--role faculty` → adds `faculty_info`
-
----
-
-## ⚙️ Configuration
-
-### Table Metadata Format
-
-The system requires a JSON file with table metadata in the following format:
+Each metadata JSON file maps table names to their configuration:
 
 ```json
 {
   "table_name": {
-    "description": "Table description",
+    "description": "What this table contains",
     "metadata": {
       "columns": {
         "column_name": {
-          "description": "Column description",
-          "synonyms": ["synonym1", "synonym2"],
+          "description": "What this column stores",
+          "synonyms": ["alias1", "alias2"],
           "hints": ["good_for_indexing"],
           "sample_values": ["value1", "value2"],
           "is_primary_key": false,
@@ -472,154 +421,53 @@ The system requires a JSON file with table metadata in the following format:
 }
 ```
 
-### LLM Provider Configuration
-
-The system uses the `aretai` library for LLM access. Supported providers:
-
-- `groq` (default) - Fast inference
-- `openai` - OpenAI API
-- `anthropic` - Anthropic Claude API
-- `grok` - xAI Grok API
-
-**Setting up API Keys:**
-
-1. Copy the example environment file:
-   ```bash
-   cp .env.example .env
-   ```
-
-2. Edit `.env` and add your API keys:
-   ```bash
-   # At minimum, add one API key for your preferred provider
-   GROQ_API_KEY=your_actual_api_key_here
-   # Or use OPENAI_API_KEY, ANTHROPIC_API_KEY, or XAI_API_KEY
-   ```
-
-3. The `aretai` library automatically loads these from `.env` files.
-
-**Configure via command-line:**
-```bash
-python main.py --provider groq --model llama-3.1-70b
-```
-
-**Or in code:**
-```python
-selector_agent = SchemaSelectorService(provider="groq", model="llama-3.1-70b")
-```
-
-**Note:** API keys are read in this order:
-1. Explicitly passed to `SchemaSelectorService`
-2. Environment variables from `.env` file
-3. System environment variables
+`references` and `referenced_by` drive graph expansion. Tables marked `is_hub_table: true` are protected from pulling in all their children during expansion.
 
 ---
 
-## 🧪 Testing
+## Configuration
 
-### Running Tests
+### LLM provider and model
+
+Set via command-line flags or environment variables:
 
 ```bash
-# Run main script with test queries
-python main.py
+# Command-line
+python run.py "query" --provider groq --model llama-3.3-70b-versatile
 
-# Run batch tests
-python src/batch_run.py --input-file helpers/test.xlsx
-
-# Debug a specific query
-python src/debug_query.py --query "Your query here"
+# Environment variable (applies to the API and all scripts)
+MODEL=openai/gpt-oss-120b
 ```
 
-### Test Queries
+### Embedding model
 
-The system includes built-in test queries:
-1. "What is Manoj Iyer's GPA?" - Tests sample values retrieval
-2. "Show me the fees for hostel" - Tests synonym/description retrieval
-3. "Who teaches Engineering Graphics?" - Tests column name/description retrieval
+The embedding model is fixed at `all-MiniLM-L6-v2` (384 dimensions) across the codebase. If you change it, you must regenerate all FAISS index files and ensure the API constant `EMBEDDING_MODEL` in `api.py` matches.
 
-### Batch Testing
+### Role-based filtering
 
-Create an Excel file with columns:
-- **Column 1**: Query/question
-- **Column 2**: Expected tables (comma-separated)
-- **Optional `role` column**: Per-query role
+Passing a role automatically includes the corresponding identity table in the results:
 
-Run:
+| Role | Table added |
+|---|---|
+| `student` | `students_info` |
+| `parent` | `parent_info` |
+| `faculty` | `faculty_info` |
+
+---
+
+## Testing
+
 ```bash
-python src/batch_run.py --input-file test_queries.xlsx
+pytest tests/
 ```
 
-Output includes:
-- Predicted tables for each query
-- Match categories (exact, partial_acceptable, partial_serious, no_match)
-- Accuracy metrics
-- Detailed results saved to Excel
+Tests use a minimal in-memory metadata fixture and do not require a running LLM or a real FAISS index file. The test helpers create temporary `.faiss` and `.faiss.meta` files as needed.
 
 ---
 
-## 🔧 Advanced Usage
+## Known Limitations
 
-### Custom Embedding Model
-
-The system uses `all-MiniLM-L6-v2` by default. To use a different model:
-
-```python
-from sentence_transformers import SentenceTransformer
-
-# Use a different model
-model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
-vector_service = VectorDBService(embedding_dim=768)  # Update dimension
-```
-
-### Adjusting Search Parameters
-
-Modify search behavior in `SearchService`:
-
-```python
-# In search_service.py, adjust top_k values:
-seeds = list(set(
-    [res[0] for res in self.vector_service.search(query_vector, top_k=5)] +  # Increase from 3
-    [res[0] for res in self.keyword_service.search(query, top_k=5)]  # Increase from 3
-))
-```
-
-### Graph Expansion Depth
-
-Control expansion depth in `GraphExpansionService`:
-
-```python
-# In graph_expansion_service.py:
-expanded = graph_service.expand_candidates(seeds, max_hops=2)  # Increase from 1
-```
-
----
-
-## 📚 Additional Documentation
-
-- **`main.py`**: Main entry point with examples
-- **`src/batch_run.py`**: Batch testing implementation
-- **`src/debug_query.py`**: Debug/analysis tool
-- **`docs/`**: Additional documentation files
-
----
-
-## 🚧 Known Limitations
-
-1. **In-Memory Index**: Vector index is rebuilt on each run (no persistence)
-2. **LLM Dependency**: Requires LLM API access for final selection
-3. **Metadata Dependency**: Requires comprehensive table metadata JSON
-
-### Future Improvements
-
-- [ ] Persist vector index to disk for faster startup
-- [ ] Support for multiple embedding models
-- [ ] Configurable scoring weights
-- [ ] Caching of LLM responses
-- [ ] Support for additional LLM providers
-
----
-
-## 👤 Author
-
-**ashwin-sreejith**
-
-
+- **LLM dependency**: Final table selection requires an LLM API call. Latency and availability depend on the chosen provider.
+- **Metadata dependency**: Results are only as good as the metadata. Tables with poor descriptions, missing synonyms, or incomplete FK relationships will score lower.
+- **Single embedding model**: The FAISS index and the query encoder must use the same model. Changing the model requires rebuilding all index files.
+- **No request-level caching**: Each API request rebuilds the BM25 index and loads the FAISS index from disk. For high-traffic deployments, add a caching layer in front of `_build_search_service`.
