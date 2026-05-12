@@ -16,6 +16,9 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
 
+import time
+from logger import log
+
 project_root = Path(__file__).parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
@@ -63,6 +66,11 @@ class QueryResponse(BaseModel):
 
 app = FastAPI(title="Table Picker API", version="1.0.0")
 
+log(
+    event="table_picker_api_started",
+    embedding_model=EMBEDDING_MODEL
+)
+
 
 def _build_search_service(metadata_path: str) -> SearchService:
     json_path = Path(metadata_path)
@@ -105,27 +113,83 @@ def _build_search_service(metadata_path: str) -> SearchService:
 
 @app.post("/query", response_model=QueryResponse)
 def handle_query(payload: QueryRequest):
-    """
-    Accepts a natural language query and a metadata_path.
-    Loads the pre-built FAISS index from disk and returns selected tables
-    with join conditions.
-    """
-    search_service = _build_search_service(payload.metadata_path)
+
+    start_time = time.time()
+
+    log(
+        event="query_request_started",
+        metadata_path=payload.metadata_path,
+        role=payload.role
+    )
 
     try:
-        result = search_service.get_selection_result(payload.query, role=payload.role)
+
+        search_service = _build_search_service(payload.metadata_path)
+
+        result = search_service.get_selection_result(
+            payload.query,
+            role=payload.role
+        )
+
+        table_names: List[str] = result.selected_tables
+
+        if not table_names:
+
+            log(
+                level="warning",
+                event="no_tables_selected",
+                query=payload.query[:100]
+            )
+
+            raise HTTPException(
+                status_code=404,
+                detail="No tables selected for the given query."
+            )
+
+        join_conditions: List[str] = []
+
+        if result.join_result and result.join_result.join_conditions:
+            join_conditions = result.join_result.join_conditions
+
+        duration_ms = round((time.time() - start_time) * 1000)
+
+        log(
+            event="query_request_completed",
+            duration_ms=duration_ms,
+            selected_table_count=len(table_names),
+            has_joins=bool(join_conditions)
+        )
+
+        return QueryResponse(
+            tables=table_names,
+            join_conditions=join_conditions
+        )
+
+    except HTTPException as exc:
+
+        log(
+            level="warning",
+            event="query_request_http_error",
+            error=str(exc.detail)
+        )
+
+        raise exc
+
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Error selecting tables: {exc}")
 
-    table_names: List[str] = result.selected_tables
-    if not table_names:
-        raise HTTPException(status_code=404, detail="No tables selected for the given query.")
+        duration_ms = round((time.time() - start_time) * 1000)
 
-    join_conditions: List[str] = []
-    if result.join_result and result.join_result.join_conditions:
-        join_conditions = result.join_result.join_conditions
+        log(
+            level="error",
+            event="query_request_failed",
+            duration_ms=duration_ms,
+            error=exc
+        )
 
-    return QueryResponse(tables=table_names, join_conditions=join_conditions)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error selecting tables: {exc}"
+        )
 
 
 if __name__ == "__main__":

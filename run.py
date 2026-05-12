@@ -12,6 +12,9 @@ import argparse
 import sys
 from pathlib import Path
 
+import time
+from logger import log
+
 # Load .env from project root if present
 try:
     from dotenv import load_dotenv
@@ -79,6 +82,11 @@ def build_searcher(metadata_path: str, provider: str = "groq", model: str = None
 
 
 def main():
+    start_time = time.time()
+
+    log(
+        event="table_picker_run_started"
+    )
     parser = argparse.ArgumentParser(description="Table picker - find relevant tables for a query")
     parser.add_argument("query", help="Natural language query")
     parser.add_argument("--role", choices=["parent", "student", "faculty"], default=None)
@@ -103,7 +111,26 @@ def main():
     join_text = searcher.graph_service.format_join_result(result.join_result)
     for line in join_text.splitlines():
         print(f"  {line}")
+    
+    duration_ms = round((time.time() - start_time) * 1000)
 
+    log(
+        event="table_picker_run_completed",
+        duration_ms=duration_ms,
+        selected_table_count=len(result.selected_tables),
+    )
 
 if __name__ == "__main__":
-    main()
+
+    try:
+        main()
+
+    except Exception as exc:
+
+        log(
+            level="error",
+            event="table_picker_run_failed",
+            error=exc
+        )
+
+        raise exc

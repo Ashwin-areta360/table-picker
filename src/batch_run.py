@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+#!/usr/bin/env 
+#src/batch_run.py
 """
 Batch runner for table_picker_v2.
 
@@ -18,6 +19,9 @@ from typing import List, Optional
 
 import pandas as pd
 from sentence_transformers import SentenceTransformer
+
+import time
+from logger import log
 
 # Add parent directory to path for aretai import
 project_root = Path(__file__).parent.parent
@@ -176,6 +180,14 @@ def main() -> int:
     )
 
     args = parser.parse_args()
+    batch_start_time = time.time()
+
+    log(
+        event="batch_run_started",
+        provider=args.provider,
+        model=args.model,
+        limit=args.limit
+    )
 
     # Resolve paths relative to project root
     project_root = Path(__file__).parent.parent
@@ -196,6 +208,10 @@ def main() -> int:
     print(f"\nLoading test data from: {input_file}")
     try:
         df = pd.read_excel(input_file)
+        log(
+            event="batch_input_loaded",
+            total_rows=len(df)
+        )
     except FileNotFoundError:
         print(f"\n❌ Error: Could not find {input_file}")
         return 1
@@ -230,11 +246,16 @@ def main() -> int:
         print(f"Limit: processing first {len(to_process)} rows")
 
     # Setup services
+    service_setup_start = time.time()
     searcher = setup_services(
         metadata_path=str(metadata_path),
         provider=args.provider,
         model=args.model,
     )
+    log(
+    event="batch_services_initialized",
+    duration_ms=round((time.time() - service_setup_start) * 1000)
+)
 
     # Run predictions
     print("\n" + "=" * 80)
@@ -267,6 +288,13 @@ def main() -> int:
         # Track the role used for this query
         used_roles.append(query_role if query_role else "")
 
+        if ni % 25 == 0:
+            log(
+                event="batch_progress",
+                processed=ni,
+                total=len(to_process)
+            )
+
         try:
             # Run through table_picker_v2 pipeline
             result = searcher.get_selection_result(query, role=query_role)
@@ -278,6 +306,12 @@ def main() -> int:
 
         except Exception as e:
             print(f"  Error: {e}")
+            log(
+                level="error",
+                event="batch_query_failed",
+                row_number=ni,
+                error=e
+            )
             import traceback
             traceback.print_exc()
             predictions.append("")
@@ -365,8 +399,28 @@ def main() -> int:
         print(f"   Predicted: {row['predicted_tables']}")
 
     print(f"\n✓ Complete! Results saved to: {output_path}")
+    total_duration_ms = round((time.time() - batch_start_time) * 1000)
+
+    log(
+        event="batch_run_completed",
+        duration_ms=total_duration_ms,
+        processed_rows=len(to_process),
+        output_file=str(output_path)
+    )
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+
+    try:
+        raise SystemExit(main())
+
+    except Exception as exc:
+
+        log(
+            level="error",
+            event="batch_run_failed",
+            error=exc
+        )
+
+        raise exc

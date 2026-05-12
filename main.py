@@ -7,6 +7,9 @@ from pathlib import Path
 
 from sentence_transformers import SentenceTransformer
 
+import time
+from logger import log
+
 # Add project root to path for aretai import
 project_root = Path(__file__).parent
 if str(project_root) not in sys.path:
@@ -39,6 +42,10 @@ from services import (
 
 
 def main():
+
+    log(
+        event="table_picker_main_started"
+    )
     env_model = os.getenv("MODEL") or None
 
     parser = argparse.ArgumentParser(description="Table Picker V2 - Query table selection")
@@ -98,8 +105,17 @@ def main():
 
     # 2. Build the Index (Done once at startup)
     print("Building index...")
+    index_start_time = time.time()
     indexer = IndexingService(repo, vector_service, model, preprocessor)
     indexer.build_index()
+
+    index_duration_ms = round((time.time() - index_start_time) * 1000)
+
+    log(
+        event="index_build_completed",
+        duration_ms=index_duration_ms
+    )
+
     print("✓ Index built")
 
     # 3. Initialize Search Services
@@ -132,4 +148,16 @@ def main():
         print(f" Join result:\n   {join_text.replace(chr(10), chr(10) + '   ')}")
 
 if __name__ == "__main__":
-    main()
+
+    try:
+        main()
+
+    except Exception as exc:
+
+        log(
+            level="error",
+            event="table_picker_main_failed",
+            error=exc
+        )
+
+        raise exc

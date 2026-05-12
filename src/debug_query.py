@@ -1,4 +1,4 @@
-# debug_query.py - Debug script to analyze query matching
+# src/debug_query.py - Debug script to analyze query matching
 import argparse
 import sys
 from pathlib import Path
