@@ -119,7 +119,8 @@ def handle_query(payload: QueryRequest):
     log(
         event="query_request_started",
         metadata_path=payload.metadata_path,
-        role=payload.role
+        role=payload.role,
+        query=payload.query
     )
 
     try:
@@ -157,6 +158,8 @@ def handle_query(payload: QueryRequest):
             event="query_request_completed",
             duration_ms=duration_ms,
             selected_table_count=len(table_names),
+            selected_tables=table_names,
+            join_conditions=join_conditions,
             has_joins=bool(join_conditions)
         )
 
