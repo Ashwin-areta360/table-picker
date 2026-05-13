@@ -1,0 +1,64 @@
+1. Understanding Your Knowledge Graph Structure
+From your code, I can see your KG contains:
+Table-Level Metadata:
+
+Table names, row counts, column counts
+Primary key candidates
+Foreign key candidates (with referenced tables)
+Referenced_by relationships (reverse FK mapping)
+
+Centrality Metrics:
+
+degree_centrality: Weighted FK relationships (incoming×1.0 + outgoing×0.5)
+normalized_centrality: 0-1 normalized score
+betweenness_centrality: How often a table is on the path between other tables
+is_hub_table: Boolean flag for central tables
+incoming_fk_count & outgoing_fk_count
+
+Column-Level Metadata:
+
+Column names, data types
+Statistical properties (cardinality, null counts, etc.)
+Relationships between columns across tables
+
+Graph Structure:
+
+Nodes: Tables and columns (prefixed with table_name:)
+Edges: FK relationships, column references
+
+
+2. Challenge Analysis: Why Table Selection is Hard
+Let me identify the key challenges:
+Challenge 1: Ambiguity in Natural Language
+
+"Show me all students" → students table (obvious)
+"Show me enrollments last semester" → enrollments + courses + semesters? (multiple tables)
+"Who teaches calculus?" → instructors + courses + course_assignments? (implicit joins)
+
+Challenge 2: Query Complexity Variance
+
+Simple queries: 1 table
+Moderate: 2-3 tables with explicit joins
+Complex: 4+ tables with multiple join paths
+
+Challenge 3: Synonym & Domain Language
+
+"instructors" vs "teachers" vs "faculty"
+"enrolled in" vs "taking" vs "registered for"
+Domain-specific terms that don't match table/column names exactly
+
+Challenge 4: Multi-Table Queries
+
+How many tables? (1, 2, 3, or more?)
+Which join path? (multiple paths may exist)
+Do we need dimension tables or fact tables?
+
+Challenge 5: False Positives
+
+A keyword might appear in column descriptions but table isn't relevant
+Similar table names but different purposes
+
+
+3. Proposed Multi-Stage Selection Strategy
+Let me design a robust pipeline:
+

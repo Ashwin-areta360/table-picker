@@ -1,0 +1,713 @@
+{
+  "Customers": {
+    "metadata": {
+      "name": "Customers",
+      "row_count": 19759,
+      "column_count": 4,
+      "columns": {
+        "CustomerID": {
+          "name": "CustomerID",
+          "type": " (NUMERICAL)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "8",
+            "9",
+            "14",
+            "20",
+            "28"
+          ],
+          "hints": [
+            "good_for_aggregation",
+            "good_for_indexing"
+          ],
+          "description": "A unique identifier assigned to each customer, used to link customer records to transactions in the Sales table.",
+          "synonyms": [
+            "customer_id",
+            "customer id",
+            "client",
+            "client_id",
+            "buyer",
+            "buyer_id",
+            "consumer",
+            "consumer_id",
+            "purchaser",
+            "who",
+            "person",
+            "account",
+            "account_id"
+          ]
+        },
+        "FirstName": {
+          "name": "FirstName",
+          "type": " (TEXT)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "5.1% unique",
+          "sample_values": [
+            "Abraham",
+            "Adrian",
+            "Aidan",
+            "Aimee",
+            "Ajay"
+          ],
+          "hints": [],
+          "description": "The first (given) name of the customer.",
+          "synonyms": [
+            "first name",
+            "first",
+            "given name",
+            "fname",
+            "customer first name",
+            "name"
+          ]
+        },
+        "MiddleInitial": {
+          "name": "MiddleInitial",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "42.2%",
+          "cardinality": "0.2% unique",
+          "sample_values": [
+            "A",
+            "C",
+            "J",
+            "L",
+            "M"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The middle initial of the customer's name, which may not be present for all records.",
+          "synonyms": [
+            "middle initial",
+            "middle",
+            "mi",
+            "middle name",
+            "customer middle"
+          ]
+        },
+        "LastName": {
+          "name": "LastName",
+          "type": " (TEXT)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "6.1% unique",
+          "sample_values": [
+            "Alexander",
+            "Con",
+            "Edwards",
+            "Zhang",
+            "Campbell"
+          ],
+          "hints": [],
+          "description": "The last name (surname) of the customer.",
+          "synonyms": [
+            "last name",
+            "last",
+            "surname",
+            "family name",
+            "lname",
+            "customer last name",
+            "customer surname",
+            "name"
+          ]
+        }
+      },
+      "foreign_keys": {},
+      "referenced_by": [
+        "Sales"
+      ]
+    },
+    "selector_extras": {
+      "is_hub_table": false,
+      "degree_centrality": 1.0,
+      "normalized_centrality": 0.6666666666666666,
+      "incoming_fk_count": 1,
+      "outgoing_fk_count": 0,
+      "betweenness_centrality": 0.0,
+      "referenced_by": [
+        "Sales"
+      ],
+      "references": []
+    },
+    "description": "Records representing individual customers who have made purchases. This table stores core identity information for each customer and serves as the reference point for customer-related sales analysis.",
+    "columns": {
+      "CustomerID": {
+        "description": "A unique identifier assigned to each customer, used to link customer records to transactions in the Sales table."
+      },
+      "FirstName": {
+        "description": "The first (given) name of the customer."
+      },
+      "MiddleInitial": {
+        "description": "The middle initial of the customer's name, which may not be present for all records."
+      },
+      "LastName": {
+        "description": "The last name (surname) of the customer."
+      }
+    }
+  },
+  "Employees": {
+    "metadata": {
+      "name": "Employees",
+      "row_count": 22,
+      "column_count": 4,
+      "columns": {
+        "EmployeeID": {
+          "name": "EmployeeID",
+          "type": " (NUMERICAL)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "6",
+            "10",
+            "18",
+            "2",
+            "22"
+          ],
+          "hints": [
+            "good_for_aggregation",
+            "good_for_indexing"
+          ],
+          "description": "A unique identifier assigned to each employee, used to link to the SalesPersonID field in the Sales table.",
+          "synonyms": [
+            "employee_id",
+            "employee id",
+            "staff",
+            "staff_id",
+            "worker",
+            "worker_id",
+            "salesperson",
+            "sales rep",
+            "rep",
+            "rep_id",
+            "personnel"
+          ]
+        },
+        "FirstName": {
+          "name": "FirstName",
+          "type": " (TEXT)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "Morningstar",
+            "Burt",
+            "Sylvia",
+            "Johnson",
+            "Akiko"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "The first (given) name of the employee.",
+          "synonyms": [
+            "first name",
+            "first",
+            "given name",
+            "fname",
+            "employee first name",
+            "staff first name",
+            "name"
+          ]
+        },
+        "MiddleInitial": {
+          "name": "MiddleInitial",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "50.0% unique",
+          "sample_values": [
+            "a",
+            "e",
+            "o",
+            "r",
+            "t"
+          ],
+          "hints": [
+            "good_for_filtering",
+            "good_for_grouping"
+          ],
+          "description": "The middle initial of the employee's name, which may not be present for all records.",
+          "synonyms": [
+            "middle initial",
+            "middle",
+            "mi",
+            "middle name",
+            "employee middle"
+          ]
+        },
+        "LastName": {
+          "name": "LastName",
+          "type": " (TEXT)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "95.5% unique",
+          "sample_values": [
+            "Carson",
+            "Dull",
+            "McBadden",
+            "Smith",
+            "Stringer"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "The last name (surname) of the employee.",
+          "synonyms": [
+            "last name",
+            "last",
+            "surname",
+            "family name",
+            "lname",
+            "employee last name",
+            "staff surname",
+            "name"
+          ]
+        }
+      },
+      "foreign_keys": {},
+      "referenced_by": [
+        "Sales"
+      ]
+    },
+    "selector_extras": {
+      "is_hub_table": false,
+      "degree_centrality": 1.0,
+      "normalized_centrality": 0.6666666666666666,
+      "incoming_fk_count": 1,
+      "outgoing_fk_count": 0,
+      "betweenness_centrality": 0.0,
+      "referenced_by": [
+        "Sales"
+      ],
+      "references": []
+    },
+    "description": "Records representing employees of the organization who act as salespeople. This table stores identity information for each staff member and is linked to sales transactions through the SalesPersonID field in the Sales table.",
+    "columns": {
+      "EmployeeID": {
+        "description": "A unique identifier assigned to each employee, used to link to the SalesPersonID field in the Sales table."
+      },
+      "FirstName": {
+        "description": "The first (given) name of the employee."
+      },
+      "MiddleInitial": {
+        "description": "The middle initial of the employee's name, which may not be present for all records."
+      },
+      "LastName": {
+        "description": "The last name (surname) of the employee."
+      }
+    }
+  },
+  "Products": {
+    "metadata": {
+      "name": "Products",
+      "row_count": 504,
+      "column_count": 3,
+      "columns": {
+        "ProductID": {
+          "name": "ProductID",
+          "type": " (NUMERICAL)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "1",
+            "12",
+            "16",
+            "17",
+            "23"
+          ],
+          "hints": [
+            "good_for_aggregation",
+            "good_for_indexing"
+          ],
+          "description": "A unique identifier assigned to each product, used to link product details to transactions in the Sales table.",
+          "synonyms": [
+            "product_id",
+            "product id",
+            "item",
+            "item_id",
+            "sku",
+            "sku_id",
+            "goods",
+            "article",
+            "product code"
+          ]
+        },
+        "Name": {
+          "name": "Name",
+          "type": " (TEXT)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "Chainring Bolts",
+            "Fork End",
+            "Flat Washer 2",
+            "Flat Washer 9",
+            "Flat Washer 8"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "The name of the product as listed in the product catalogue.",
+          "synonyms": [
+            "product name",
+            "item name",
+            "product title",
+            "goods name",
+            "article name",
+            "what product",
+            "which product",
+            "product",
+            "item"
+          ]
+        },
+        "Price": {
+          "name": "Price",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "50.4% unique",
+          "sample_values": [
+            "2.4000000953674316",
+            "0.0",
+            "380.3999938964844",
+            "130.39999389648438",
+            "417.6000061035156"
+          ],
+          "hints": [
+            "good_for_filtering",
+            "good_for_aggregation"
+          ],
+          "description": "The unit selling price of the product at the time of listing.",
+          "synonyms": [
+            "price",
+            "cost",
+            "amount",
+            "rate",
+            "product price",
+            "item price",
+            "how much",
+            "value",
+            "unit price",
+            "selling price"
+          ]
+        }
+      },
+      "foreign_keys": {},
+      "referenced_by": [
+        "Sales"
+      ]
+    },
+    "selector_extras": {
+      "is_hub_table": false,
+      "degree_centrality": 1.0,
+      "normalized_centrality": 0.6666666666666666,
+      "incoming_fk_count": 1,
+      "outgoing_fk_count": 0,
+      "betweenness_centrality": 0.0,
+      "referenced_by": [
+        "Sales"
+      ],
+      "references": []
+    },
+    "description": "Records representing products available for sale. This table defines the product catalogue, including product names and their unit prices, and is referenced by the Sales table for each transaction.",
+    "columns": {
+      "ProductID": {
+        "description": "A unique identifier assigned to each product, used to link product details to transactions in the Sales table."
+      },
+      "Name": {
+        "description": "The name of the product as listed in the product catalogue."
+      },
+      "Price": {
+        "description": "The unit selling price of the product at the time of listing."
+      }
+    }
+  },
+  "Sales": {
+    "metadata": {
+      "name": "Sales",
+      "row_count": 0,
+      "column_count": 0,
+      "columns": {
+        "SalesID": {
+          "name": "SalesID",
+          "type": " (NUMERICAL)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "3788346",
+            "3788361",
+            "3788623",
+            "3788634",
+            "3788769"
+          ],
+          "hints": [
+            "good_for_aggregation",
+            "good_for_indexing"
+          ],
+          "description": "A unique identifier assigned to each sales transaction record.",
+          "synonyms": [
+            "sales_id",
+            "sale_id",
+            "transaction",
+            "transaction_id",
+            "order",
+            "order_id",
+            "record",
+            "sale record"
+          ]
+        },
+        "SalesPersonID": {
+          "name": "SalesPersonID",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "foreign_key_references": [
+            "Employees"
+          ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "Employees",
+              "ref_col": "EmployeeID"
+            }
+          ],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "0.0% unique",
+          "sample_values": [
+            "1",
+            "14",
+            "2",
+            "20",
+            "8"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The identifier of the employee who conducted the sale, linking to the EmployeeID field in the Employees table.",
+          "synonyms": [
+            "salesperson_id",
+            "salesperson id",
+            "sales rep",
+            "rep",
+            "rep_id",
+            "employee",
+            "staff",
+            "who sold",
+            "sold by",
+            "sales agent",
+            "agent"
+          ]
+        },
+        "CustomerID": {
+          "name": "CustomerID",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "foreign_key_references": [
+            "Customers"
+          ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "Customers",
+              "ref_col": "CustomerID"
+            }
+          ],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "0.0% unique",
+          "sample_values": [
+            "13280",
+            "16240",
+            "3040",
+            "5200",
+            "6000"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The identifier of the customer who made the purchase, linking to the CustomerID field in the Customers table.",
+          "synonyms": [
+            "customer_id",
+            "customer id",
+            "client",
+            "buyer",
+            "purchaser",
+            "sold to",
+            "who bought",
+            "account"
+          ]
+        },
+        "ProductID": {
+          "name": "ProductID",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "foreign_key_references": [
+            "Products"
+          ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "Products",
+              "ref_col": "ProductID"
+            }
+          ],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "0.0% unique",
+          "sample_values": [
+            "184",
+            "294",
+            "353",
+            "434",
+            "44"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The identifier of the product that was sold, linking to the ProductID field in the Products table.",
+          "synonyms": [
+            "product_id",
+            "product",
+            "item",
+            "sku",
+            "what was sold",
+            "product sold",
+            "item sold",
+            "goods"
+          ]
+        },
+        "Quantity": {
+          "name": "Quantity",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "0.0% unique",
+          "sample_values": [
+            "126",
+            "343",
+            "376",
+            "470",
+            "702"
+          ],
+          "hints": [],
+          "description": "The number of units of the product purchased in this transaction.",
+          "synonyms": [
+            "quantity",
+            "qty",
+            "units",
+            "units sold",
+            "amount sold",
+            "number of items",
+            "volume",
+            "how many",
+            "count",
+            "pieces",
+            "items sold"
+          ]
+        }
+      },
+      "foreign_keys": {
+        "SalesPersonID": [
+          "Employees"
+        ],
+        "CustomerID": [
+          "Customers"
+        ],
+        "ProductID": [
+          "Products"
+        ]
+      }
+    },
+    "selector_extras": {
+      "is_hub_table": true,
+      "degree_centrality": 1.5,
+      "normalized_centrality": 1.0,
+      "incoming_fk_count": 0,
+      "outgoing_fk_count": 3,
+      "betweenness_centrality": 1.0,
+      "referenced_by": [],
+      "references": [
+        "Products",
+        "Customers",
+        "Employees"
+      ]
+    },
+    "description": "Records representing individual sales transactions. This is the central fact table of the database, linking customers, employees, and products together. Each record captures a single sale event including the salesperson involved, the customer, the product sold, and the quantity purchased.",
+    "columns": {
+      "SalesID": {
+        "description": "A unique identifier assigned to each sales transaction record."
+      },
+      "SalesPersonID": {
+        "description": "The identifier of the employee who conducted the sale, linking to the EmployeeID field in the Employees table."
+      },
+      "CustomerID": {
+        "description": "The identifier of the customer who made the purchase, linking to the CustomerID field in the Customers table."
+      },
+      "ProductID": {
+        "description": "The identifier of the product that was sold, linking to the ProductID field in the Products table."
+      },
+      "Quantity": {
+        "description": "The number of units of the product purchased in this transaction."
+      }
+    }
+  }
+}

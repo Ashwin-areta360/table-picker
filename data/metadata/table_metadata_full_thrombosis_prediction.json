@@ -1,0 +1,2178 @@
+{
+  "Examination": {
+    "metadata": {
+      "name": "Examination",
+      "row_count": 0,
+      "column_count": 0,
+      "columns": {
+        "ID": {
+          "name": "ID",
+          "type": " (IDENTIFIER)",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "foreign_key_references": [
+            "Patient"
+          ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "Patient",
+              "ref_col": "ID"
+            }
+          ],
+          "nullable": true,
+          "null_percentage": "34.0%",
+          "cardinality": "98.6% unique",
+          "sample_values": [
+            "48473",
+            "102490",
+            "283032",
+            "395524",
+            "424396"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "The identifier of the patient who underwent the examination, linking to the Patient table.",
+          "synonyms": [
+            "patient_id",
+            "patient id",
+            "person",
+            "person_id",
+            "subject",
+            "case",
+            "record",
+            "who"
+          ]
+        },
+        "Examination Date": {
+          "name": "Examination Date",
+          "type": " (TEMPORAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "3.8%",
+          "cardinality": "92.2% unique",
+          "sample_values": [
+            "1995-11-13",
+            "1993-11-12",
+            "1993-10-04",
+            "1997-09-22",
+            "1995-06-20"
+          ],
+          "hints": [
+            "good_for_partitioning"
+          ],
+          "description": "The date on which the clinical examination was conducted.",
+          "synonyms": [
+            "exam date",
+            "examination date",
+            "date of examination",
+            "test date",
+            "visit date",
+            "check date",
+            "when examined"
+          ]
+        },
+        "aCL IgG": {
+          "name": "aCL IgG",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "31.1% unique",
+          "sample_values": [
+            "1.2000000476837158",
+            "1.899999976158142",
+            "2.700000047683716",
+            "0.0",
+            "1.100000023841858"
+          ],
+          "hints": [
+            "good_for_filtering",
+            "good_for_aggregation"
+          ],
+          "description": "Anticardiolipin antibody of the IgG isotype, a key marker for antiphospholipid syndrome (APS) associated with thrombosis and pregnancy complications.",
+          "synonyms": [
+            "acl igg",
+            "anticardiolipin igg",
+            "anti-cardiolipin igg",
+            "aps marker",
+            "antiphospholipid igg"
+          ]
+        },
+        "aCL IgM": {
+          "name": "aCL IgM",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "46.2% unique",
+          "sample_values": [
+            "3.799999952316284",
+            "13.0",
+            "1.2999999523162842",
+            "5.099999904632568",
+            "4.0"
+          ],
+          "hints": [
+            "good_for_filtering",
+            "good_for_aggregation"
+          ],
+          "description": "Anticardiolipin antibody of the IgM isotype, another antiphospholipid marker used in the diagnosis of APS.",
+          "synonyms": [
+            "acl igm",
+            "anticardiolipin igm",
+            "anti-cardiolipin igm",
+            "aps marker",
+            "antiphospholipid igm"
+          ]
+        },
+        "ANA": {
+          "name": "ANA",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "17.9%",
+          "cardinality": "8.1% unique",
+          "sample_values": [
+            "0",
+            "1024",
+            "16",
+            "256",
+            "4"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Antinuclear antibody titer, a broad screening test for autoimmune conditions, particularly systemic lupus erythematosus.",
+          "synonyms": [
+            "ana",
+            "antinuclear antibody",
+            "antinuclear",
+            "anti-nuclear antibody",
+            "lupus test",
+            "autoimmune marker"
+          ]
+        },
+        "ANA Pattern": {
+          "name": "ANA Pattern",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "38.7%",
+          "cardinality": "9.2% unique",
+          "sample_values": [
+            "D,P,S",
+            "P",
+            "P,S",
+            "S",
+            "S,D"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The immunofluorescence staining pattern of the ANA test, which helps distinguish the specific autoimmune condition (e.g., homogeneous, speckled, peripheral).",
+          "synonyms": [
+            "ana pattern",
+            "antinuclear pattern",
+            "fluorescence pattern",
+            "nuclear pattern",
+            "immunofluorescence pattern"
+          ]
+        },
+        "aCL IgA": {
+          "name": "aCL IgA",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "19.8% unique",
+          "sample_values": [
+            "2",
+            "10",
+            "3",
+            "12",
+            "6"
+          ],
+          "hints": [
+            "good_for_filtering",
+            "good_for_aggregation"
+          ],
+          "description": "Anticardiolipin antibody of the IgA isotype, a supplementary antiphospholipid marker occasionally evaluated alongside IgG and IgM.",
+          "synonyms": [
+            "acl iga",
+            "anticardiolipin iga",
+            "anti-cardiolipin iga",
+            "aps marker",
+            "antiphospholipid iga"
+          ]
+        },
+        "Diagnosis": {
+          "name": "Diagnosis",
+          "type": " (TEXT)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "22.6%",
+          "cardinality": "53.7% unique",
+          "sample_values": [
+            "Behcet, SjS susp",
+            "SLE, SjS, ITP",
+            "SjS",
+            "SjS susp",
+            "RA+DVT"
+          ],
+          "hints": [
+            "good_for_filtering"
+          ],
+          "description": "The medical diagnosis recorded at the time of the examination, which may differ from or refine the primary diagnosis in the Patient table.",
+          "synonyms": [
+            "diagnosis",
+            "diagnosed",
+            "condition",
+            "disease",
+            "disorder",
+            "illness",
+            "examination diagnosis",
+            "what disease",
+            "what condition",
+            "final diagnosis"
+          ]
+        },
+        "KCT": {
+          "name": "KCT",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "80.2%",
+          "cardinality": "9.5% unique",
+          "sample_values": [
+            "+",
+            "-"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Kaolin clotting time, a lupus anticoagulant screening test measuring prolonged clotting in the presence of antiphospholipid antibodies.",
+          "synonyms": [
+            "kct",
+            "kaolin clotting time",
+            "lupus anticoagulant test",
+            "coagulation"
+          ]
+        },
+        "RVVT": {
+          "name": "RVVT",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "80.2%",
+          "cardinality": "9.5% unique",
+          "sample_values": [
+            "+",
+            "-"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Russell's Viper Venom Time, a confirmatory test for lupus anticoagulant used in antiphospholipid syndrome evaluation.",
+          "synonyms": [
+            "rvvt",
+            "russell viper venom time",
+            "dilute rvvt",
+            "lupus anticoagulant",
+            "coagulation test"
+          ]
+        },
+        "LAC": {
+          "name": "LAC",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "76.4%",
+          "cardinality": "8.0% unique",
+          "sample_values": [
+            "+",
+            "-"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Lupus anticoagulant test result, indicating the presence of antiphospholipid antibodies that paradoxically prolong clotting tests in vitro.",
+          "synonyms": [
+            "lac",
+            "lupus anticoagulant",
+            "lupus coagulant",
+            "antiphospholipid",
+            "coagulation"
+          ]
+        },
+        "Symptoms": {
+          "name": "Symptoms",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "88.7%",
+          "cardinality": "83.3% unique",
+          "sample_values": [
+            "AMI",
+            "Apo",
+            "CNS lupus",
+            "CNS susp",
+            "CVA, epilepsy"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Clinical symptoms reported or observed at the time of examination, recorded as free text describing the patient's presenting complaints.",
+          "synonyms": [
+            "symptoms",
+            "symptom",
+            "clinical symptoms",
+            "presenting symptoms",
+            "complaints",
+            "signs",
+            "clinical signs",
+            "what symptoms",
+            "patient symptoms"
+          ]
+        },
+        "Thrombosis": {
+          "name": "Thrombosis",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "3.8% unique",
+          "sample_values": [
+            "0",
+            "1",
+            "2",
+            "3"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Indicates whether a thrombotic event was present at the time of examination, recorded as a numeric value (0 = no thrombosis, 1 = thrombosis present).",
+          "synonyms": [
+            "thrombosis",
+            "blood clot",
+            "clot",
+            "clotting",
+            "thrombotic event",
+            "vein clot",
+            "arterial clot",
+            "dvt",
+            "embolism",
+            "thrombus"
+          ]
+        }
+      },
+      "foreign_keys": {
+        "ID": [
+          "Patient"
+        ]
+      }
+    },
+    "selector_extras": {
+      "is_hub_table": false,
+      "degree_centrality": 0.5,
+      "normalized_centrality": 0.25,
+      "incoming_fk_count": 0,
+      "outgoing_fk_count": 1,
+      "betweenness_centrality": 0.0,
+      "referenced_by": [],
+      "references": [
+        "Patient"
+      ]
+    },
+    "description": "Records representing clinical examination findings for patients, including autoantibody test results, coagulation screening, diagnosis at the time of examination, and the presence or absence of thrombosis. This table focuses on immunological and antiphospholipid syndrome-related assessments.",
+    "columns": {
+      "ID": {
+        "description": "The identifier of the patient who underwent the examination, linking to the Patient table."
+      },
+      "Examination Date": {
+        "description": "The date on which the clinical examination was conducted."
+      },
+      "aCL IgG": {
+        "description": "Anticardiolipin antibody of the IgG isotype, a key marker for antiphospholipid syndrome (APS) associated with thrombosis and pregnancy complications."
+      },
+      "aCL IgM": {
+        "description": "Anticardiolipin antibody of the IgM isotype, another antiphospholipid marker used in the diagnosis of APS."
+      },
+      "ANA": {
+        "description": "Antinuclear antibody titer, a broad screening test for autoimmune conditions, particularly systemic lupus erythematosus."
+      },
+      "ANA Pattern": {
+        "description": "The immunofluorescence staining pattern of the ANA test, which helps distinguish the specific autoimmune condition (e.g., homogeneous, speckled, peripheral)."
+      },
+      "aCL IgA": {
+        "description": "Anticardiolipin antibody of the IgA isotype, a supplementary antiphospholipid marker occasionally evaluated alongside IgG and IgM."
+      },
+      "Diagnosis": {
+        "description": "The medical diagnosis recorded at the time of the examination, which may differ from or refine the primary diagnosis in the Patient table."
+      },
+      "KCT": {
+        "description": "Kaolin clotting time, a lupus anticoagulant screening test measuring prolonged clotting in the presence of antiphospholipid antibodies."
+      },
+      "RVVT": {
+        "description": "Russell's Viper Venom Time, a confirmatory test for lupus anticoagulant used in antiphospholipid syndrome evaluation."
+      },
+      "LAC": {
+        "description": "Lupus anticoagulant test result, indicating the presence of antiphospholipid antibodies that paradoxically prolong clotting tests in vitro."
+      },
+      "Symptoms": {
+        "description": "Clinical symptoms reported or observed at the time of examination, recorded as free text describing the patient's presenting complaints."
+      },
+      "Thrombosis": {
+        "description": "Indicates whether a thrombotic event was present at the time of examination, recorded as a numeric value (0 = no thrombosis, 1 = thrombosis present)."
+      }
+    }
+  },
+  "Laboratory": {
+    "metadata": {
+      "name": "Laboratory",
+      "row_count": 0,
+      "column_count": 0,
+      "columns": {
+        "ID": {
+          "name": "ID",
+          "type": " (IDENTIFIER)",
+          "is_primary_key": true,
+          "is_foreign_key": true,
+          "foreign_key_references": [
+            "Patient"
+          ],
+          "foreign_key_references_detail": [
+            {
+              "ref_table": "Patient",
+              "ref_col": "ID"
+            }
+          ],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "2.2% unique",
+          "sample_values": [
+            "30609",
+            "43003",
+            "122405",
+            "287122",
+            "915768"
+          ],
+          "hints": [],
+          "description": "The identifier of the patient for whom the laboratory tests were conducted, linking to the Patient table.",
+          "synonyms": [
+            "patient_id",
+            "patient id",
+            "person",
+            "person_id",
+            "subject",
+            "case",
+            "record",
+            "who"
+          ]
+        },
+        "Date": {
+          "name": "Date",
+          "type": " (TEMPORAL)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "26.8% unique",
+          "sample_values": [
+            "1991-09-24",
+            "1991-09-26",
+            "1991-09-27",
+            "1991-09-30",
+            "1991-10-02"
+          ],
+          "hints": [
+            "good_for_filtering",
+            "good_for_partitioning"
+          ],
+          "description": "The date on which the laboratory tests were performed or the sample was collected.",
+          "synonyms": [
+            "test date",
+            "lab date",
+            "laboratory date",
+            "date of test",
+            "when tested",
+            "sample date",
+            "collection date"
+          ]
+        },
+        "GOT": {
+          "name": "GOT",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "18.9%",
+          "cardinality": "1.9% unique",
+          "sample_values": [
+            "15",
+            "16",
+            "17",
+            "18",
+            "19"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Glutamate oxaloacetate transaminase (also known as AST), a liver enzyme used to assess liver and cardiac health.",
+          "synonyms": [
+            "got",
+            "aspartate aminotransferase",
+            "ast",
+            "liver enzyme",
+            "sgot",
+            "serum got"
+          ]
+        },
+        "GPT": {
+          "name": "GPT",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "18.9%",
+          "cardinality": "2.7% unique",
+          "sample_values": [
+            "11",
+            "12",
+            "13",
+            "14",
+            "16"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Glutamate pyruvate transaminase (also known as ALT), a liver enzyme primarily used to evaluate liver function.",
+          "synonyms": [
+            "gpt",
+            "alanine aminotransferase",
+            "alt",
+            "liver enzyme",
+            "sgpt",
+            "serum gpt"
+          ]
+        },
+        "LDH": {
+          "name": "LDH",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "18.7%",
+          "cardinality": "8.1% unique",
+          "sample_values": [
+            "312",
+            "313",
+            "118",
+            "132",
+            "122"
+          ],
+          "hints": [
+            "good_for_aggregation"
+          ],
+          "description": "Lactate dehydrogenase, an enzyme present in many body tissues, elevated in cases of tissue damage or disease.",
+          "synonyms": [
+            "ldh",
+            "lactate dehydrogenase",
+            "lactic acid dehydrogenase"
+          ]
+        },
+        "ALP": {
+          "name": "ALP",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "19.8%",
+          "cardinality": "4.8% unique",
+          "sample_values": [
+            "62",
+            "66",
+            "67",
+            "76",
+            "80"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Alkaline phosphatase, an enzyme associated with liver, bone, and biliary tract conditions.",
+          "synonyms": [
+            "alp",
+            "alkaline phosphatase",
+            "alk phos"
+          ]
+        },
+        "TP": {
+          "name": "TP",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "20.1%",
+          "cardinality": "0.6% unique",
+          "sample_values": [
+            "6.900000095367432",
+            "7.0",
+            "7.099999904632568",
+            "7.199999809265137",
+            "7.300000190734863"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Total protein level in the blood, reflecting overall nutritional status and liver function.",
+          "synonyms": [
+            "tp",
+            "total protein",
+            "serum protein",
+            "protein level"
+          ]
+        },
+        "ALB": {
+          "name": "ALB",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "20.4%",
+          "cardinality": "0.4% unique",
+          "sample_values": [
+            "4.0",
+            "4.099999904632568",
+            "4.199999809265137",
+            "4.300000190734863",
+            "4.400000095367432"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Albumin, the most abundant protein in blood, used to assess liver function and nutritional status.",
+          "synonyms": [
+            "alb",
+            "albumin",
+            "serum albumin",
+            "albumin level"
+          ]
+        },
+        "UA": {
+          "name": "UA",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "20.2%",
+          "cardinality": "1.2% unique",
+          "sample_values": [
+            "3.700000047683716",
+            "3.799999952316284",
+            "3.9000000953674316",
+            "4.099999904632568",
+            "4.400000095367432"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Uric acid level in the blood, elevated in conditions such as gout or renal dysfunction.",
+          "synonyms": [
+            "ua",
+            "uric acid",
+            "urate",
+            "gout marker"
+          ]
+        },
+        "UN": {
+          "name": "UN",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "19.2%",
+          "cardinality": "1.0% unique",
+          "sample_values": [
+            "11",
+            "12",
+            "13",
+            "14",
+            "15"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Urea nitrogen (blood urea nitrogen), a marker of kidney function and protein metabolism.",
+          "synonyms": [
+            "un",
+            "urea nitrogen",
+            "blood urea nitrogen",
+            "bun",
+            "urea"
+          ]
+        },
+        "CRE": {
+          "name": "CRE",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "19.1%",
+          "cardinality": "0.6% unique",
+          "sample_values": [
+            "0.5",
+            "0.6000000238418579",
+            "0.699999988079071",
+            "0.800000011920929",
+            "0.8999999761581421"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Creatinine level in the blood, a key indicator of kidney (renal) function.",
+          "synonyms": [
+            "cre",
+            "creatinine",
+            "serum creatinine",
+            "kidney marker",
+            "renal marker",
+            "creatinine level"
+          ]
+        },
+        "T-BIL": {
+          "name": "T-BIL",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "30.8%",
+          "cardinality": "0.4% unique",
+          "sample_values": [
+            "0.30000001192092896",
+            "0.4000000059604645",
+            "0.5",
+            "0.6000000238418579",
+            "0.699999988079071"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Total bilirubin level, used to evaluate liver function and detect conditions such as jaundice or hemolysis.",
+          "synonyms": [
+            "tbil",
+            "t-bil",
+            "total bilirubin",
+            "bilirubin",
+            "jaundice marker"
+          ]
+        },
+        "T-CHO": {
+          "name": "T-CHO",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "23.3%",
+          "cardinality": "3.0% unique",
+          "sample_values": [
+            "169",
+            "170",
+            "174",
+            "185",
+            "194"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Total cholesterol level in the blood, used to assess cardiovascular risk.",
+          "synonyms": [
+            "tcho",
+            "t-cho",
+            "total cholesterol",
+            "cholesterol",
+            "cholesterol level"
+          ]
+        },
+        "TG": {
+          "name": "TG",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "53.7%",
+          "cardinality": "6.1% unique",
+          "sample_values": [
+            "185",
+            "166",
+            "199",
+            "116",
+            "136"
+          ],
+          "hints": [
+            "good_for_aggregation"
+          ],
+          "description": "Triglyceride level, a type of fat in the blood used to evaluate cardiovascular and metabolic health.",
+          "synonyms": [
+            "tg",
+            "triglycerides",
+            "triglyceride level",
+            "lipids",
+            "fat level"
+          ]
+        },
+        "CPK": {
+          "name": "CPK",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "63.9%",
+          "cardinality": "9.2% unique",
+          "sample_values": [
+            "10",
+            "18",
+            "39",
+            "28",
+            "29"
+          ],
+          "hints": [
+            "good_for_aggregation"
+          ],
+          "description": "Creatine phosphokinase, a muscle enzyme elevated in conditions such as muscle injury, myocardial infarction, or myositis.",
+          "synonyms": [
+            "cpk",
+            "creatine phosphokinase",
+            "creatine kinase",
+            "ck",
+            "muscle enzyme"
+          ]
+        },
+        "GLU": {
+          "name": "GLU",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "87.7%",
+          "cardinality": "12.2% unique",
+          "sample_values": [
+            "169",
+            "104",
+            "136",
+            "399",
+            "170"
+          ],
+          "hints": [
+            "good_for_aggregation"
+          ],
+          "description": "Blood glucose level, used to screen for and monitor diabetes and other metabolic conditions.",
+          "synonyms": [
+            "glu",
+            "glucose",
+            "blood sugar",
+            "sugar level",
+            "blood glucose",
+            "fasting glucose"
+          ]
+        },
+        "WBC": {
+          "name": "WBC",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "13.1%",
+          "cardinality": "1.8% unique",
+          "sample_values": [
+            "5.300000190734863",
+            "5.5",
+            "5.699999809265137",
+            "6.400000095367432",
+            "6.5"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "White blood cell count, reflecting immune system activity and used to detect infection or hematological conditions.",
+          "synonyms": [
+            "wbc",
+            "white blood cell",
+            "white blood count",
+            "leukocyte",
+            "leukocytes",
+            "immune cells",
+            "white cells"
+          ]
+        },
+        "RBC": {
+          "name": "RBC",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "13.1%",
+          "cardinality": "0.5% unique",
+          "sample_values": [
+            "4.199999809265137",
+            "4.300000190734863",
+            "4.400000095367432",
+            "4.5",
+            "4.599999904632568"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Red blood cell count, used to assess oxygen-carrying capacity and detect anemia or polycythemia.",
+          "synonyms": [
+            "rbc",
+            "red blood cell",
+            "red blood count",
+            "erythrocyte",
+            "erythrocytes",
+            "red cells"
+          ]
+        },
+        "HGB": {
+          "name": "HGB",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "13.1%",
+          "cardinality": "1.1% unique",
+          "sample_values": [
+            "12.300000190734863",
+            "12.5",
+            "12.800000190734863",
+            "13.0",
+            "13.100000381469727"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Hemoglobin level, the oxygen-carrying protein in red blood cells, used to diagnose and monitor anemia.",
+          "synonyms": [
+            "hgb",
+            "hemoglobin",
+            "haemoglobin",
+            "hb",
+            "blood hemoglobin"
+          ]
+        },
+        "HCT": {
+          "name": "HCT",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "13.1%",
+          "cardinality": "3.0% unique",
+          "sample_values": [
+            "37.70000076293945",
+            "38.099998474121094",
+            "38.599998474121094",
+            "39.099998474121094",
+            "39.70000076293945"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Hematocrit, the proportion of red blood cells in total blood volume, used in anemia and hydration assessment.",
+          "synonyms": [
+            "hct",
+            "hematocrit",
+            "haematocrit",
+            "packed cell volume",
+            "pcv"
+          ]
+        },
+        "PLT": {
+          "name": "PLT",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "18.9%",
+          "cardinality": "5.8% unique",
+          "sample_values": [
+            "242",
+            "177",
+            "234",
+            "240",
+            "229"
+          ],
+          "hints": [
+            "good_for_aggregation"
+          ],
+          "description": "Platelet count, used to evaluate clotting ability and detect conditions such as thrombocytopenia or thrombocytosis.",
+          "synonyms": [
+            "plt",
+            "platelet",
+            "platelet count",
+            "thrombocyte",
+            "thrombocytes",
+            "platelets"
+          ]
+        },
+        "PT": {
+          "name": "PT",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "95.5%",
+          "cardinality": "16.8% unique",
+          "sample_values": [
+            "15.899999618530273",
+            "14.699999809265137",
+            "16.5",
+            "13.600000381469727",
+            "11.0"
+          ],
+          "hints": [
+            "good_for_aggregation"
+          ],
+          "description": "Prothrombin time, a coagulation test measuring how long blood takes to clot via the extrinsic pathway.",
+          "synonyms": [
+            "pt",
+            "prothrombin time",
+            "clotting time",
+            "coagulation",
+            "bleeding time"
+          ]
+        },
+        "APTT": {
+          "name": "APTT",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "99.6%",
+          "cardinality": "52.9% unique",
+          "sample_values": [
+            "88",
+            "109",
+            "57",
+            "89",
+            "112"
+          ],
+          "hints": [
+            "good_for_aggregation"
+          ],
+          "description": "Activated partial thromboplastin time, a coagulation test evaluating the intrinsic clotting pathway.",
+          "synonyms": [
+            "aptt",
+            "activated partial thromboplastin time",
+            "partial thromboplastin",
+            "clotting",
+            "coagulation"
+          ]
+        },
+        "FG": {
+          "name": "FG",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "96.7%",
+          "cardinality": "61.3% unique",
+          "sample_values": [
+            "44.400001525878906",
+            "42.29999923706055",
+            "30.899999618530273",
+            "71.80000305175781",
+            "57.400001525878906"
+          ],
+          "hints": [
+            "good_for_aggregation"
+          ],
+          "description": "Fibrinogen level, a clotting protein that plays a central role in blood coagulation and is elevated in inflammatory states.",
+          "synonyms": [
+            "fg",
+            "fibrinogen",
+            "fibrinogen level",
+            "clotting factor"
+          ]
+        },
+        "PIC": {
+          "name": "PIC",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "99.5%",
+          "cardinality": "82.9% unique",
+          "sample_values": [
+            "210",
+            "176",
+            "193",
+            "298",
+            "437"
+          ],
+          "hints": [
+            "good_for_aggregation"
+          ],
+          "description": "Plasmin-alpha2-plasmin inhibitor complex, a marker of fibrinolytic activity and clot breakdown.",
+          "synonyms": [
+            "pic",
+            "plasmin inhibitor complex",
+            "pic level"
+          ]
+        },
+        "TAT": {
+          "name": "TAT",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "99.0%",
+          "cardinality": "57.8% unique",
+          "sample_values": [
+            "115",
+            "85",
+            "94",
+            "146",
+            "144"
+          ],
+          "hints": [
+            "good_for_aggregation"
+          ],
+          "description": "Thrombin-antithrombin complex, a marker of thrombin generation and coagulation activation.",
+          "synonyms": [
+            "tat",
+            "thrombin antithrombin",
+            "tat complex",
+            "coagulation marker"
+          ]
+        },
+        "TAT2": {
+          "name": "TAT2",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "99.1%",
+          "cardinality": "50.4% unique",
+          "sample_values": [
+            "113",
+            "124",
+            "134",
+            "103",
+            "123"
+          ],
+          "hints": [
+            "good_for_aggregation"
+          ],
+          "description": "Secondary thrombin-antithrombin complex measurement, providing an additional quantitative assessment of coagulation activation.",
+          "synonyms": [
+            "tat2",
+            "thrombin antithrombin 2",
+            "tat ii",
+            "coagulation"
+          ]
+        },
+        "U-PRO": {
+          "name": "U-PRO",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "30.5%",
+          "cardinality": "0.2% unique",
+          "sample_values": [
+            "-",
+            "0",
+            "1",
+            "30",
+            "TR"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Urine protein level, used to detect proteinuria, which may indicate kidney disease or systemic conditions affecting renal filtration.",
+          "synonyms": [
+            "upro",
+            "u-pro",
+            "urine protein",
+            "proteinuria",
+            "urinary protein",
+            "protein in urine"
+          ]
+        },
+        "IGG": {
+          "name": "IGG",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "80.7%",
+          "cardinality": "56.6% unique",
+          "sample_values": [
+            "1285",
+            "1089",
+            "1256",
+            "1225",
+            "1248"
+          ],
+          "hints": [
+            "good_for_aggregation"
+          ],
+          "description": "Immunoglobulin G level, the most abundant antibody in serum, reflecting humoral immunity and used in autoimmune disease evaluation.",
+          "synonyms": [
+            "igg",
+            "immunoglobulin g",
+            "igg level",
+            "antibody",
+            "gamma globulin"
+          ]
+        },
+        "IGA": {
+          "name": "IGA",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "80.7%",
+          "cardinality": "25.4% unique",
+          "sample_values": [
+            "308",
+            "245",
+            "255",
+            "637",
+            "311"
+          ],
+          "hints": [
+            "good_for_aggregation"
+          ],
+          "description": "Immunoglobulin A level, an antibody associated with mucosal immunity and elevated or decreased in various immune conditions.",
+          "synonyms": [
+            "iga",
+            "immunoglobulin a",
+            "iga level",
+            "antibody"
+          ]
+        },
+        "IGM": {
+          "name": "IGM",
+          "type": " (NUMERICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "80.7%",
+          "cardinality": "18.2% unique",
+          "sample_values": [
+            "132",
+            "134",
+            "163",
+            "92",
+            "55"
+          ],
+          "hints": [
+            "good_for_aggregation"
+          ],
+          "description": "Immunoglobulin M level, the first antibody produced in response to infection, used to detect acute immune responses.",
+          "synonyms": [
+            "igm",
+            "immunoglobulin m",
+            "igm level",
+            "antibody"
+          ]
+        },
+        "CRP": {
+          "name": "CRP",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "17.6%",
+          "cardinality": "1.8% unique",
+          "sample_values": [
+            "+",
+            "-",
+            "2+",
+            "<0.2",
+            "<0.3"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "C-reactive protein, an acute-phase inflammatory marker elevated in infections, autoimmune diseases, and tissue injury.",
+          "synonyms": [
+            "crp",
+            "c-reactive protein",
+            "c reactive protein",
+            "inflammation marker",
+            "inflammatory marker"
+          ]
+        },
+        "RA": {
+          "name": "RA",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "79.5%",
+          "cardinality": "0.2% unique",
+          "sample_values": [
+            "+",
+            "+-",
+            "-",
+            "2+",
+            "7-"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Rheumatoid arthritis factor test result, used as a serological marker in the diagnosis of rheumatoid arthritis.",
+          "synonyms": [
+            "ra",
+            "rheumatoid arthritis factor",
+            "ra factor",
+            "rheumatoid factor test"
+          ]
+        },
+        "RF": {
+          "name": "RF",
+          "type": " (TEXT)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "76.0%",
+          "cardinality": "27.1% unique",
+          "sample_values": [
+            "80.4",
+            "66",
+            "39.4",
+            "156.4",
+            "142.8"
+          ],
+          "hints": [],
+          "description": "Rheumatoid factor level, an autoantibody associated with rheumatoid arthritis and other autoimmune conditions.",
+          "synonyms": [
+            "rf",
+            "rheumatoid factor",
+            "rheumatoid",
+            "ra marker"
+          ]
+        },
+        "C3": {
+          "name": "C3",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "60.7%",
+          "cardinality": "2.8% unique",
+          "sample_values": [
+            "52",
+            "55",
+            "57",
+            "59",
+            "72"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Complement C3 protein level, part of the innate immune system, decreased in active lupus or immune complex disease.",
+          "synonyms": [
+            "c3",
+            "complement c3",
+            "complement 3",
+            "complement level",
+            "immune complement"
+          ]
+        },
+        "C4": {
+          "name": "C4",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "60.7%",
+          "cardinality": "1.1% unique",
+          "sample_values": [
+            "16",
+            "17",
+            "19",
+            "21",
+            "24"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Complement C4 protein level, another component of the complement system, used alongside C3 in autoimmune disease monitoring.",
+          "synonyms": [
+            "c4",
+            "complement c4",
+            "complement 4",
+            "complement level",
+            "immune complement"
+          ]
+        },
+        "RNP": {
+          "name": "RNP",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "99.0%",
+          "cardinality": "5.6% unique",
+          "sample_values": [
+            "0",
+            "1",
+            "15",
+            "16",
+            "256"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Anti-ribonucleoprotein antibody, associated with mixed connective tissue disease (MCTD) and systemic lupus erythematosus.",
+          "synonyms": [
+            "rnp",
+            "ribonucleoprotein",
+            "anti-rnp",
+            "anti rnp",
+            "rnp antibody"
+          ]
+        },
+        "SM": {
+          "name": "SM",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "99.1%",
+          "cardinality": "3.9% unique",
+          "sample_values": [
+            "0",
+            "1",
+            "2",
+            "8",
+            "negative"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Anti-Smith antibody, a highly specific autoantibody for systemic lupus erythematosus (SLE).",
+          "synonyms": [
+            "sm",
+            "anti-sm",
+            "anti smith",
+            "smith antibody",
+            "sm antibody"
+          ]
+        },
+        "SC170": {
+          "name": "SC170",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "99.8%",
+          "cardinality": "17.9% unique",
+          "sample_values": [
+            "0",
+            "1",
+            "16",
+            "4",
+            "negative"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Anti-Scl-70 (anti-topoisomerase I) antibody, a marker associated with systemic sclerosis (scleroderma).",
+          "synonyms": [
+            "sc170",
+            "anti-sc170",
+            "scleroderma 70",
+            "anti-topoisomerase",
+            "topo1"
+          ]
+        },
+        "SSA": {
+          "name": "SSA",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "99.3%",
+          "cardinality": "7.1% unique",
+          "sample_values": [
+            "0",
+            "1",
+            "16",
+            "256",
+            "4"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Anti-SSA/Ro antibody, associated with Sjögren's syndrome, neonatal lupus, and systemic lupus erythematosus.",
+          "synonyms": [
+            "ssa",
+            "anti-ssa",
+            "ro antibody",
+            "anti-ro",
+            "sjogrens ssa",
+            "sjogren marker"
+          ]
+        },
+        "SSB": {
+          "name": "SSB",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "99.3%",
+          "cardinality": "6.5% unique",
+          "sample_values": [
+            "0",
+            "1",
+            "2",
+            "32",
+            "8"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Anti-SSB/La antibody, associated with Sjögren's syndrome and systemic lupus erythematosus.",
+          "synonyms": [
+            "ssb",
+            "anti-ssb",
+            "la antibody",
+            "anti-la",
+            "sjogrens ssb",
+            "sjogren marker"
+          ]
+        },
+        "CENTROMEA": {
+          "name": "CENTROMEA",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "99.9%",
+          "cardinality": "13.3% unique",
+          "sample_values": [
+            "0",
+            "negative"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Anti-centromere antibody, a marker associated with the CREST variant of systemic sclerosis.",
+          "synonyms": [
+            "centromea",
+            "centromere antibody",
+            "anti-centromere",
+            "crest syndrome marker"
+          ]
+        },
+        "DNA": {
+          "name": "DNA",
+          "type": " (TEXT)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "99.5%",
+          "cardinality": "95.7% unique",
+          "sample_values": [
+            "16.6",
+            "23.4",
+            "117",
+            "95.5",
+            "41.4"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "Anti-double stranded DNA antibody, a highly specific marker for systemic lupus erythematosus (SLE), used for diagnosis and monitoring.",
+          "synonyms": [
+            "dna",
+            "anti-dna",
+            "anti-double stranded dna",
+            "dsdna",
+            "lupus marker",
+            "anti ds dna"
+          ]
+        },
+        "DNA-II": {
+          "name": "DNA-II",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "100.0%",
+          "cardinality": "0.0% unique",
+          "sample_values": [],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "Quantitative anti-double stranded DNA antibody level, providing a numeric measurement of anti-dsDNA antibody concentration.",
+          "synonyms": [
+            "dna2",
+            "dna-ii",
+            "anti-dna ii",
+            "double stranded dna ii",
+            "ds dna level"
+          ]
+        }
+      },
+      "foreign_keys": {
+        "ID": [
+          "Patient"
+        ]
+      }
+    },
+    "selector_extras": {
+      "is_hub_table": false,
+      "degree_centrality": 0.5,
+      "normalized_centrality": 0.25,
+      "incoming_fk_count": 0,
+      "outgoing_fk_count": 1,
+      "betweenness_centrality": 0.0,
+      "referenced_by": [],
+      "references": [
+        "Patient"
+      ]
+    },
+    "description": "Records representing laboratory test results conducted on patients over time. Each record corresponds to a single test session for a patient and contains a comprehensive panel of hematological, biochemical, immunological, and coagulation markers.",
+    "columns": {
+      "ID": {
+        "description": "The identifier of the patient for whom the laboratory tests were conducted, linking to the Patient table."
+      },
+      "Date": {
+        "description": "The date on which the laboratory tests were performed or the sample was collected."
+      },
+      "GOT": {
+        "description": "Glutamate oxaloacetate transaminase (also known as AST), a liver enzyme used to assess liver and cardiac health."
+      },
+      "GPT": {
+        "description": "Glutamate pyruvate transaminase (also known as ALT), a liver enzyme primarily used to evaluate liver function."
+      },
+      "LDH": {
+        "description": "Lactate dehydrogenase, an enzyme present in many body tissues, elevated in cases of tissue damage or disease."
+      },
+      "ALP": {
+        "description": "Alkaline phosphatase, an enzyme associated with liver, bone, and biliary tract conditions."
+      },
+      "TP": {
+        "description": "Total protein level in the blood, reflecting overall nutritional status and liver function."
+      },
+      "ALB": {
+        "description": "Albumin, the most abundant protein in blood, used to assess liver function and nutritional status."
+      },
+      "UA": {
+        "description": "Uric acid level in the blood, elevated in conditions such as gout or renal dysfunction."
+      },
+      "UN": {
+        "description": "Urea nitrogen (blood urea nitrogen), a marker of kidney function and protein metabolism."
+      },
+      "CRE": {
+        "description": "Creatinine level in the blood, a key indicator of kidney (renal) function."
+      },
+      "T-BIL": {
+        "description": "Total bilirubin level, used to evaluate liver function and detect conditions such as jaundice or hemolysis."
+      },
+      "T-CHO": {
+        "description": "Total cholesterol level in the blood, used to assess cardiovascular risk."
+      },
+      "TG": {
+        "description": "Triglyceride level, a type of fat in the blood used to evaluate cardiovascular and metabolic health."
+      },
+      "CPK": {
+        "description": "Creatine phosphokinase, a muscle enzyme elevated in conditions such as muscle injury, myocardial infarction, or myositis."
+      },
+      "GLU": {
+        "description": "Blood glucose level, used to screen for and monitor diabetes and other metabolic conditions."
+      },
+      "WBC": {
+        "description": "White blood cell count, reflecting immune system activity and used to detect infection or hematological conditions."
+      },
+      "RBC": {
+        "description": "Red blood cell count, used to assess oxygen-carrying capacity and detect anemia or polycythemia."
+      },
+      "HGB": {
+        "description": "Hemoglobin level, the oxygen-carrying protein in red blood cells, used to diagnose and monitor anemia."
+      },
+      "HCT": {
+        "description": "Hematocrit, the proportion of red blood cells in total blood volume, used in anemia and hydration assessment."
+      },
+      "PLT": {
+        "description": "Platelet count, used to evaluate clotting ability and detect conditions such as thrombocytopenia or thrombocytosis."
+      },
+      "PT": {
+        "description": "Prothrombin time, a coagulation test measuring how long blood takes to clot via the extrinsic pathway."
+      },
+      "APTT": {
+        "description": "Activated partial thromboplastin time, a coagulation test evaluating the intrinsic clotting pathway."
+      },
+      "FG": {
+        "description": "Fibrinogen level, a clotting protein that plays a central role in blood coagulation and is elevated in inflammatory states."
+      },
+      "PIC": {
+        "description": "Plasmin-alpha2-plasmin inhibitor complex, a marker of fibrinolytic activity and clot breakdown."
+      },
+      "TAT": {
+        "description": "Thrombin-antithrombin complex, a marker of thrombin generation and coagulation activation."
+      },
+      "TAT2": {
+        "description": "Secondary thrombin-antithrombin complex measurement, providing an additional quantitative assessment of coagulation activation."
+      },
+      "U-PRO": {
+        "description": "Urine protein level, used to detect proteinuria, which may indicate kidney disease or systemic conditions affecting renal filtration."
+      },
+      "IGG": {
+        "description": "Immunoglobulin G level, the most abundant antibody in serum, reflecting humoral immunity and used in autoimmune disease evaluation."
+      },
+      "IGA": {
+        "description": "Immunoglobulin A level, an antibody associated with mucosal immunity and elevated or decreased in various immune conditions."
+      },
+      "IGM": {
+        "description": "Immunoglobulin M level, the first antibody produced in response to infection, used to detect acute immune responses."
+      },
+      "CRP": {
+        "description": "C-reactive protein, an acute-phase inflammatory marker elevated in infections, autoimmune diseases, and tissue injury."
+      },
+      "RA": {
+        "description": "Rheumatoid arthritis factor test result, used as a serological marker in the diagnosis of rheumatoid arthritis."
+      },
+      "RF": {
+        "description": "Rheumatoid factor level, an autoantibody associated with rheumatoid arthritis and other autoimmune conditions."
+      },
+      "C3": {
+        "description": "Complement C3 protein level, part of the innate immune system, decreased in active lupus or immune complex disease."
+      },
+      "C4": {
+        "description": "Complement C4 protein level, another component of the complement system, used alongside C3 in autoimmune disease monitoring."
+      },
+      "RNP": {
+        "description": "Anti-ribonucleoprotein antibody, associated with mixed connective tissue disease (MCTD) and systemic lupus erythematosus."
+      },
+      "SM": {
+        "description": "Anti-Smith antibody, a highly specific autoantibody for systemic lupus erythematosus (SLE)."
+      },
+      "SC170": {
+        "description": "Anti-Scl-70 (anti-topoisomerase I) antibody, a marker associated with systemic sclerosis (scleroderma)."
+      },
+      "SSA": {
+        "description": "Anti-SSA/Ro antibody, associated with Sjögren's syndrome, neonatal lupus, and systemic lupus erythematosus."
+      },
+      "SSB": {
+        "description": "Anti-SSB/La antibody, associated with Sjögren's syndrome and systemic lupus erythematosus."
+      },
+      "CENTROMEA": {
+        "description": "Anti-centromere antibody, a marker associated with the CREST variant of systemic sclerosis."
+      },
+      "DNA": {
+        "description": "Anti-double stranded DNA antibody, a highly specific marker for systemic lupus erythematosus (SLE), used for diagnosis and monitoring."
+      },
+      "DNA-II": {
+        "description": "Quantitative anti-double stranded DNA antibody level, providing a numeric measurement of anti-dsDNA antibody concentration."
+      }
+    }
+  },
+  "Patient": {
+    "metadata": {
+      "name": "Patient",
+      "row_count": 1238,
+      "column_count": 7,
+      "columns": {
+        "ID": {
+          "name": "ID",
+          "type": " (IDENTIFIER)",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": false,
+          "null_percentage": "0.0%",
+          "cardinality": "100.0% unique",
+          "sample_values": [
+            "11408",
+            "30609",
+            "43003",
+            "122405",
+            "287122"
+          ],
+          "hints": [
+            "good_for_indexing"
+          ],
+          "description": "A unique identifier assigned to each patient, used to link records across the Patient, Laboratory, and Examination tables.",
+          "synonyms": [
+            "patient_id",
+            "patient id",
+            "person",
+            "person_id",
+            "individual",
+            "case",
+            "case_id",
+            "subject",
+            "subject_id",
+            "record",
+            "record_id",
+            "who",
+            "which patient"
+          ]
+        },
+        "SEX": {
+          "name": "SEX",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "0.2% unique",
+          "sample_values": [
+            "",
+            "F",
+            "M"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The biological sex of the patient, recorded as a categorical value (e.g., M for male, F for female).",
+          "synonyms": [
+            "gender",
+            "sex",
+            "male",
+            "female",
+            "m",
+            "f",
+            "biological sex",
+            "patient gender"
+          ]
+        },
+        "Birthday": {
+          "name": "Birthday",
+          "type": " (TEMPORAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.1%",
+          "cardinality": "96.4% unique",
+          "sample_values": [
+            "1936-03-25",
+            "1944-07-13",
+            "1967-03-25",
+            "1958-01-28",
+            "1952-08-22"
+          ],
+          "hints": [
+            "good_for_indexing",
+            "good_for_partitioning"
+          ],
+          "description": "The date on which the patient was born, used to derive patient age at time of examination or laboratory test.",
+          "synonyms": [
+            "dob",
+            "date of birth",
+            "birth date",
+            "birthdate",
+            "born",
+            "born on",
+            "age",
+            "how old",
+            "patient age"
+          ]
+        },
+        "Description": {
+          "name": "Description",
+          "type": " (TEMPORAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "17.4%",
+          "cardinality": "9.5% unique",
+          "sample_values": [
+            "1994-02-24",
+            "1996-11-01",
+            "1997-08-02",
+            "1994-02-07",
+            "1993-07-22"
+          ],
+          "hints": [
+            "good_for_partitioning"
+          ],
+          "description": "The date on which the patient's medical record or case description was formally entered into the system.",
+          "synonyms": [
+            "description date",
+            "noted on",
+            "recorded on",
+            "entry date",
+            "description"
+          ]
+        },
+        "First Date": {
+          "name": "First Date",
+          "type": " (TEMPORAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "20.3%",
+          "cardinality": "80.8% unique",
+          "sample_values": [
+            "1989-03-17",
+            "1983-01-20",
+            "1973-04-08",
+            "1973-11-01",
+            "1998-07-23"
+          ],
+          "hints": [
+            "good_for_filtering",
+            "good_for_partitioning"
+          ],
+          "description": "The date of the patient's first visit or first recorded interaction with the medical facility.",
+          "synonyms": [
+            "first visit",
+            "first appointment",
+            "first consultation",
+            "first seen",
+            "first recorded",
+            "initial visit",
+            "initial date",
+            "when first seen"
+          ]
+        },
+        "Admission": {
+          "name": "Admission",
+          "type": " (CATEGORICAL)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "0.3% unique",
+          "sample_values": [
+            "",
+            "+",
+            "+(",
+            "-"
+          ],
+          "hints": [
+            "good_for_grouping"
+          ],
+          "description": "The admission status of the patient, indicating whether the patient was admitted as an inpatient or seen as an outpatient.",
+          "synonyms": [
+            "admitted",
+            "admission status",
+            "inpatient",
+            "outpatient",
+            "hospitalized",
+            "admission type",
+            "type of admission"
+          ]
+        },
+        "Diagnosis": {
+          "name": "Diagnosis",
+          "type": " (TEXT)",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "foreign_key_references": [],
+          "foreign_key_references_detail": [],
+          "nullable": true,
+          "null_percentage": "0.0%",
+          "cardinality": "17.8% unique",
+          "sample_values": [
+            "SLE",
+            "MRA",
+            "PM, SJS, RA",
+            "PSS(CREST)",
+            "SJS, RA susp"
+          ],
+          "hints": [
+            "good_for_filtering"
+          ],
+          "description": "The primary medical diagnosis assigned to the patient, representing their principal condition or disease.",
+          "synonyms": [
+            "diagnosis",
+            "diagnosed",
+            "condition",
+            "disease",
+            "disorder",
+            "illness",
+            "what disease",
+            "what condition",
+            "patient diagnosis",
+            "medical condition",
+            "ailment",
+            "patient condition"
+          ]
+        }
+      },
+      "foreign_keys": {},
+      "referenced_by": [
+        "Examination",
+        "Laboratory"
+      ]
+    },
+    "selector_extras": {
+      "is_hub_table": true,
+      "degree_centrality": 2.0,
+      "normalized_centrality": 1.0,
+      "incoming_fk_count": 2,
+      "outgoing_fk_count": 0,
+      "betweenness_centrality": 1.0,
+      "referenced_by": [
+        "Examination",
+        "Laboratory"
+      ],
+      "references": []
+    },
+    "description": "Records representing core patient identity and profile information, including demographic details, admission type, and primary diagnosis. This table serves as the central reference for all patients in the system.",
+    "columns": {
+      "ID": {
+        "description": "A unique identifier assigned to each patient, used to link records across the Patient, Laboratory, and Examination tables."
+      },
+      "SEX": {
+        "description": "The biological sex of the patient, recorded as a categorical value (e.g., M for male, F for female)."
+      },
+      "Birthday": {
+        "description": "The date on which the patient was born, used to derive patient age at time of examination or laboratory test."
+      },
+      "Description": {
+        "description": "The date on which the patient's medical record or case description was formally entered into the system."
+      },
+      "First Date": {
+        "description": "The date of the patient's first visit or first recorded interaction with the medical facility."
+      },
+      "Admission": {
+        "description": "The admission status of the patient, indicating whether the patient was admitted as an inpatient or seen as an outpatient."
+      },
+      "Diagnosis": {
+        "description": "The primary medical diagnosis assigned to the patient, representing their principal condition or disease."
+      }
+    }
+  }
+}
