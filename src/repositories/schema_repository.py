@@ -5,12 +5,39 @@ from typing import Dict, List
 
 from models import TableMetadata, ColumnMetadata, TableSelectorExtras
 
+import time
+from logger import log
 
 class SchemaRepository:
     def __init__(self, file_path: str):
+
+        start_time = time.time()
+
         self.file_path = file_path
-        self._raw_data = self._load_json()
-        self.tables: Dict[str, TableMetadata] = self._parse_metadata()
+
+        try:
+
+            self._raw_data = self._load_json()
+
+            self.tables: Dict[str, TableMetadata] = self._parse_metadata()
+
+            duration_ms = round((time.time() - start_time) * 1000)
+
+            log(
+                event="schema_repository_loaded",
+                duration_ms=duration_ms,
+                table_count=len(self.tables)
+            )
+
+        except Exception as exc:
+
+            log(
+                level="error",
+                event="schema_repository_load_failed",
+                error=exc
+            )
+
+            raise exc
 
     def _load_json(self):
         with open(self.file_path, "r") as f:
