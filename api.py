@@ -12,6 +12,7 @@ serialised by a per-path lock (double-checked locking) so the FAISS index
 is never loaded more than once per path.
 """
 
+import asyncio
 from pathlib import Path
 import os
 import sys
@@ -151,16 +152,20 @@ def _build_search_service(metadata_path: str) -> SearchService:
 
 
 @app.post("/query", response_model=QueryResponse)
-def handle_query(payload: QueryRequest):
+async def handle_query(payload: QueryRequest):
     """
     Accepts a natural language query and a metadata_path.
     Returns selected tables with join conditions.
     SearchService is built once per metadata_path and reused across requests.
+    The blocking LLM call runs in a thread so the event loop stays free for
+    concurrent requests from other users.
     """
-    search_service = _get_or_build_service(payload.metadata_path)
+    search_service = await asyncio.to_thread(_get_or_build_service, payload.metadata_path)
 
     try:
-        result = search_service.get_selection_result(payload.query, role=payload.role)
+        result = await asyncio.to_thread(
+            search_service.get_selection_result, payload.query, payload.role
+        )
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"Error selecting tables: {exc}")
 
@@ -180,19 +185,18 @@ class WarmupRequest(BaseModel):
 
 
 @app.post("/warmup")
-def warmup(payload: WarmupRequest):
+async def warmup(payload: WarmupRequest):
     """
     Pre-build and cache the SearchService for a metadata_path.
     Call this when the user switches databases so the cold-start cost is paid
     immediately rather than on the first real query.
-    Blocks until the service is ready, then returns.
+    Runs in a thread so other requests are not blocked during the build.
     """
-    already_cached = payload.metadata_path in _registry
-    if already_cached:
+    if payload.metadata_path in _registry:
         return {"status": "already_cached", "metadata_path": payload.metadata_path}
 
     try:
-        _get_or_build_service(payload.metadata_path)
+        await asyncio.to_thread(_get_or_build_service, payload.metadata_path)
     except HTTPException:
         raise
     except Exception as exc:
@@ -202,12 +206,12 @@ def warmup(payload: WarmupRequest):
 
 
 @app.post("/invalidate")
-def invalidate_cache(metadata_path: str):
+async def invalidate_cache(metadata_path: str):
     """
     Drop the cached SearchService for a metadata_path so it is rebuilt on the
     next request. Call this after re-running the profiler for a database.
     """
-    evicted = _invalidate_service(metadata_path)
+    evicted = await asyncio.to_thread(_invalidate_service, metadata_path)
     return {"evicted": evicted, "metadata_path": metadata_path}
 
 
