@@ -32,7 +32,7 @@ The pipeline has four stages:
 3. **LLM selection** — picks the minimal optimal set from the candidates
 4. **Join resolution** — returns the join conditions needed to connect the selected tables
 
-The FAISS vector index is **not built at runtime**. It is pre-built and stored on disk alongside the metadata JSON file. The API loads it on each request. This means startup is fast and no embedding computation happens during serving.
+The FAISS vector index is **not built at runtime**. It is pre-built and stored on disk alongside the metadata JSON file. The API loads it once per metadata path and caches the resulting `SearchService` in memory. Subsequent requests for the same path are served directly from the cache with no disk I/O.
 
 ---
 
@@ -242,6 +242,38 @@ curl -X POST http://localhost:9019/query \
 | 400 | Metadata file not found, FAISS index not found, or embedding model mismatch |
 | 404 | No tables selected for the query |
 | 500 | Internal error during table selection |
+
+### Cache management
+
+The API caches one `SearchService` per `metadata_path`. The service holds the FAISS index, BM25 index, and schema graph in memory. Three endpoints control the cache:
+
+**Invalidate** — drop the cached service for a path so the next request rebuilds it from disk. Call this after re-running the profiler (new metadata JSON or FAISS index):
+
+```bash
+curl -X POST "http://localhost:9019/invalidate?metadata_path=/path/to/table_metadata_full.json"
+```
+
+Response: `{"evicted": true, "metadata_path": "..."}`. Returns `evicted: false` if the path was not cached.
+
+**Warmup** — pre-load a path into the cache before the first real query hits. Useful after a server restart or after invalidating:
+
+```bash
+curl -X POST http://localhost:9019/warmup \
+  -H "Content-Type: application/json" \
+  -d '{"metadata_path": "/path/to/table_metadata_full.json"}'
+```
+
+Response: `{"status": "ready", "metadata_path": "..."}` or `{"status": "already_cached", ...}` if already loaded.
+
+**Cache status** — list all currently cached paths:
+
+```bash
+curl http://localhost:9019/cache/status
+```
+
+Response: `{"cached_paths": ["/path/to/..."], "count": 1}`.
+
+> **When to invalidate:** any time the profiler is re-run — whether to add synonyms, fix FK annotations, or update table descriptions. Without invalidation the API will keep serving results from the old index even though the files on disk have changed.
 
 ---
 
@@ -470,4 +502,4 @@ Tests use a minimal in-memory metadata fixture and do not require a running LLM 
 - **LLM dependency**: Final table selection requires an LLM API call. Latency and availability depend on the chosen provider.
 - **Metadata dependency**: Results are only as good as the metadata. Tables with poor descriptions, missing synonyms, or incomplete FK relationships will score lower.
 - **Single embedding model**: The FAISS index and the query encoder must use the same model. Changing the model requires rebuilding all index files.
-- **No request-level caching**: Each API request rebuilds the BM25 index and loads the FAISS index from disk. For high-traffic deployments, add a caching layer in front of `_build_search_service`.
+- **Stale cache after profiler re-runs**: The API caches `SearchService` instances in memory. If the profiler regenerates the metadata JSON or FAISS index, the running API will not pick up the changes until the cache is explicitly invalidated via `POST /invalidate`. Always invalidate after re-profiling.

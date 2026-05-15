@@ -252,7 +252,9 @@ class GraphExpansionService:
                 for col_name in sorted(cols_a & cols_b):
                     ca = meta_a.columns[col_name]
                     cb = meta_b.columns[col_name]
-                    if ca.is_primary_key or ca.is_foreign_key or cb.is_primary_key or cb.is_foreign_key:
+                    ca_is_real_fk = ca.is_foreign_key and ca.ref_table is not None
+                    cb_is_real_fk = cb.is_foreign_key and cb.ref_table is not None
+                    if ca.is_primary_key or ca_is_real_fk or cb.is_primary_key or cb_is_real_fk:
                         conditions.append(f'{ta}."{col_name}" = {tb}."{col_name}"')
                         processed.add(pair)
                         break
