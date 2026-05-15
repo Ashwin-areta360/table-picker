@@ -183,20 +183,22 @@ class GraphExpansionService:
             if len(path) == 2 and (a, b) not in mst_pairs
         ]
 
-        # Build the ordered path for join condition resolution
+        # Build join conditions
         if is_linear and spanning_path:
-            path_for_conditions = spanning_path
+            join_conditions = self._resolve_join_conditions(spanning_path)
         elif tree_edges:
-            path_for_conditions = []
+            # For tree/star topologies, resolve conditions per edge to avoid
+            # duplicate nodes when concatenating paths (e.g. hub A-B, A-C, A-D
+            # would produce [..., A, A, A] and generate bogus A→A self-joins).
+            seen: set = set()
+            join_conditions = []
             for edge in tree_edges:
-                if not path_for_conditions:
-                    path_for_conditions = edge.path
-                else:
-                    path_for_conditions = path_for_conditions + edge.path[1:]
+                for cond in self._resolve_join_conditions(edge.path):
+                    if cond not in seen:
+                        seen.add(cond)
+                        join_conditions.append(cond)
         else:
-            path_for_conditions = []
-
-        join_conditions = self._resolve_join_conditions(path_for_conditions)
+            join_conditions = []
 
         return JoinResult(
             spanning_path=spanning_path,
